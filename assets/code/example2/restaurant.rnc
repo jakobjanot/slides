@@ -1,0 +1,23 @@
+start = restaurant
+
+restaurant =
+    element restaurant {
+        element name { text },
+        element menu { pizza+ }
+    }
+
+pizza = 
+    element pizza {
+        element name { text },
+        element price { xsd:decimal }, # in danish kr.
+        element base {
+            attribute type { xsd:NCName }
+        },
+        element toppings { topping+ }
+    }
+
+topping =
+    element topping {
+        attribute type { xsd:NCName },
+        text
+    }

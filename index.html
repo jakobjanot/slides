@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="da">
-
 	<head>
 		<meta charset="utf-8">
 
@@ -14,9 +13,9 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<link rel="stylesheet" href="../../dist/reset.css">
-		<link rel="stylesheet" href="../../dist/reveal.css">
-		<link rel="stylesheet" href="../../dist/theme/schultz-light.css" id="theme">
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/schultz-light.css" id="theme">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="plugin/highlight/atom-one-dark.css">
@@ -38,7 +37,7 @@
 				</section>
 
 				<section>
-					<img src="assets/pizzaovn.jpg"/>
+					<img src="assets/images/pizzaovn.jpg"/>
 				</section>
 
 				<section>
@@ -50,156 +49,48 @@
 				</section>
 
 				<section>
-					<img src="assets/menukort.jpg"/>
+					<img src="assets/images/menukort.jpg"/>
 				</section>
 
 				<section>
-					<img src="assets/menu-screen.jpg"/>
-				</section>
-				
-				<section>
-					<img src="assets/restaurant-webpage.png"/>
+					<img src="assets/images/menu-screen.jpg"/>
 				</section>
 				
 				<section>
-					<pre>
-						<code class="hljs language-xml" data-trim data-line-numbers="|1-4|5-13|14-23|15-17|18-22">
-							<script type="text/template">
-								<?xml version="1.0" encoding="UTF-8"?>
-								<restaurant>
-									<name>Bernds thin crust pizzas</name>
-									<menu>
-										<pizza>
-											<name>Pizza Marguerita</name>
-											<price>50.00</price>
-											<base type="thin"/>
-											<toppings>
-												<topping type="tomato">Tomato sauce</topping>
-												<topping type="cheese">Fresh Mozzarella</topping>
-											</toppings>
-										</pizza>
-										<pizza>
-											<name>Flammkuchen </name>
-											<price>62.00</price>
-											<base type="thin"/>
-											<toppings>
-												<topping type="sour-creme">Creme Fraiche</topping>
-												<topping type="bacon">Thin sliced Bacon</topping>
-												<topping type="onion">Red onion slices</topping>
-											</toppings>
-										</pizza>
-									</menu>
-								</restaurant>
-							</script>
-						</code>
-					</pre>
+					<img src="assets/images/restaurant-webpage.png"/>
 				</section>
-
-
-				<section>
-					<object data="assets/code/example1/restaurant.rnc"></object>
-				</section>
-
-
+				
 				<section>
 					<pre>
-						<code class="hljs" data-trim>
-							start =
-								element restaurant {
-									element name { text },
-									element menu {
-										element pizza {
-											element name { text },
-											element price { xsd:decimal },
-											element base {
-												attribute type { xsd:NCName }
-											},
-											element toppings {
-												element topping {
-													attribute type { xsd:NCName },
-													text
-												}+
-											}
-										}+
-									}
-								}
-						</code>
+						<code data-code="assets/code/example1/bernds.xml" class="hljs language-xml" data-trim data-line-numbers="|1-4|5-13|14-23|15-17|18-22"></code>
 					</pre>
 				</section>
 
 				<section>
 					<pre>
-						<code class="hljs" data-trim data-line-numbers="|1|3-7|6,9-17|16,19-23">
-							start = restaurant
-
-							restaurant =
-								element restaurant {
-									element name { text },
-									element menu { pizza+ }
-								}
-
-							pizza = 
-								element pizza {
-									element name { text },
-									element price { xsd:decimal }, # in danish kr.
-									element base {
-										attribute type { xsd:NCName }
-									},
-									element toppings { topping+ }
-								}
-
-							topping =
-								element topping {
-									attribute type { xsd:NCName },
-									text
-								}
-						</code>
+						<code data-code="assets/code/example1/restaurant.rnc" class="hljs language-xml" data-trim></code>
 					</pre>
 				</section>
 
 				<section>
+					<p>Omorganisering</p>
 					<pre>
-						<code class="hljs" data-trim data-line-numbers="|14,19|23,27-30">
-							start = restaurant
-
-							restaurant =
-								element restaurant {
-									element name { text },
-									element menu { pizza+ }
-								}
-
-							pizza = 
-								element pizza {
-									element name { text },
-									element price { xsd:decimal }, # in danish kr.
-									element base {
-										attribute type { Base.datatype }
-									},
-									element toppings { topping+ }
-								}
-
-							Base.datatype = "thin-crust" | "deep-pan"
-							
-							topping =
-								element topping {
-									attribute type { Topping.datatype },
-									text
-								}
-
-							Topping.datatype = 
-								"tomato"
-								| "cheese"
-								| "bacon"
-						</code>
+						<code data-code="assets/code/example2/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|1|3-7|6,9-17|16,19-23"></code>
 					</pre>
 				</section>
 
 				<section>
-					<h2>Valider!</h2>
+					<p>Datatyper</p>
+					<pre>
+						<code data-code="assets/code/example3/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|14,19|23,27-30"></code>
+					</pre>
+				</section>
 
+				<section>
+					<p>Valider!</p>
 					<pre>
 						<code class="hljs shell" data-trim data-line-numbers="1|">
-							> jing -c restarant.rnc bernds.xml
+							> jing -c restaurant.rnc bernds.xml
 
 							bernds.xml:19:44: 
 							error: value of attribute "type" is invalid; 
@@ -211,10 +102,9 @@
 				<section>
 					<p>Tilføjer vi 'sour-cream' som valid topping</p>
 					<p>... og genkører validering</p>
-
 					<pre>
 						<code class="hljs shell" data-trim>
-							> jing -c restarant.rnc bernds.xml
+							> jing -c restaurant.rnc bernds.xml
 							> echo $?
 							0
 						</code>
@@ -225,7 +115,7 @@
 				</section>
 
 				<section>
-					<h2>Nyt eksempel: Strukturel fejl</h2>
+					<p>Prisen mangler</p>
 					<pre>
 						<code class="hljs language-xml" data-trim>
 							<script type="text/template">
@@ -242,11 +132,10 @@
 				</section>
 
 				<section>
-					<h2>Valider igen</h2>
-
+					<p>Valider igen</p>
 					<pre>
 						<code class="hljs shell" data-trim>
-							> jing -c restarant.rnc bernds.xml
+							> jing -c restaurant.rnc bernds.xml
 
 							bernds.xml:16:38: error: element "base" not allowed yet; 
 							missing required element "price"
@@ -255,96 +144,26 @@
 				</section>
 
 				<section>
-					<h2>Der er kommet burger på menuen</h2>
+					<p>Der er kommet burger på menuen</p>
 					<pre>
-						<code class="hljs language-xml" data-trim>
-							<script type="text/template">
-								<?xml version="1.0" encoding="UTF-8"?>
-								<restaurant>
-									<name>Bernds thin crust pizzas</name>
-									<menu>
-										<pizza>
-											<name>Pizza Marguerita</name>
-											<price>50.00</price>
-											<base type="thin"/>
-											<toppings>
-												<topping type="tomato">Tomatsovs</topping>
-												<topping type="cheese">Frisk Mozzarellaost</topping>
-											</toppings>
-										</pizza>
-										<burger>
-											<name>Bun, James Bun</name>
-											<price>35.00</price>
-											<bun type="brioche">Brioche bolle</bun>
-											<patty type="beef">Dansk hakket oksekød</patty>
-										</burger>
-									</menu>
-								</restarant>
-							</script>
-						</code>
+						<code data-code="assets/code/example4/bernds.xml" class="hljs language-xml" data-trim data-line-numbers="|14-19"></code>
 					</pre>
 				</section>
 
 				<section>
+					Brioche eller fuldkorn? Vegetar?
 					<pre>
-						<code class="hljs" data-trim data-line-numbers="|14,19|23,27-30">
-							start = restaurant
-
-							restaurant =
-								element restaurant {
-									element name { text },
-									element menu { (burger | pizza)+ }
-								}
+						<code data-code="assets/code/example4/restaurant.rnc" class="hljs" data-trim data-line-numbers="|6|9-20|22-24">
 							
-							burger = element pizza {
-								element name { text },
-								element price { xsd:decimal },
-								element bun {
-									attribute type { Bun.datatype },
-									text
-								},
-								element patty {
-									attribute type { Patty.datatype },
-									text
-								}
-							}
-
-							Bun.datatype = "brioche" | "whole-grain" 
-							
-							Patty.datatype = "beef" | "chicken-breast" | "vegan"
-
-							pizza = 
-								element pizza {
-									element name { text },
-									element price { xsd:decimal }, # in danish kr.
-									element base {
-										attribute type { Base.datatype }
-									},
-									element toppings { topping+ }
-								}
-
-							Base.datatype = "thin-crust" | "deep-pan"
-							
-							topping =
-								element topping {
-									attribute type { Topping.datatype },
-									text
-								}
-
-							Topping.datatype = 
-								"tomato"
-								| "cheese"
-								| "bacon"
 						</code>
 					</pre>
 				</section>
 
 				<section>
 					<h2>Valider igen</h2>
-
 					<pre>
 						<code class="hljs shell" data-trim>
-							> jing -c restarant.rnc bernds.xml
+							> jing -c restaurant.rnc bernds.xml
 
 							bernds.xml:16:38: error: element "base" not allowed yet; 
 							missing required element "price"
@@ -488,7 +307,6 @@
 
 				<section>
 					<h2>Vores schema fil vokser - lad os modularisere</h2>
-
 					<pre>
 						<code class="hljs shell" data-trim>
 							├── meals
@@ -733,12 +551,13 @@ Reveal.on( 'customevent', function() {
 
 		</div>
 
-		<script src="../../dist/reveal.js"></script>
-		<script src="../../plugin/zoom/zoom.js"></script>
-		<script src="../../plugin/notes/notes.js"></script>
-		<script src="../../plugin/search/search.js"></script>
-		<script src="../../plugin/markdown/markdown.js"></script>
-		<script src="../../plugin/highlight/highlight.js"></script>
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/externalcode/externalcode.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
 		<script>
 
 			// Also available as an ES module, see:
@@ -750,7 +569,7 @@ Reveal.on( 'customevent', function() {
 				hash: true,
 
 				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealExternalCode, RevealHighlight]
 			});
 
 		</script>

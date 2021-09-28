@@ -1,7 +1,7 @@
 /**
- * Schultz light theme
+ * White theme for reveal.js. This is the opposite of the 'black' theme.
  *
- * By Jakob Kofoed Janot
+ * By Hakim El Hattab, http://hakim.se
  */
 @import url(./fonts/soho-gothic-pro/soho-gothic-pro.css);
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {

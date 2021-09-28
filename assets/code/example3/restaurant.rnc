@@ -1,0 +1,48 @@
+start = restaurant
+
+restaurant =
+  element restaurant {
+    element name { text },
+    element menu { (burger | pizza)+ }
+  }
+
+pizza = 
+  element pizza {
+    element name { text },
+    element price { xsd:decimal },
+    element base {
+      attribute type { BaseType }
+    },
+    element toppings { topping+ }
+  }
+
+burger = element burger {
+  element name { text },
+  element price { xsd:decimal },
+  element bun {
+    attribute type { Bun.datatype },
+    text
+  },
+  element patty {
+    attribute type { Patty.datatype },
+    text
+  }
+}
+
+Bun.datatype = "brioche" | "whole-grain" 
+
+Patty.datatype = "beef" | "chicken-breast" | "vegan"
+
+topping =
+  element topping {
+    attribute type { ToppingType },
+    text
+  }
+
+BaseType = "thin-crust" | "deep-pan"
+
+ToppingType = "tomato" 
+  | "cheese"
+  | "bacon"
+  | "onion"
+  | "sour-creme"
