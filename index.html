@@ -61,54 +61,42 @@
 				</section>
 				
 				<section>
-					<pre>
-						<code data-code="assets/code/example1/bernds.xml" class="hljs language-xml" data-trim data-line-numbers="|1-4|5-13|14-23|15-17|18-22"></code>
-					</pre>
+					<pre><code data-code="assets/code/example1/bernds.xml" class="hljs language-xml" data-trim data-line-numbers="|1-4|5-13|14-23|15-17|18-22"></code></pre>
 				</section>
 
 				<section>
-					<pre>
-						<code data-code="assets/code/example1/restaurant.rnc" class="hljs language-xml" data-trim></code>
-					</pre>
+					<pre><code data-code="assets/code/example1/restaurant.rnc" class="hljs language-xml" data-trim></code></pre>
 				</section>
 
 				<section>
 					<p>Omorganisering</p>
-					<pre>
-						<code data-code="assets/code/example2/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|1|3-7|6,9-17|16,19-23"></code>
-					</pre>
+					<pre><code data-code="assets/code/example2/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|1|3-7|6,9-17|16,19-23"></code></pre>
 				</section>
 
 				<section>
 					<p>Datatyper</p>
-					<pre>
-						<code data-code="assets/code/example3/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|14,19|23,27-30"></code>
-					</pre>
+					<pre><code data-code="assets/code/example3/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|14,19|23,27-30"></code></pre>
 				</section>
 
 				<section>
 					<p>Valider!</p>
-					<pre>
-						<code class="hljs shell" data-trim data-line-numbers="1|">
-							> jing -c restaurant.rnc bernds.xml
+					<pre><code class="hljs shell" data-trim data-line-numbers="1|">
+						> jing -c restaurant.rnc bernds.xml
 
-							bernds.xml:19:44: 
-							error: value of attribute "type" is invalid; 
-							must be equal to "bacon", "cheese", "onion" or "tomato"
-						</code>
-					</pre>
+						bernds.xml:19:44: 
+						error: value of attribute "type" is invalid; 
+						must be equal to "bacon", "cheese", "onion" or "tomato"
+					</code></pre>
 				</section>
 
 				<section>
 					<p>Tilføjer vi 'sour-cream' som valid topping</p>
 					<p>... og genkører validering</p>
-					<pre>
-						<code class="hljs shell" data-trim>
-							> jing -c restaurant.rnc bernds.xml
-							> echo $?
-							0
-						</code>
-					</pre>
+					<pre><code class="hljs shell" data-trim>
+						> jing -c restaurant.rnc bernds.xml
+						> echo $?
+						0
+					</code></pre>
 				</section>
 
 				<section data-background="http://i.giphy.com/s2qXK8wAvkHTO.gif">
@@ -116,205 +104,69 @@
 
 				<section>
 					<p>Prisen mangler</p>
-					<pre>
-						<code class="hljs language-xml" data-trim>
-							<script type="text/template">
-								<pizza>
-									<name>Flammkuchen </name>
-									<!-- price used to be here -->
-									<base type="thin-crust"/>
-									<toppings>
-										...
-								...
-							</script>
-						</code>
-					</pre>
+					<pre><code class="hljs language-xml" data-trim>
+						<script type="text/template">
+							<pizza>
+								<name>Flammkuchen </name>
+								<!-- price used to be here -->
+								<base type="thin-crust"/>
+								<toppings>
+									...
+							...
+						</script>
+					</code></pre>
 				</section>
 
 				<section>
 					<p>Valider igen</p>
-					<pre>
-						<code class="hljs shell" data-trim>
-							> jing -c restaurant.rnc bernds.xml
+					<pre><code class="hljs shell" data-trim>
+						> jing -c restaurant.rnc bernds.xml
 
-							bernds.xml:16:38: error: element "base" not allowed yet; 
-							missing required element "price"
-						</code>
-					</pre>
+						bernds.xml:16:38: error: element "base" not allowed yet; 
+						missing required element "price"
+					</code></pre>
 				</section>
 
 				<section>
 					<p>Der er kommet burger på menuen</p>
-					<pre>
-						<code data-code="assets/code/example4/bernds.xml" class="hljs language-xml" data-trim data-line-numbers="|14-19"></code>
-					</pre>
+					<pre><code data-code="assets/code/example4/bernds.xml" class="hljs language-xml" data-trim data-line-numbers="|14-19"></code></pre>
 				</section>
 
 				<section>
 					Brioche eller fuldkorn? Vegetar?
-					<pre>
-						<code data-code="assets/code/example4/restaurant.rnc" class="hljs" data-trim data-line-numbers="|6|9-20|22-24">
-							
-						</code>
-					</pre>
+					<pre><code data-code="assets/code/example4/restaurant.rnc" class="hljs" data-trim data-line-numbers="|6|9-20|22-24"></code></pre>
 				</section>
 
 				<section>
 					<h2>Valider igen</h2>
-					<pre>
-						<code class="hljs shell" data-trim>
-							> jing -c restaurant.rnc bernds.xml
-
-							bernds.xml:16:38: error: element "base" not allowed yet; 
-							missing required element "price"
-						</code>
-					</pre>
+					<pre><code class="hljs shell" data-trim>
+						> jing -c restaurant.rnc bernds.xml
+					</code></pre>
 				</section>
 
 				<section>
-					<pre>
-						<code class="hljs" data-trim>
-							Meal.model |= burger
-							
-							burger = element burger {
-								element name { text },
-								element price { xsd:decimal },
-								element bun {
-									attribute type { Bun.datatype },
-									text
-								},
-								element patty {
-									attribute type { Patty.datatype },
-									text
-								}
-							}
-
-							Bun.datatype = "brioche" | "whole-grain" 
-							
-							Patty.datatype = "beef" | "chicken-breast" | "vegan"
-
-							pizza = 
-								element pizza {
-									element name { text },
-									element price { xsd:decimal }, # in danish kr.
-									element base {
-										attribute type { Base.datatype }
-									},
-									element toppings { topping+ }
-								}
-
-							Base.datatype = "thin-crust" | "deep-pan"
-							
-							topping =
-								element topping {
-									attribute type { Topping.datatype },
-									text
-								}
-
-							Topping.datatype = 
-								"tomato"
-								| "cheese"
-								| "bacon"
-						</code>
-					</pre>
-				</section>
-
-				<section>
-					<h2>pizza.rnc</h2>
-					<pre>
-						<code class="hljs" data-trim>
-							Meal.model |= pizza
-
-							pizza = 
-								element pizza {
-									element name { text },
-									element price { xsd:decimal }, # in danish kr.
-									element base {
-										attribute type { Base.datatype }
-									},
-									element toppings { topping+ }
-								}
-
-							Base.datatype = "thin-crust" | "deep-pan"
-							
-							topping =
-								element topping {
-									attribute type { Topping.datatype },
-									text
-								}
-
-							Topping.datatype = 
-								"tomato"
-								| "cheese"
-								| "bacon"
-						</code>
-					</pre>
-				</section>
-
-				<section>
-					<pre>
-						<code class="hljs" data-trim data-line-numbers="|14,19|23,27-30">
-							start = restaurant
-
-							restaurant =
-								element restaurant {
-									element name { text },
-									element menu { (burger | pizza)+ }
-								}
-							
-							burger = element pizza {
-								element name { text },
-								element price { xsd:decimal },
-								element bun {
-									attribute type { Bun.datatype },
-									text
-								},
-								element patty {
-									attribute type { Patty.datatype },
-									text
-								}
-							}
-
-							Bun.datatype = "brioche" | "whole-grain" 
-							
-							Patty.datatype = "beef" | "chicken-breast" | "vegan"
-
-							pizza = 
-								element pizza {
-									element name { text },
-									element price { xsd:decimal }, # in danish kr.
-									element base {
-										attribute type { Base.datatype }
-									},
-									element toppings { topping+ }
-								}
-
-							Base.datatype = "thin-crust" | "deep-pan"
-							
-							topping =
-								element topping {
-									attribute type { Topping.datatype },
-									text
-								}
-
-							Topping.datatype = 
-								"tomato"
-								| "cheese"
-								| "bacon"
-						</code>
-					</pre>
-				</section>
-
-				<section>
-					<h2>Vores schema fil vokser - lad os modularisere</h2>
-					<pre>
-						<code class="hljs shell" data-trim>
+					<p>Vores schema fil vokser - lad os modularisere</p>
+					<pre><code class="hljs shell" data-trim>
 							├── meals
 							│   ├── burger.rnc
 							│   └── pizza.rnc
 							└── restaurant.rnc
-						</code>
-					</pre>
+						</code></pre>
+				</section>
+
+				<section>
+					<p>restaurant.rnc</p>
+					<pre><code data-code="assets/code/example5/restaurant.rnc" class="hljs" data-trim data-line-numbers="|1-2|9"></code></pre>
+				</section>
+				
+				<section>
+					<p>meals/burger.rnc</p>
+					<pre><code data-code="assets/code/example5/meals/burger.rnc" class="hljs" data-trim data-line-numbers="|1"></code></pre>
+				</section>
+
+				<section>
+					<p>meals/pizza.rnc</p>
+					<pre><code data-code="assets/code/example5/meals/pizza.rnc" class="hljs" data-trim data-line-numbers="|1"></code></pre>
 				</section>
 
 				<section>
