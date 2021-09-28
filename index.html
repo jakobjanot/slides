@@ -59,6 +59,15 @@
 				<section>
 					<img src="assets/images/restaurant-webpage.png"/>
 				</section>
+
+				<section>
+					<p>
+						Her skal være nogle slides om hvordan man kunne gøre med tabeller, men at XML også er en struktureret måde at gøre det på.
+						Der skal bl.a. være noget om skemaer og sammenlign med tabel skemaer og JSON
+						Desuden forskellen på et AST og en tabel struktur.
+						Evt også noget om mixed-content
+					</p>
+				</section>
 				
 				<section>
 					<pre><code data-code="assets/code/example1/bernds.xml" class="hljs language-xml" data-trim data-line-numbers="|1-4|5-13|14-23|15-17|18-22"></code></pre>
@@ -107,7 +116,7 @@
 					<pre><code class="hljs language-xml" data-trim>
 						<script type="text/template">
 							<pizza>
-								<name>Flammkuchen </name>
+								<name>Flammkuchen</name>
 								<!-- price used to be here -->
 								<base type="thin-crust"/>
 								<toppings>
@@ -147,7 +156,7 @@
 				<section>
 					<p>Vores schema fil vokser - lad os modularisere</p>
 					<pre><code class="hljs shell" data-trim>
-							├── meals
+							├── modules
 							│   ├── burger.rnc
 							│   └── pizza.rnc
 							└── restaurant.rnc

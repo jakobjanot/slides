@@ -1,0 +1,9 @@
+<pizza>
+    <name>Cheese Addict</name>
+    <price>52.00</price>
+    <base type="deep-pan"/>
+    <toppings>
+        <topping type="tomato">Tomato sauce</topping>
+        <topping type="cheese">Mozzarella</topping>
+    </toppings>
+</pizza>

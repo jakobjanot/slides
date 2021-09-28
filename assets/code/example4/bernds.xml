@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <restaurant>
     <name>Bernds thin crust pizzas</name>
-    <menu>
+    <meals>
         <pizza>
             <name>Pizza Marguerita</name>
             <price>50.00</price>
@@ -27,5 +27,5 @@
                 <topping type="onion">Red onion slices</topping>
             </toppings>
         </pizza>
-    </menu>
+    </meals>
 </restaurant>

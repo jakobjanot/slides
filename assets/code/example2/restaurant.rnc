@@ -3,7 +3,7 @@ start = restaurant
 restaurant =
     element restaurant {
         element name { text },
-        element menu { pizza+ }
+        element meals { pizza+ }
     }
 
 pizza = 

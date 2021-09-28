@@ -1,0 +1,10 @@
+<pizza>
+    <name>Flammkuchen </name>
+    <price>62.00</price>
+    <base type="thin"/>
+    <toppings>
+        <topping type="sour-creme">Creme Fraiche</topping>
+        <topping type="bacon">Thin sliced Bacon</topping>
+        <topping type="onion">Red onion slices</topping>
+    </toppings>
+</pizza>

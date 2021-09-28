@@ -1,10 +1,10 @@
-include "meals/pizza.rnc"
-include "meals/burger.rnc"
+include "modules/pizza.rnc"
+include "modules/burger.rnc"
 
 start = restaurant
 
 restaurant =
   element restaurant {
     element name { text },
-    element menu { Meal.model+ }
+    element meals { Meal.model+ }
   }
