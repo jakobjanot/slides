@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="da">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Fundament - Tech talk</title>
+
+		<meta name="description" content="En præsentation om hvordan XML værktøjer kan bruges til at håndtere dokumenter">
+		<meta name="author" content="Jakob Kofoed Janot">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="../../dist/reset.css">
+		<link rel="stylesheet" href="../../dist/reveal.css">
+		<link rel="stylesheet" href="../../dist/theme/schultz-light.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/atom-one-dark.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>Pizza, XML og skemaer</h2>
+					<p><small>- eller hvordan du bygger en succesfuld<br/> pizza restaurant kæde vha. XML teknologi</small></p>
+				</section>
+
+				<section>
+					<h4>Det startede med en pizzaovn</h4>
+				</section>
+
+				<section>
+					<img src="assets/pizzaovn.jpg"/>
+				</section>
+
+				<section>
+					<h4>Next step: En restaurant</h4>
+				</section>
+			
+				<section>
+					<h4>Til en restaurant har man brug for</h4>
+				</section>
+
+				<section>
+					<img src="assets/menukort.jpg"/>
+				</section>
+
+				<section>
+					<img src="assets/menu-screen.jpg"/>
+				</section>
+				
+				<section>
+					<img src="assets/restaurant-webpage.png"/>
+				</section>
+				
+				<section>
+					<pre>
+						<code class="hljs language-xml" data-trim data-line-numbers="|1-4|5-13|14-23|15-17|18-22">
+							<script type="text/template">
+								<?xml version="1.0" encoding="UTF-8"?>
+								<restaurant>
+									<name>Bernds thin crust pizzas</name>
+									<menu>
+										<pizza>
+											<name>Pizza Marguerita</name>
+											<price>50.00</price>
+											<base type="thin"/>
+											<toppings>
+												<topping type="tomato">Tomato sauce</topping>
+												<topping type="cheese">Fresh Mozzarella</topping>
+											</toppings>
+										</pizza>
+										<pizza>
+											<name>Flammkuchen </name>
+											<price>62.00</price>
+											<base type="thin"/>
+											<toppings>
+												<topping type="sour-creme">Creme Fraiche</topping>
+												<topping type="bacon">Thin sliced Bacon</topping>
+												<topping type="onion">Red onion slices</topping>
+											</toppings>
+										</pizza>
+									</menu>
+								</restaurant>
+							</script>
+						</code>
+					</pre>
+				</section>
+
+
+				<section>
+					<object data="assets/code/example1/restaurant.rnc"></object>
+				</section>
+
+
+				<section>
+					<pre>
+						<code class="hljs" data-trim>
+							start =
+								element restaurant {
+									element name { text },
+									element menu {
+										element pizza {
+											element name { text },
+											element price { xsd:decimal },
+											element base {
+												attribute type { xsd:NCName }
+											},
+											element toppings {
+												element topping {
+													attribute type { xsd:NCName },
+													text
+												}+
+											}
+										}+
+									}
+								}
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="|1|3-7|6,9-17|16,19-23">
+							start = restaurant
+
+							restaurant =
+								element restaurant {
+									element name { text },
+									element menu { pizza+ }
+								}
+
+							pizza = 
+								element pizza {
+									element name { text },
+									element price { xsd:decimal }, # in danish kr.
+									element base {
+										attribute type { xsd:NCName }
+									},
+									element toppings { topping+ }
+								}
+
+							topping =
+								element topping {
+									attribute type { xsd:NCName },
+									text
+								}
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="|14,19|23,27-30">
+							start = restaurant
+
+							restaurant =
+								element restaurant {
+									element name { text },
+									element menu { pizza+ }
+								}
+
+							pizza = 
+								element pizza {
+									element name { text },
+									element price { xsd:decimal }, # in danish kr.
+									element base {
+										attribute type { Base.datatype }
+									},
+									element toppings { topping+ }
+								}
+
+							Base.datatype = "thin-crust" | "deep-pan"
+							
+							topping =
+								element topping {
+									attribute type { Topping.datatype },
+									text
+								}
+
+							Topping.datatype = 
+								"tomato"
+								| "cheese"
+								| "bacon"
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>Valider!</h2>
+
+					<pre>
+						<code class="hljs shell" data-trim data-line-numbers="1|">
+							> jing -c restarant.rnc bernds.xml
+
+							bernds.xml:19:44: 
+							error: value of attribute "type" is invalid; 
+							must be equal to "bacon", "cheese", "onion" or "tomato"
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<p>Tilføjer vi 'sour-cream' som valid topping</p>
+					<p>... og genkører validering</p>
+
+					<pre>
+						<code class="hljs shell" data-trim>
+							> jing -c restarant.rnc bernds.xml
+							> echo $?
+							0
+						</code>
+					</pre>
+				</section>
+
+				<section data-background="http://i.giphy.com/s2qXK8wAvkHTO.gif">
+				</section>
+
+				<section>
+					<h2>Nyt eksempel: Strukturel fejl</h2>
+					<pre>
+						<code class="hljs language-xml" data-trim>
+							<script type="text/template">
+								<pizza>
+									<name>Flammkuchen </name>
+									<!-- price used to be here -->
+									<base type="thin-crust"/>
+									<toppings>
+										...
+								...
+							</script>
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>Valider igen</h2>
+
+					<pre>
+						<code class="hljs shell" data-trim>
+							> jing -c restarant.rnc bernds.xml
+
+							bernds.xml:16:38: error: element "base" not allowed yet; 
+							missing required element "price"
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>Der er kommet burger på menuen</h2>
+					<pre>
+						<code class="hljs language-xml" data-trim>
+							<script type="text/template">
+								<?xml version="1.0" encoding="UTF-8"?>
+								<restaurant>
+									<name>Bernds thin crust pizzas</name>
+									<menu>
+										<pizza>
+											<name>Pizza Marguerita</name>
+											<price>50.00</price>
+											<base type="thin"/>
+											<toppings>
+												<topping type="tomato">Tomatsovs</topping>
+												<topping type="cheese">Frisk Mozzarellaost</topping>
+											</toppings>
+										</pizza>
+										<burger>
+											<name>Bun, James Bun</name>
+											<price>35.00</price>
+											<bun type="brioche">Brioche bolle</bun>
+											<patty type="beef">Dansk hakket oksekød</patty>
+										</burger>
+									</menu>
+								</restarant>
+							</script>
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="|14,19|23,27-30">
+							start = restaurant
+
+							restaurant =
+								element restaurant {
+									element name { text },
+									element menu { (burger | pizza)+ }
+								}
+							
+							burger = element pizza {
+								element name { text },
+								element price { xsd:decimal },
+								element bun {
+									attribute type { Bun.datatype },
+									text
+								},
+								element patty {
+									attribute type { Patty.datatype },
+									text
+								}
+							}
+
+							Bun.datatype = "brioche" | "whole-grain" 
+							
+							Patty.datatype = "beef" | "chicken-breast" | "vegan"
+
+							pizza = 
+								element pizza {
+									element name { text },
+									element price { xsd:decimal }, # in danish kr.
+									element base {
+										attribute type { Base.datatype }
+									},
+									element toppings { topping+ }
+								}
+
+							Base.datatype = "thin-crust" | "deep-pan"
+							
+							topping =
+								element topping {
+									attribute type { Topping.datatype },
+									text
+								}
+
+							Topping.datatype = 
+								"tomato"
+								| "cheese"
+								| "bacon"
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>Valider igen</h2>
+
+					<pre>
+						<code class="hljs shell" data-trim>
+							> jing -c restarant.rnc bernds.xml
+
+							bernds.xml:16:38: error: element "base" not allowed yet; 
+							missing required element "price"
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre>
+						<code class="hljs" data-trim>
+							Meal.model |= burger
+							
+							burger = element burger {
+								element name { text },
+								element price { xsd:decimal },
+								element bun {
+									attribute type { Bun.datatype },
+									text
+								},
+								element patty {
+									attribute type { Patty.datatype },
+									text
+								}
+							}
+
+							Bun.datatype = "brioche" | "whole-grain" 
+							
+							Patty.datatype = "beef" | "chicken-breast" | "vegan"
+
+							pizza = 
+								element pizza {
+									element name { text },
+									element price { xsd:decimal }, # in danish kr.
+									element base {
+										attribute type { Base.datatype }
+									},
+									element toppings { topping+ }
+								}
+
+							Base.datatype = "thin-crust" | "deep-pan"
+							
+							topping =
+								element topping {
+									attribute type { Topping.datatype },
+									text
+								}
+
+							Topping.datatype = 
+								"tomato"
+								| "cheese"
+								| "bacon"
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>pizza.rnc</h2>
+					<pre>
+						<code class="hljs" data-trim>
+							Meal.model |= pizza
+
+							pizza = 
+								element pizza {
+									element name { text },
+									element price { xsd:decimal }, # in danish kr.
+									element base {
+										attribute type { Base.datatype }
+									},
+									element toppings { topping+ }
+								}
+
+							Base.datatype = "thin-crust" | "deep-pan"
+							
+							topping =
+								element topping {
+									attribute type { Topping.datatype },
+									text
+								}
+
+							Topping.datatype = 
+								"tomato"
+								| "cheese"
+								| "bacon"
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<pre>
+						<code class="hljs" data-trim data-line-numbers="|14,19|23,27-30">
+							start = restaurant
+
+							restaurant =
+								element restaurant {
+									element name { text },
+									element menu { (burger | pizza)+ }
+								}
+							
+							burger = element pizza {
+								element name { text },
+								element price { xsd:decimal },
+								element bun {
+									attribute type { Bun.datatype },
+									text
+								},
+								element patty {
+									attribute type { Patty.datatype },
+									text
+								}
+							}
+
+							Bun.datatype = "brioche" | "whole-grain" 
+							
+							Patty.datatype = "beef" | "chicken-breast" | "vegan"
+
+							pizza = 
+								element pizza {
+									element name { text },
+									element price { xsd:decimal }, # in danish kr.
+									element base {
+										attribute type { Base.datatype }
+									},
+									element toppings { topping+ }
+								}
+
+							Base.datatype = "thin-crust" | "deep-pan"
+							
+							topping =
+								element topping {
+									attribute type { Topping.datatype },
+									text
+								}
+
+							Topping.datatype = 
+								"tomato"
+								| "cheese"
+								| "bacon"
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>Vores schema fil vokser - lad os modularisere</h2>
+
+					<pre>
+						<code class="hljs shell" data-trim>
+							├── meals
+							│   ├── burger.rnc
+							│   └── pizza.rnc
+							└── restaurant.rnc
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<p>Add the <code>r-fit-text</code> class to auto-size text</p>
+					<h2 class="r-fit-text">FIT TEXT</h2>
+				</section>
+
+				<section>
+					<section id="fragments">
+						<h2>Fragments</h2>
+						<p>Hit the next arrow...</p>
+						<p class="fragment">... to step through ...</p>
+						<p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
+
+						<aside class="notes">
+							This slide has fragments which are also stepped through in the notes window.
+						</aside>
+					</section>
+					<section>
+						<h2>Fragment Styles</h2>
+						<p>There's different types of fragments, like:</p>
+						<p class="fragment grow">grow</p>
+						<p class="fragment shrink">shrink</p>
+						<p class="fragment fade-out">fade-out</p>
+						<p>
+							<span style="display: inline-block;" class="fragment fade-right">fade-right, </span>
+							<span style="display: inline-block;" class="fragment fade-up">up, </span>
+							<span style="display: inline-block;" class="fragment fade-down">down, </span>
+							<span style="display: inline-block;" class="fragment fade-left">left</span>
+						</p>
+						<p class="fragment fade-in-then-out">fade-in-then-out</p>
+						<p class="fragment fade-in-then-semi-out">fade-in-then-semi-out</p>
+						<p>Highlight <span class="fragment highlight-red">red</span> <span class="fragment highlight-blue">blue</span> <span class="fragment highlight-green">green</span></p>
+					</section>
+				</section>
+
+				<section id="transitions">
+					<h2>Transition Styles</h2>
+					<p>
+						You can select from different transitions, like: <br>
+						<a href="?transition=none#/transitions">None</a> -
+						<a href="?transition=fade#/transitions">Fade</a> -
+						<a href="?transition=slide#/transitions">Slide</a> -
+						<a href="?transition=convex#/transitions">Convex</a> -
+						<a href="?transition=concave#/transitions">Concave</a> -
+						<a href="?transition=zoom#/transitions">Zoom</a>
+					</p>
+				</section>
+
+				<section>
+					<section data-background="#dddddd">
+						<h2>Slide Backgrounds</h2>
+						<p>
+							Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
+						</p>
+						<a href="#" class="navigate-down">
+							<img class="r-frame" style="background: rgba(255,255,255,0.1);" width="178" height="238" data-src="https://static.slid.es/reveal/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section data-background="https://static.slid.es/reveal/image-placeholder.png">
+						<h2>Image Backgrounds</h2>
+						<pre><code class="hljs html">&lt;section data-background="image.png"&gt;</code></pre>
+					</section>
+					<section data-background="https://static.slid.es/reveal/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
+						<h2>Tiled Backgrounds</h2>
+						<pre><code class="hljs html" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
+					</section>
+					<section data-background-video="https://static.slid.es/site/homepage/v1/homepage-video-editor.mp4" data-background-color="#000000">
+						<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
+							<h2>Video Backgrounds</h2>
+							<pre><code class="hljs html" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
+						</div>
+					</section>
+					<section data-background="http://i.giphy.com/90F8aUepslB84.gif">
+						<h2>... and GIFs!</h2>
+					</section>
+				</section>
+
+				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+					<h2>Background Transitions</h2>
+					<p>
+						Different background transitions are available via the backgroundTransition option. This one's called "zoom".
+					</p>
+					<pre><code class="hljs javascript">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
+				</section>
+
+				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
+					<h2>Background Transitions</h2>
+					<p>
+						You can override background transitions per-slide.
+					</p>
+					<pre><code class="hljs html" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
+				</section>
+
+				<section data-background-iframe="https://hakim.se" data-background-interactive>
+					<div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h2>Iframe Backgrounds</h2>
+						<p>Since reveal.js runs on the web, you can easily embed other web content. Try interacting with the page in the background.</p>
+					</div>
+				</section>
+
+				<section>
+					<h2>Marvelous List</h2>
+					<ul>
+						<li>No order here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Fantastic Ordered List</h2>
+					<ol>
+						<li>One is smaller than...</li>
+						<li>Two is smaller than...</li>
+						<li>Three!</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Tabular Tables</h2>
+					<table>
+						<thead>
+							<tr>
+								<th>Item</th>
+								<th>Value</th>
+								<th>Quantity</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Apples</td>
+								<td>$1</td>
+								<td>7</td>
+							</tr>
+							<tr>
+								<td>Lemonade</td>
+								<td>$2</td>
+								<td>18</td>
+							</tr>
+							<tr>
+								<td>Bread</td>
+								<td>$3</td>
+								<td>2</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+
+				<section>
+					<h2>Clever Quotes</h2>
+					<p>
+						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">The nice thing about standards is that there are so many to choose from</q> and block:
+					</p>
+					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
+						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+					</blockquote>
+				</section>
+
+				<section>
+					<h2>Intergalactic Interconnections</h2>
+					<p>
+						You can link between slides internally,
+						<a href="#/2/3">like this</a>.
+					</p>
+				</section>
+
+				<section>
+					<h2>Speaker View</h2>
+					<p>There's a <a href="https://revealjs.com/speaker-view/">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
+					<p>Press the <em>S</em> key to try it out.</p>
+
+					<aside class="notes">
+						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					</aside>
+				</section>
+
+				<section>
+					<h2>Export to PDF</h2>
+					<p>Presentations can be <a href="https://revealjs.com/pdf-export/">exported to PDF</a>, here's an example:</p>
+					<iframe data-src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
+				</section>
+
+				<section>
+					<h2>Global State</h2>
+					<p>
+						Set <code>data-state="something"</code> on a slide and <code>"something"</code>
+						will be added as a class to the document element when the slide is open. This lets you
+						apply broader style changes, like switching the page background.
+					</p>
+				</section>
+
+				<section data-state="customevent">
+					<h2>State Events</h2>
+					<p>
+						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
+					</p>
+					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
+Reveal.on( 'customevent', function() {
+	console.log( '"customevent" has fired' );
+} );
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Take a Moment</h2>
+					<p>
+						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
+					</p>
+				</section>
+
+				<section>
+					<h2>Much more</h2>
+					<ul>
+						<li>Right-to-left support</li>
+						<li><a href="https://revealjs.com/api/">Extensive JavaScript API</a></li>
+						<li><a href="https://revealjs.com/auto-slide/">Auto-progression</a></li>
+						<li><a href="https://revealjs.com/backgrounds/#parallax-background">Parallax backgrounds</a></li>
+						<li><a href="https://revealjs.com/keyboard/">Custom keyboard bindings</a></li>
+					</ul>
+				</section>
+
+				<section style="text-align: left;">
+					<h1>THE END</h1>
+					<p>
+						- <a href="https://slides.com">Try the online editor</a> <br>
+						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
+					</p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="../../dist/reveal.js"></script>
+		<script src="../../plugin/zoom/zoom.js"></script>
+		<script src="../../plugin/notes/notes.js"></script>
+		<script src="../../plugin/search/search.js"></script>
+		<script src="../../plugin/markdown/markdown.js"></script>
+		<script src="../../plugin/highlight/highlight.js"></script>
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,25 @@
+Meal.model |= pizza
+
+pizza = 
+  element pizza {
+    element name { text },
+    element price { xsd:decimal },
+    element base {
+      attribute type { BaseType }
+    },
+    element toppings { topping+ }
+  }
+
+topping =
+  element topping {
+    attribute type { ToppingType },
+    text
+  }
+
+BaseType = "thin-crust" | "deep-pan"
+
+ToppingType = "tomato" 
+  | "cheese"
+  | "bacon"
+  | "onion"
+  | "sour-creme"

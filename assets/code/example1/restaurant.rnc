@@ -1,0 +1,19 @@
+start =
+    element restaurant {
+        element name { text },
+        element menu {
+            element pizza {
+                element name { text },
+                element price { xsd:decimal },
+                element base {
+                    attribute type { xsd:NCName }
+                },
+                element toppings {
+                    element topping {
+                        attribute type { xsd:NCName },
+                        text
+                    }+
+                }
+            }+
+        }
+    }
