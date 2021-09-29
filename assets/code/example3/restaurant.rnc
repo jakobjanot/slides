@@ -3,7 +3,7 @@ start = restaurant
 restaurant =
   element restaurant {
     element name { text },
-    element meals { (burger | pizza)+ }
+    element meals { pizza+ }
   }
 
 pizza = 
@@ -15,23 +15,6 @@ pizza =
     },
     element toppings { topping+ }
   }
-
-burger = element burger {
-  element name { text },
-  element price { xsd:decimal },
-  element bun {
-    attribute type { Bun.datatype },
-    text
-  },
-  element patty {
-    attribute type { Patty.datatype },
-    text
-  }
-}
-
-Bun.datatype = "brioche" | "whole-grain" 
-
-Patty.datatype = "beef" | "chicken-breast" | "vegan"
 
 topping =
   element topping {

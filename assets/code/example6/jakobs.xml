@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <restaurant xmlns:xi="http://www.w3.org/2001/XInclude">
     <name>Jakobs cheesy pizzas</name>
-    <meals>
-        <xi:include href="meals/pizza-margherita.xml"/>
-        <xi:include href="meals/cheese-addict.xml"/>
-    </meals>
+    <menu>
+        <xi:include href="pizzas/pizza-margherita.xml"/>
+        <xi:include href="pizzas/cheese-addict.xml"/>
+    </menu>
 </restaurant>

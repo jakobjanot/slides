@@ -1,0 +1,16 @@
+<pizza>
+    <name>Cheese Addict</name>
+    <price>52.00</price>
+    <base type="deep-pan"/>
+    <toppings>
+        <topping type="tomato">Tomato sauce</topping>
+        <topping type="cheese">Mozzarella</topping>
+        <topping type="cheese">Gorgonzola</topping>
+        <topping type="cheese">Parmigiano Reggiano</topping>
+        <topping type="cheese">Goat cheese</topping>
+        <topping type="cheese">Cheddar</topping>
+        <topping type="cheese">Maasdamer</topping>
+        <topping type="cheese">Gouda</topping>
+        <topping type="cheese">Gamle Ole</topping>
+    </toppings>
+</pizza>

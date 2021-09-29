@@ -12,7 +12,7 @@
             </toppings>
         </pizza>
         <pizza>
-            <name>Flammkuchen </name>
+            <name>Flammenkuchen</name>
             <price>55.00</price>
             <base type="thin-crust"/>
             <toppings>

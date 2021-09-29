@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <restaurant>
     <name>Bernds thin crust pizzas</name>
-    <meals>
+    <menu>
         <pizza>
             <name>Pizza Marguerita</name>
             <price>50.00</price>
@@ -18,7 +18,7 @@
             <patty type="beef">Dansk hakket oksekød</patty>
         </burger>
         <pizza>
-            <name>Flammkuchen </name>
+            <name>Flammenkuchen</name>
             <price>62.00</price>
             <base type="thin"/>
             <toppings>
@@ -27,5 +27,5 @@
                 <topping type="onion">Red onion slices</topping>
             </toppings>
         </pizza>
-    </meals>
+    </menu>
 </restaurant>

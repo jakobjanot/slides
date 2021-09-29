@@ -116,7 +116,7 @@
 					<pre><code class="hljs language-xml" data-trim>
 						<script type="text/template">
 							<pizza>
-								<name>Flammkuchen</name>
+								<name>Flammenkuchen</name>
 								<!-- price used to be here -->
 								<base type="thin-crust"/>
 								<toppings>
@@ -169,13 +169,53 @@
 				</section>
 				
 				<section>
-					<p>meals/burger.rnc</p>
-					<pre><code data-code="assets/code/example5/meals/burger.rnc" class="hljs" data-trim data-line-numbers="|1"></code></pre>
+					<p>modules/burger.rnc</p>
+					<pre><code data-code="assets/code/example5/modules/burger.rnc" class="hljs" data-trim data-line-numbers="|"></code></pre>
 				</section>
 
 				<section>
-					<p>meals/pizza.rnc</p>
-					<pre><code data-code="assets/code/example5/meals/pizza.rnc" class="hljs" data-trim data-line-numbers="|1"></code></pre>
+					<p>modules/pizza.rnc</p>
+					<pre><code data-code="assets/code/example5/modules/pizza.rnc" class="hljs" data-trim data-line-numbers="|"></code></pre>
+				</section>
+
+				<section>
+					<p>Flere restauranter - kan vi genbruge?</p>
+					<pre><code class="hljs shell" data-trim>
+							├── bernds.xml
+							├── jakobs.xml
+							├── meals
+							│   ├── cheese-addict.xml
+							│   ├── flammenkuchen.xml
+							│   └── pizza-margherita.xml
+							└── restaurant.rnc
+						</code></pre>
+				</section>
+
+				<section>
+					<p>bernds.xml</p>
+					<pre><code data-code="assets/code/example6/bernds.xml" class="hljs" data-trim data-line-numbers="|"></code></pre>
+				</section>
+
+				<section>
+					<p>jakob.xml</p>
+					<pre><code data-code="assets/code/example6/jakobs.xml" class="hljs" data-trim data-line-numbers="|1"></code></pre>
+				</section>
+
+				<section>
+					<p>pizzas/pizza-margherita.xml</p>
+					<pre><code data-code="assets/code/example6/pizzas/pizza-margherita.xml" class="hljs" data-trim data-line-numbers="|"></code></pre>
+				</section>
+				
+				<section>
+					<p>pizzas/cheese-addict.xml</p>
+					<pre><code data-code="assets/code/example6/pizzas/cheese-addict.xml" class="hljs" data-trim data-line-numbers="|"></code></pre>
+				</section>
+
+				<section>
+					<h2>Validering virker stadigt</h2>
+					<pre><code class="hljs shell" data-trim>
+						> jing -c restaurant.rnc bernds.xml
+					</code></pre>
 				</section>
 
 				<section>
