@@ -1,6 +1,8 @@
 # Slides
 
-Fork this project and do your own slides with easy code display
+Fork this project and do your own slides with easy code display.
+
+Based on the (reveal.js)[https://revealjs.com/] HTML presentation framework.
 
 ## How to
 
