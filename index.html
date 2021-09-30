@@ -267,13 +267,13 @@
 				</section>
 
 				<section>
-					<h2>Valider igen</h2>
+					<h2>Vi validerer igen</h2>
 					<pre><code class="hljs shell" data-trim>
 						> jing -c restaurant.rnc bernds.xml
 					</code></pre>
 				</section>
 
-				<section data-background="assets/images/magination-spongebob-squarepants.gif"></section>
+				<section data-background="assets/images/imagination-spongebob-squarepants.gif"></section>
 
 				<section>
 					<p>Vores schema fil vokser - lad os modularisere</p>
@@ -283,6 +283,7 @@
 							│   └── pizza.rnc
 							└── restaurant.rnc
 						</code></pre>
+					<small>Note! Det vil vi ikke kunne med DTD</small>
 				</section>
 
 				<section>
@@ -292,45 +293,54 @@
 				
 				<section>
 					<p>modules/burger.rnc</p>
-					<pre><code data-code="assets/code/example5/modules/burger.rnc" class="hljs" data-trim data-line-numbers="|"></code></pre>
+					<pre><code data-code="assets/code/example5/modules/burger.rnc" class="hljs" data-trim data-line-numbers="|1"></code></pre>
 				</section>
 
 				<section>
 					<p>modules/pizza.rnc</p>
-					<pre><code data-code="assets/code/example5/modules/pizza.rnc" class="hljs" data-trim data-line-numbers="|"></code></pre>
+					<pre><code data-code="assets/code/example5/modules/pizza.rnc" class="hljs" data-trim data-line-numbers="|1"></code></pre>
 				</section>
 
 				<section>
-					<p>Flere restauranter - kan vi genbruge?</p>
+					<p>Lad os åbne flere restauranter</p>
+					<img src="assets/images/pizza-tycoon-new-restaurant.gif">
+				</section>
+
+				<section>
+					<p>Kan vi genbruge data?</p>
 					<pre><code class="hljs shell" data-trim>
 							├── bernds.xml
 							├── jakobs.xml
-							├── meals
-							│   ├── cheese-addict.xml
-							│   ├── flammenkuchen.xml
-							│   └── pizza-margherita.xml
+							├── cheese-addict.xml
+							├── flammenkuchen.xml
+							├── pizza-margherita.xml
 							└── restaurant.rnc
-						</code></pre>
+					</code></pre>
+				</section>
+
+				<section>
+					<p>Ja, vha. XInclude</p>
+					<small>og en Xinclude aware parser</small>
 				</section>
 
 				<section>
 					<p>bernds.xml</p>
-					<pre><code data-code="assets/code/example6/bernds.xml" class="hljs" data-trim data-line-numbers="|"></code></pre>
+					<pre><code data-code="assets/code/example6/bernds.xml" class="hljs" data-trim data-line-numbers="|5-6"></code></pre>
 				</section>
 
 				<section>
 					<p>jakob.xml</p>
-					<pre><code data-code="assets/code/example6/jakobs.xml" class="hljs" data-trim data-line-numbers="|1"></code></pre>
+					<pre><code data-code="assets/code/example6/jakobs.xml" class="hljs" data-trim data-line-numbers="|5-6"></code></pre>
 				</section>
 
 				<section>
 					<p>pizzas/pizza-margherita.xml</p>
-					<pre><code data-code="assets/code/example6/pizzas/pizza-margherita.xml" class="hljs" data-trim data-line-numbers="|"></code></pre>
+					<pre><code data-code="assets/code/example6/pizzas/pizza-margherita.xml" class="hljs" data-trim></code></pre>
 				</section>
 				
 				<section>
 					<p>pizzas/cheese-addict.xml</p>
-					<pre><code data-code="assets/code/example6/pizzas/cheese-addict.xml" class="hljs" data-trim data-line-numbers="|"></code></pre>
+					<pre><code data-code="assets/code/example6/pizzas/cheese-addict.xml" class="hljs" data-trim></code></pre>
 				</section>
 
 				<section>

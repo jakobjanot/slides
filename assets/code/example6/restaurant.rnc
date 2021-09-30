@@ -3,25 +3,8 @@ start = restaurant
 restaurant =
     element restaurant {
         element name { text },
-        element menu { (burger | pizza)+ }
+        element menu { pizza+ }
     }
-
-burger = element burger {
-    element name { text },
-    element price { xsd:decimal },
-    element bun {
-        attribute type { Bun.datatype },
-        text
-    },
-    element patty {
-        attribute type { Patty.datatype },
-        text
-    }
-}
-
-Bun.datatype = "brioche" | "whole-grain" 
-
-Patty.datatype = "beef" | "chicken-breast" | "vegetarian"
 
 pizza = 
     element pizza {
@@ -30,7 +13,8 @@ pizza =
         element base {
             attribute type { Base.datatype }
         },
-        element toppings { topping+ }
+        element toppings { topping+ },
+        attribute xml:base { text }
     }
 
 Base.datatype = "thin-crust" | "deep-pan"

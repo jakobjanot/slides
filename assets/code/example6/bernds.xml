@@ -2,7 +2,7 @@
 <restaurant xmlns:xi="http://www.w3.org/2001/XInclude">
     <name>Bernds thin crust pizzas</name>
     <menu>
-        <xi:include href="pizzas/pizza-margherita.xml"/>
-        <xi:include href="pizzas/flammenkuchen.xml"/>
+        <xi:include href="pizza-margherita.xml"/>
+        <xi:include href="flammenkuchen.xml"/>
     </menu>
 </restaurant>
