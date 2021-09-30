@@ -143,14 +143,14 @@
 
 				<section>
 					<p>Er dine data well-formed XML?</p>
-					<p>Da er der en palette af tooling til din rådighed:</p>
-					<p>Validering, transformering, exchange, storage, redigering m.v.</p>
-					<small>Og <em>brug</em> en parser</small>
+					<p>- en palette af tooling:</p>
+					<p><small>Parsing, validering, transformering,<br>
+						exchange, storage, redigering m.v.</small></p>
 				</section>
 
 				<section>
 					<p>Eksempler på XML formater:</p>
-					<p>DocBook og EPUB (bøger), RSS (nyhedsfeed), XSLT (programmeringssprog), Universal Subtitle Format, RailML, MathML, XBRL (revision), XAML (UI), KML (GIS data), SVG (vektorgrafik)</p>
+					<p><small>DocBook og EPUB (bøger), RSS (nyhedsfeed), XSLT (prog.sprog), <br>Universal Subtitle Format, RailML, MathML, XBRL (revision),<br>XAML (UI), KML (GIS data), SVG (vektorgrafik)</small></p>
 				</section>
 
 				<section>
@@ -174,7 +174,7 @@
 				</section>
 
 				<section>
-					<p>Lad os bygge vores eget format</p>
+					<h2>Lad os bygge<br>vores eget format</h2>
 				</section>
 
 				<section>
@@ -195,7 +195,7 @@
 				</section>
 
 				<section>
-					<p>Restaurant skemaet</p>
+					<p>Restaurant skemaet i RELAX NG compact syntax</p>
 					<pre><code data-code="assets/code/example1/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|1-2|5|6|7|12,15"></code></pre>
 				</section>
 
@@ -205,7 +205,7 @@
 				</section>
 
 				<section>
-					<p>Vi kan indføre datatyper for bund og toppings</p>
+					<p>Vi kan indføre datatyper for bunde og toppings</p>
 					<pre><code data-code="assets/code/example3/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|14,19|23,27-30"></code></pre>
 				</section>
 
@@ -304,6 +304,35 @@
 				</section>
 
 				<section>
+					<p>RelaxNG er fleksibelt og læsbart</p>
+					<p>... men hvad gør vi hvis en applikation<br>kræver et andet format?</p>
+				</section>
+
+				<section>
+					<p>Konvertering til W3 XML Schema (.xsd)</p>
+					<pre><code class="hljs shell" data-trim>
+						> trang -I rnc -O xsd restaurant.rnc restaurant.xsd
+					</code></pre>
+				</section>
+
+				<section>
+					<p>restaurant.xsd</p>
+					<pre><code data-code="assets/code/example7/restaurant.xsd" class="hljs language-xml" data-trim></code></pre>
+				</section>
+
+				<section>
+					<p>... og med lidt god vilje kan vi konvertere til DTD</p>
+					<pre><code class="hljs shell" data-trim>
+						> trang -I rnc -O dtd restaurant.rnc restaurant.dtd
+					</code></pre>
+				</section>
+
+				<section>
+					<p>restaurant.dtd</p>
+					<pre><code data-code="assets/code/example7/restaurant.dtd" class="hljs language-dtd" data-trim></code></pre>
+				</section>
+
+				<section>
 					<p>Lad os åbne flere restauranter</p>
 					<img src="assets/images/pizza-tycoon-new-restaurant.gif">
 				</section>
@@ -352,6 +381,41 @@
 					</code></pre>
 				</section>
 
+				<section>
+					<h2>Tooling</h2>
+					<p>XML skemaer er agnostiske<br> - og understøttes i de fleste programmeringssprog</p>
+				</section>
+
+				<section>
+					<p>jing-trang - anbefales</p>
+					<p><small>(Java library og CLI, validering og konvertering)</small></p>
+					<p><small><a href="https://github.com/relaxng/jing-trang">https://github.com/relaxng/jing-trang</a></small></p>
+				</section>
+
+				<section>
+					<p>libxml2</p>
+					<p><small>(libxml2 er et C-library wrapped i mange sprog)</small></p>
+					<p><small><code>xmllint --relaxng ...</code></small></p>
+				</section>
+
+				<section>
+					<p>RelaxNG </p>
+					<p><small>(NuGet pakke)</small></p>
+					<p><small><a href="https://www.nuget.org/packages/RelaxNG/">https://www.nuget.org/packages/RelaxNG/</a></small></p>
+				</section>
+				
+				<section>
+					<p>RELAX NG validator</p>
+					<p><small>(online)</small></p>
+					<p><small><a href="http://debeissat.nicolas.free.fr/relaxng.php">http://debeissat.nicolas.free.fr/relaxng.php</a></small></p>
+				</section>
+
+				<section>
+					<p>XSD til RELAX NG konvertering</p>
+					<p><small>(online)</small></p>
+					<p><small><a href="http://debeissat.nicolas.free.fr/relaxng.php">http://debeissat.nicolas.free.fr/relaxng.php</a></small></p>
+				</section>
+				
 				<section data-background="assets/images/typing-cat.gif"></section>
 
 				<section>
