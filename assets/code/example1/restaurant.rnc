@@ -1,7 +1,7 @@
 start =
     element restaurant {
         element name { text },
-        element meals {
+        element menu {
             element pizza {
                 element name { text },
                 element price { xsd:decimal },

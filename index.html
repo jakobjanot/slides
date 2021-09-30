@@ -61,29 +61,149 @@
 				</section>
 
 				<section>
-					<p>
-						Her skal være nogle slides om hvordan man kunne gøre med tabeller, men at XML også er en struktureret måde at gøre det på.
-						Der skal bl.a. være noget om skemaer og sammenlign med tabel skemaer og JSON
-						Desuden forskellen på et AST og en tabel struktur.
-						Evt også noget om mixed-content
-					</p>
+					<h2>Krav til datastruktur:</h2>
+					<p>- Undgå fejl</p>
+					<p>- Genbrug</p>
+					<p>- Fleksibilitet<br>
+						 <small>En ny pizza på menuen?</small></p>
+				</section>
+
+				<section>
+					<p>Skal vi modulere det i en database?</p>
+					<section>
+						<img src="assets/images/er-diagram.jpg"/>
+					</section>
+				</section>
+
+				<section>
+					<p>Skemaet sikrer at data er veldefinerede, valide og normaliserede</p>
+					<pre><code class="hljs sql" data-trim>
+						CREATE TABLE pizzas (
+							id INT PRIMARY KEY,
+							name VARCHAR (50) NOT NULL,
+							price DECIMAL,
+							... (osv.)
+						);
+					</code></pre>
+					<p>osv...</p>
+				</section>
+
+				<section>
+					<p>Men XML har også skemaer</p>
+				</section>
+
+				<section>
+					<p>... og det <em>er</em> jo en tech talk om XML</p>
+					<p>så ...</p>
 				</section>
 				
 				<section>
-					<pre><code data-code="assets/code/example1/bernds.xml" class="hljs language-xml" data-trim data-line-numbers="|1-4|5-13|14-23|15-17|18-22"></code></pre>
+					<h2>Hvad er XML?</p>
 				</section>
 
 				<section>
-					<pre><code data-code="assets/code/example1/restaurant.rnc" class="hljs language-xml" data-trim></code></pre>
+					<p>XML er et E<strong>x</strong>tensible <strong>M</strong>arkup <strong>L</strong>anguage</p>
+				</section>
+				
+				<section>
+					<p>XML er et markup sprog</p>
+					<p>fordi man kan opmarkere tekst (content) med matchende start- og slut-<em>tags</em></p>					
+				</section>				
+
+				<section>
+					<p><em>Mark up</em>, analogt</p>
+					<img src="assets/images/dansk-stil.png">
+				</section>
+
+				<section>					
+					<p>og digitalt</p>
+					<pre><code class="hljs language-xml" data-trim>
+						<script type="text/template">
+							<p>
+								... Kennedsy aktioner omkring Cubakrisen ses.
+							</p>
+							<p>
+								Da Cuba ved Castros overtagelse af magten blev 
+								et socialistisk land, manglede det kapitaler til 
+								gennemfør<del>sel</del><ins>else</ins> af sit 
+								nye reformprogram. De amerikanske kapitalister
+								nægtede forståeligt nok at udlåne penge, da de
+								...
+							</p>
+						</script>
+					</code></pre>
 				</section>
 
 				<section>
-					<p>Omorganisering</p>
+					<p>XML er extensible</p>
+					<p>fordi man kan definere egne datastrukturer, dvs. <strong>d</strong>okument <strong>t</strong>ype <strong>d</strong>efinitioner</p>
+					<p>- så længe det er en træstruktur</p>
+				</section>
+
+				<section>
+					<p>Er dine data well-formed XML</p>
+					<p>Da er der en palette af tooling til din rådighed:</p>
+					<p>Validering, transformering, exchange, storage, redigering m.v.</p>
+				</section>
+
+				<section>
+					<p>Eksempler på XML formater:</p>
+					<p>DocBook og EPUB (bøger), RSS (nyhedsfeed), XSLT (programmeringssprog), Universal Subtitle Format, RailML, MathML, XBRL (revision), XAML (UI), KML (GIS data), SVG (vektorgrafik)</p>
+				</section>
+
+				<section>
+					<p>XML formater (dokumenttyper) defineres i skemaer - traditionelt en i en DTD-fil</p>
+				</section>
+
+				<section>
+					<p>Vha. linjen <code>&lt;!DOCTYPE ...&gt;</code> forstår parseren, hvilken DTD/struktur dokumentet har</p>
+					<pre><code class="hljs language-xml" data-trim>
+						<script type="text/template">
+							<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+								"http://www.w3.org/TR/html4/loose.dtd">
+						</script>
+					</code></pre>
+
+				</section>
+
+				<section>
+					<p>Prøv: <a href="http://w3.org/TR/html4/loose.dtd">http://w3.org/TR/html4/loose.dtd</a></p>
+					<img src="assets/images/html4-loose-dtd.png">
+				</section>
+
+				<section>
+					<p>Lad os bygge vores eget format</p>
+				</section>
+
+				<section>
+					<p>DTD har en del ulemper<br>
+						bl.a. at være ulæseligt</p>
+					<p>så vi benytter skemasproget<br>
+						<strong>RELAX NG</strong> i stedet</p>
+				</section>
+
+				<section>
+					<p>Først noget data</p>
+					<p><em>Lad mig præsentere ...</em></p>
+				</section>
+				
+				<section>
+					<p>Bernd's Thin Crust pizzas</p>
+					<pre><code data-code="assets/code/example1/bernds.xml" class="hljs language-xml" data-trim data-line-numbers="|1|2|3-4|5-13|14-23|15-17|18-22"></code></pre>
+				</section>
+
+				<section>
+					<p>Restaurant skemaet</p>
+					<pre><code data-code="assets/code/example1/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|1-2|5|6|7|12,15"></code></pre>
+				</section>
+
+				<section>
+					<p>Vha. et par variable og lidt omorganisering</p>
 					<pre><code data-code="assets/code/example2/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|1|3-7|6,9-17|16,19-23"></code></pre>
 				</section>
 
 				<section>
-					<p>Datatyper</p>
+					<p>Vi kan indføre datatyper for bund og toppings</p>
 					<pre><code data-code="assets/code/example3/restaurant.rnc" class="hljs language-xml" data-trim data-line-numbers="|14,19|23,27-30"></code></pre>
 				</section>
 
@@ -108,7 +228,7 @@
 					</code></pre>
 				</section>
 
-				<section data-background="http://i.giphy.com/s2qXK8wAvkHTO.gif">
+				<section data-background="assets/images/glimmer.gif">
 				</section>
 
 				<section>
@@ -152,6 +272,8 @@
 						> jing -c restaurant.rnc bernds.xml
 					</code></pre>
 				</section>
+
+				<section data-background="assets/images/magination-spongebob-squarepants.gif"></section>
 
 				<section>
 					<p>Vores schema fil vokser - lad os modularisere</p>

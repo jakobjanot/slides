@@ -6,5 +6,5 @@ start = restaurant
 restaurant =
   element restaurant {
     element name { text },
-    element meals { Meal.model+ }
+    element menu { Meal.model+ }
   }

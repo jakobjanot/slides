@@ -3,7 +3,7 @@ start = restaurant
 restaurant =
     element restaurant {
         element name { text },
-        element meals { (burger | pizza)+ }
+        element menu { (burger | pizza)+ }
     }
 
 burger = element burger {
@@ -45,3 +45,5 @@ Topping.datatype =
     "tomato"
     | "cheese"
     | "bacon"
+    | "onion"
+    | "sour-creme"

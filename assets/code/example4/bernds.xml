@@ -5,7 +5,7 @@
         <pizza>
             <name>Pizza Marguerita</name>
             <price>50.00</price>
-            <base type="thin"/>
+            <base type="thin-crust"/>
             <toppings>
                 <topping type="tomato">Tomatsovs</topping>
                 <topping type="cheese">Frisk Mozzarellaost</topping>
@@ -20,7 +20,7 @@
         <pizza>
             <name>Flammenkuchen</name>
             <price>62.00</price>
-            <base type="thin"/>
+            <base type="thin-crust"/>
             <toppings>
                 <topping type="sour-creme">Creme Fraiche</topping>
                 <topping type="bacon">Thin sliced Bacon</topping>

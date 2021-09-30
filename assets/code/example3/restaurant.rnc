@@ -3,7 +3,7 @@ start = restaurant
 restaurant =
   element restaurant {
     element name { text },
-    element meals { pizza+ }
+    element menu { pizza+ }
   }
 
 pizza = 
@@ -16,16 +16,15 @@ pizza =
     element toppings { topping+ }
   }
 
+BaseType = "thin-crust" | "deep-pan"
+
 topping =
   element topping {
     attribute type { ToppingType },
     text
   }
 
-BaseType = "thin-crust" | "deep-pan"
-
 ToppingType = "tomato" 
   | "cheese"
   | "bacon"
   | "onion"
-  | "sour-creme"
