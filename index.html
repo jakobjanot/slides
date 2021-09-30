@@ -138,12 +138,14 @@
 					<p>XML er extensible</p>
 					<p>fordi man kan definere egne datastrukturer, dvs. <strong>d</strong>okument <strong>t</strong>ype <strong>d</strong>efinitioner</p>
 					<p>- så længe det er en træstruktur</p>
+					<small>(JSON er et data-interchange format)</small>
 				</section>
 
 				<section>
-					<p>Er dine data well-formed XML</p>
+					<p>Er dine data well-formed XML?</p>
 					<p>Da er der en palette af tooling til din rådighed:</p>
 					<p>Validering, transformering, exchange, storage, redigering m.v.</p>
+					<small>Og <em>brug</em> en parser</small>
 				</section>
 
 				<section>
@@ -152,11 +154,11 @@
 				</section>
 
 				<section>
-					<p>XML formater (dokumenttyper) defineres i skemaer - traditionelt en i en DTD-fil</p>
+					<p>XML formater (dokumenttyper) defineres i skemaer - traditionelt i en DTD-fil</p>
 				</section>
 
 				<section>
-					<p>Vha. linjen <code>&lt;!DOCTYPE ...&gt;</code> forstår parseren, hvilken DTD/struktur dokumentet har</p>
+					<p>Vha. linjen <code>&lt;!DOCTYPE ...&gt;</code> forstår parseren, hvilken DTD/struktur dokumentet har, fx.</p>
 					<pre><code class="hljs language-xml" data-trim>
 						<script type="text/template">
 							<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
