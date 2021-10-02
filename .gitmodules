@@ -4,3 +4,6 @@
 [submodule "schultz-reveal.js-theme"]
 	path = schultz-reveal.js-theme
 	url = git@github.com:jakobjanot/schultz-reveal.js-theme.git
+[submodule "plugin/externalcode"]
+	path = plugin/externalcode
+	url = git@github.com:dafrenchyman/reveal.js-extrernal-code.git
