@@ -14,7 +14,7 @@ Based on the [reveal.js](https://revealjs.com/) HTML presentation framework.
 
 - (Optional) Install Livereload extension for Chrome/Firefox
 
-- Change slides in ```./index.html```, code and images in ```./code``` and ```./assets/images``` respectively.
+- Change slides in ```./xml-schemas.html```, code and images in ```./code``` and ```./assets/images``` respectively.
 
 ## License
 
