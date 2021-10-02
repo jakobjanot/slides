@@ -2,7 +2,7 @@
 
 Fork this project and do your own slides with easy code display.
 
-Based on the (reveal.js)[https://revealjs.com/] HTML presentation framework.
+Based on the [reveal.js](https://revealjs.com/) HTML presentation framework.
 
 ## How to
 
@@ -15,8 +15,6 @@ Based on the (reveal.js)[https://revealjs.com/] HTML presentation framework.
 - (Optional) Install Livereload extension for Chrome/Firefox
 
 - Change slides in ```./index.html```, code and images in ```./code``` and ```./assets/images``` respectively.
-
-- More examples in ```./examples```
 
 ## License
 
