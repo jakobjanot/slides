@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+  <xs:element name="restaurant">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="menu"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="menu">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="pizza"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pizza">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="price"/>
+        <xs:element ref="base"/>
+        <xs:element ref="toppings"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="price" type="xs:decimal"/>
+  <xs:element name="base">
+    <xs:complexType>
+      <xs:attribute name="type" use="required" type="BaseType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="toppings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="topping"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="BaseType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="thin-crust"/>
+      <xs:enumeration value="deep-pan"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="topping">
+    <xs:complexType mixed="true">
+      <xs:attribute name="type" use="required" type="ToppingType"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="ToppingType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="tomato"/>
+      <xs:enumeration value="cheese"/>
+      <xs:enumeration value="bacon"/>
+      <xs:enumeration value="onion"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

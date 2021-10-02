@@ -1,0 +1,3 @@
+#!/bin/bash
+SCRIPT_DIR=`dirname ${BASH_SOURCE[0]-$0}`
+yarn --cwd $SCRIPT_DIR/../reveal.js $@

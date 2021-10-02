@@ -1,0 +1,6 @@
+[submodule "reveal.js"]
+	path = reveal.js
+	url = https://github.com/hakimel/reveal.js.git
+[submodule "schultz-reveal.js-theme"]
+	path = schultz-reveal.js-theme
+	url = git@github.com:jakobjanot/schultz-reveal.js-theme.git

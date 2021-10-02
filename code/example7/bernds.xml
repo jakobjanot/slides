@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<restaurant>
+    <name>Bernds thin crust pizzas</name>
+    <menu>
+        <pizza>
+            <name>Pizza Marguerita</name>
+            <price>50.00</price>
+            <base type="thin-crust"/>
+            <toppings>
+                <topping type="tomato">Tomato sauce</topping>
+                <topping type="cheese">Frisk Mozzarella</topping>
+            </toppings>
+        </pizza>
+        <pizza>
+            <name>Flammenkuchen</name>
+            <price>62.00</price>
+            <base type="thin-crust"/>
+            <toppings>
+                <topping type="sour-creme">Creme Fraiche</topping>
+                <topping type="bacon">Thin sliced Bacon</topping>
+                <topping type="onion">Red onion slices</topping>
+            </toppings>
+        </pizza>
+    </menu>
+</restaurant>

@@ -1,0 +1,31 @@
+start = restaurant
+
+restaurant =
+    element restaurant {
+        element name { text },
+        element menu { pizza+ }
+    }
+
+pizza = 
+    element pizza {
+        element name { text },
+        element price { xsd:decimal },
+        element base {
+            attribute type { Base.datatype }
+        },
+        element toppings { topping+ },
+        attribute xml:base { text }
+    }
+
+Base.datatype = "thin-crust" | "deep-pan"
+
+topping =
+    element topping {
+        attribute type { Topping.datatype },
+        text
+    }
+
+Topping.datatype = 
+    "tomato"
+    | "cheese"
+    | "bacon"

@@ -1,0 +1,18 @@
+Meal.model |= burger
+
+burger = element burger {
+  element name { text },
+  element price { xsd:decimal },
+  element bun {
+    attribute type { Bun.datatype },
+    text
+  },
+  element patty {
+    attribute type { Patty.datatype },
+    text
+  }
+}
+
+Bun.datatype = "brioche" | "whole-grain" 
+
+Patty.datatype = "beef" | "chicken-breast" | "vegan"

@@ -1,0 +1,25 @@
+<!ELEMENT restaurant (restaurantname,menu)>
+
+<!ELEMENT restaurantname (#PCDATA)>
+
+<!ELEMENT menu (pizza)+>
+
+<!ELEMENT pizza (name,price,base,toppings)>
+
+<!ELEMENT name (#PCDATA)>
+
+<!ELEMENT price (#PCDATA)>
+
+<!ENTITY % BaseType "thin-crust|deep-pan">
+
+<!ELEMENT base EMPTY>
+<!ATTLIST base
+  type (%BaseType;) #REQUIRED>
+
+<!ELEMENT toppings (topping)+>
+
+<!ENTITY % ToppingType "tomato|cheese|bacon|onion">
+
+<!ELEMENT topping (#PCDATA)>
+<!ATTLIST topping
+  type (%ToppingType;) #REQUIRED>
