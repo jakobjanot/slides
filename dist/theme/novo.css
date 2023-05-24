@@ -1,9 +1,9 @@
 /**
- * White theme for reveal.js. This is the opposite of the 'black' theme.
+ * Beige theme for reveal.js.
  *
- * By Hakim El Hattab, http://hakim.se
+ * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
  */
-@import url(./fonts/soho-gothic-pro/soho-gothic-pro.css);
+ @import url(https://fonts.googleapis.com/css?family=Bitter);
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
   color: #fff;
 }
@@ -12,34 +12,39 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  * GLOBAL STYLES
  *********************************************/
 :root {
-  --r-background-color: #f1ebe4;
-  --r-main-font: Soho Gothic Pro, Tahoma, sans-serif;
+  --r-background-color: #f7f3de;
+  --r-main-font: Bitter, serif;
   --r-main-font-size: 20px;
-  --r-main-color: #222;
+  --r-main-color: #333;
   --r-block-margin: 20px;
   --r-heading-margin: 0 0 20px 0;
-  --r-heading-font: Soho Gothic Pro, Tahoma, sans-serif;
-  --r-heading-color: #222;
+  --r-heading-font: Bitter, serif;
+  --r-heading-color: #333;
   --r-heading-line-height: 1.2;
   --r-heading-letter-spacing: normal;
   --r-heading-text-transform: none;
   --r-heading-text-shadow: none;
-  --r-heading-font-weight: bold;
-  --r-heading1-text-shadow: none;
-  --r-heading1-size: 2.5em;
-  --r-heading2-size: 1.6em;
-  --r-heading3-size: 1.3em;
+  --r-heading-font-weight: normal;
+  --r-heading1-size: 3.77em;
+  --r-heading2-size: 2.11em;
+  --r-heading3-size: 1.55em;
   --r-heading4-size: 1em;
   --r-code-font: monospace;
-  --r-link-color: #32327b;
-  --r-link-color-dark: #1c1c45;
-  --r-link-color-hover: #4848b1;
-  --r-selection-background-color: #00b8f2;
+  --r-link-color: #8b743d;
+  --r-link-color-dark: #564826;
+  --r-link-color-hover: #c0a86e;
+  --r-selection-background-color: rgba(79, 64, 28, 0.99);
   --r-selection-color: #fff;
 }
 
 .reveal-viewport {
-  background: #f1ebe4;
+  background: #f7f2d3;
+  background: -moz-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #f7f2d3));
+  background: -webkit-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
+  background: -o-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
+  background: -ms-radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
+  background: radial-gradient(center, circle cover, white 0%, #f7f2d3 100%);
   background-color: var(--r-background-color);
 }
 
@@ -172,7 +177,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 .reveal ol ol,
 .reveal ol ul {
   display: block;
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .reveal dt {
@@ -180,7 +185,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 }
 
 .reveal dd {
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .reveal blockquote {
@@ -270,6 +275,10 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   border-bottom: none;
 }
 
+.reveal li {
+  line-height: 1.8;
+}
+
 .reveal sup {
   vertical-align: super;
   font-size: smaller;
@@ -337,6 +346,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  *********************************************/
 .reveal .controls {
   color: var(--r-link-color);
+  font-size: 0.15em;
 }
 
 /*********************************************
@@ -354,10 +364,4 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   .backgrounds {
     background-color: var(--r-background-color);
   }
-}
-body:after {
-  content: url(./assets/schultz-s.png);
-  position: fixed;
-  bottom: 3.5em;
-  left: 3.5em;
 }
