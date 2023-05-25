@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="da">
+	<head>
+		<meta charset="utf-8">
+
+		<title>About me</title>
+
+		<meta name="description" content="About me">
+		<meta name="author" content="Jakob Kofoed Janot">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/novo.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/zenburn.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<section>
+						<h1>Hi 👋</h1>
+					</section>
+					<section>
+						<h3>Experiences</h3>
+						<ul>
+							<li>Exiqon (2011-)</li>
+							<li>Karnov (2014-)</li>
+							<li>Schultz (2021-)</li>
+						</ul>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<h1>Mario</h1>
+						<img src="assets/images/mario/mario-jumps.gif"/>
+						<p>Monitoring and harvest of documents<br>from danish authorities</p>
+					</section>
+					<section>
+						<h2>Examples</h2>
+					</section>
+					<section>
+						<img src="assets/images/mario/skat.png"/>
+					</section>>
+					<section>
+						<img src="assets/images/mario/regeringen-se.png"/>
+					</section>
+					<section>
+						<img src="assets/images/mario/retsinfo.png"/>
+					</section>>
+					<section>
+						<img src="assets/images/mario/resumedatabasen.png"/>
+					</section>>
+					<section>
+						<h2>Build from scratch in Ruby - why?</h2>
+						<p>Fetching isn't the hard part</p>
+					</section>
+					<section>
+						<h3>Karnov is a one-stop shop</h3>
+						<p>Documents must look and behave the same way</p>
+						<ul>
+							<li>Table of content, needs structure</li>
+							<li>Text references to other documents must be turned into links (autolinking)</li>
+							<li>Encoding errors or missing content is unacceptable</li>
+							<li>Date, titles should be available as metadata, e.g. for search/filtering</li>
+							<li>PDFs must also be indexed for search - OCR</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Architecture</h3>
+						<img src="assets/images/mario/brokerservice.jpg"/>
+						
+					</section>
+					<section>
+						<h3>Architecture</h3>
+						<ul>
+							<li>Webservices</li>
+							<li>Workers</li>
+							<li>Queues</li>
+							<li>Schedulers</li>
+							<li>YAML based configuration</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Distributed computing</h3>
+						<ul>
+							<li>Early failure - just fix the transform step and rerun</li>
+							<li>Error resilent - if website is down, re-enqueue</li>
+							<li>Scalable - add more workers</li>
+							<li>Logging and monitoring dashboard</li>
+							<li>All scrapes/transformation steps are under unit tests</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Challenges</h3>
+						<ul>
+							<li>What looks structured isn't necessary structured - XSLT Uptransform</li>
+							<li>Different encodings per site or per document</li>
+							<li>Getting e.g. dates from text in PDFs is hard</li>
+							<li>Validate!</li>
+							<li>Throttle - or get banned</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Autolink</h1>
+						<p>Finding references to other documents in text</p>
+					</section>
+					<section>
+						<h3>A named entitity recognizer problem</h3>
+						<p>There were two types of references, we could implement as</p>
+						<ul>
+							<li>Simple rules, e.g.<ul>
+								<li>"TSS-cirkulære 2000-9"</li>
+								<li>"Ankestyrelsens principafgørelse 10-19"</li>
+								<li>"U 2004.2756/3H"</li>
+								<li>"lovforslag nr. 203 af 26. marts 2021"</li>
+							</ul>
+							</li>
+							<li>Advanced rules, e.g. "Retsplejelovens §§ 33-38, 120 og 128-130"
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Matching 'TSS-cirkulære 2000-9'</h3>
+						<pre><code class="hljs ruby" data-trim>
+							class TSCirc < Rule
+								PATTERN = /
+									TSS-cirk(?:\.|ulære)?
+									\s*
+									(&lt;year&gt;\d{4})
+									\-
+									(?&lt;serial&gt;\d+)
+								/x
+
+								def self.match?(text)
+									text.match(PATTERN)
+								end
+
+								def id
+									"TS#{m[:year]}-#{m:[serial].rjust(3, '0')}"
+								end
+							end
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Matching 'TSS-cirkulære 2000-9'</h3>
+						<pre><code class="hljs ruby" data-trim>
+							class Rule
+								def self.match?(text)
+									PATTERN.match(text)
+								end
+
+								def initialize(text)
+									@text = text
+								end
+
+								def id
+									raise NotImplementedError
+								end
+
+								def m
+									self.class.match?(text)
+								end
+							end
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Matching 'TSS-cirkulære 2000-9'</h3>
+						<pre><code class="hljs ruby" data-trim>
+							RULES = [TSCirc, SkatMeddelelser, ...]
+							rule = RULES.find { |r| r.match?(text) }
+							rule.new(text).id
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>Matching 'Retsplejelovens §§ 33-38, 120 og 128-130'</h3>
+						<p>Used a recursive decent parser</p>
+						<ul>
+							<li>1. Lexer (create tokens <code>law('Retsplejeloven')</code>, <br><code>paragraf-list('33', '38')</code>, <code>paragraf('120')</code>, ...</li>
+							<li>2. Parser (create a tree of tokens)</li>
+							<li>3. Interpret tree into ids (<code>lov19160123p33</code>, <code>lov19160123p34</code>, <code>lov19160123p35</code>, etc.)</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Autolinker architecture</h2>
+						<p>Two components</p>
+						<h3>Named document recognizer</h3>
+						<ul>
+							<li>input: plain text</li>
+							<li>output: ids, and positions in text (offset, length)</li>
+						</ul>
+						<br>
+						<br>
+						<h3>Link insertion</h3>
+						<ul>
+							<li>input: documents in different formats,<br>HTML, in-house XML formats, Markdown</li>
+							<li>output: documents with links</li>
+							<li>different documents have different rules<br> for where links are allowed</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>GDPR tool</h1>
+						<p>Karnov wanted to make sure we had no GDPR violations, <br>i.e. documents that weren't correctly anonymized</p>
+						<ul>
+							<li>'Crawled' all documents, updated if documents were changed</li>
+							<li>Looked for names (among 20.000 firstnames)</li>
+							<li>Also looked for CPR, CVR, companys, addresses, car codes, phone numbers, emails etc.</li>
+							<li>Reported in a UI</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Challenges</h2>
+						<ul>
+							<li>Judges, lawyers are ok</li>
+							<li>Administrative emails, addresses etc. are ok</li>
+							<li>You have to prioritize, i.e. I had to make a severity measure and sort by that</li>
+							<li>Some documents are more severe than others, e.g.social cases.</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>MergerHub</h1>
+						<p>The Karnov and Norstedts Juridik merger</p>
+					</section>
+
+					<section>
+						<h3>Goal: All Norstedts content on Karnov platform</h3>
+						<ul>
+							<li>Merge sets of equivalent documents and their metadata</li>
+							<li>Merge and convert topic taxonomies, product taxonomies, <br>and document types</li>
+							<li>Convert all document/section ids, id references and links <br>in documents from Norstedts to Karnovs id-system</li>
+							<li>Build new workflow tools</li>
+							<li>All while keeping two businesses (and applications) running</li>
+							<li>Huge business impact</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Architecture</h3>
+						<img src="assets/images/merger-hub.jpg" alt="MergerHub architecture" />
+					</section>
+
+					<section>
+						<h3>Architecture</h3>
+						<ul>
+							<li>Validate Norstedts document based on Norstedts XML schemas</li>
+							<li>XSLT transform from Norstedts content model to Karnov content model</li>
+							<li>Validate Karnov document based on Karnov XML schemas</li>
+							<li>Collect and transform document metadata and document-document relations</li>
+							<li>Convert id and id references in the document from Norstedts to Karnov id conventions</li>
+							<li>Report errors to editors</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Challenges</h3>
+						<ul>
+							<li>Initially Norstedts ran a FTP server</li>
+							<li>We changed to git as a way to monitor changes</li>
+							<li>Reduced computation time by orders of thousands</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Challenges</h3>
+						<p>Had to provide dashboard for content editors</p>
+						<ul>
+							<li>document overlaps after id conversion</li>
+							<li>document/metadata validation errors</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Verification</h2>
+						<ul>
+							<li>Unit testing</li>
+							<li>Big set of documents and their HTML rendering as verifcation set</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>§-zoom</h1>
+						<p><em>The</em> selling feature in Schultz Legal Research</p>
+						<img src="assets/images/slr.png"/>
+					</section>
+					<section>
+						<h2>Background</h2>
+					</section>
+					<section>
+						<h3>Current product: Schultz Kommunekoncept</h3>
+						<p>Schultz is a known legal content provider within danish mulcipalities</p>
+					</section>
+					<section>
+						<h3>New product: Schultz Legal Research</h3>
+						<p>Schultz wanted to expand their business to lawyers</p> 
+					</section>
+					<section>
+						<h3>Kommunekoncept vs. Legal Research</h3>
+						<p>Users of the product for danish mulcipality users want's to know <strong>how</strong>, i.e. 
+							<ul>
+								<li>interpreted legislation</li>
+								<li>current legislation</li>
+							</ul>
+						</p>
+					</section>
+					<section>
+						<h3>Kommunekoncept vs. Legal Research</h3>
+						<p>
+							Users of the product for lawyers want's to know <strong>why</strong>, i.e.
+							<ul>
+								<li>historical, current and upcomming legislation</li>
+								<li>what are the reasons for the legislation</li>
+								<li>hence the preparatory work is important</li>
+								<li>especially the remarks (bemærkningerne)</li>
+							</ul>
+						</p>
+					</section>
+
+					<section>
+						<h2>Loven (the law)</h2>
+						<img src="assets/images/lov.png" alt="Loven" />
+					</section>
+
+					<section>
+						<h2>Det fremsatte lovforslag (the bill)</h2>
+						<img src="assets/images/lovforslag.png" alt="Lovforslag" />
+					</section>
+
+					<section>
+						<p>A lovforslag may change many laws</p>
+						<p>Typically one change-§ per law</p>
+					</section>
+
+					<section>
+						<p>A ændringsnummer changes a paragraf in a given law</p>
+					</section>
+
+					<section>
+						<h2>Bemærkningerne (remarks)</h2>
+						<img src="assets/images/bem.png" alt="Bemærkninger">
+					</section>
+
+					<section>
+						<h2>§-zoom - goal</h2>
+						<p>Show lovforslag and bemærkninger relevant for a paragraph</p>
+					</section>
+
+					<section>
+						<h2>Challenges</h2>
+						<p>We need<ul>
+							<li>strict structure</li>
+							<li>each kapitel, §, ændring, etc. must be structured and identifiable</li>
+						</ul></p>
+						
+					</section>
+					
+					<section>
+						<h2>We have ...</h2>
+					</section>
+
+					<section>
+						<img src="assets/images/lfo-crap.png"  />
+					</section>
+					<section>
+						<img src="assets/images/lfo-crap2.png"  />
+					</section>
+					<section>
+						<img src="assets/images/lfo-crap3.png"  />
+					</section>
+
+					<section>
+						<h2>... and we want</h2>
+					</section>
+
+					<section>
+						<img src="assets/images/lfo-good.png"  />
+					</section>
+
+					<section>
+						<h2>How I got there</h2>
+					</section>
+
+					<section>
+						<h2>XSLT pipeline</h2>
+						<ul>
+							<li>One transform per step</li>
+							<li>Each step is a "copy" of the document + "some change"</li>
+							<li>Only perform transformation if it has the right context</li>
+							<li>Each step has a unit test</li>
+						</ul>
+					</section>
+
+					<section>
+						<img src="assets/images/manifest-1.png"/>
+					</section>
+
+					<section>
+						<ol>
+							<li>Cleanup/standardize steps</li>
+							<li>Detect structure in text (§ 3, Kapitel 3, Til nr. 31 og 32)</li>
+							<li>Wrap in structure</li>
+							<li>Put ids on each section</li>
+							<li>Refer sections to earch other</li>
+							<li>Cleanup insignificant tags etc.</li>
+							<li>Fix whitespace errors, encoding errors</li>
+						</ul>
+					</section>
+
+					<section>
+						<img src="assets/images/kap.png"/>
+					</section>
+
+					<section>
+						<img src="assets/images/blockquotes.png"/>
+					</section>
+
+					<section>
+						<h2>Validation</h2>
+					</section>
+
+					<section>
+						<h2>relaxng for gramatics</h2>
+						<p>i.e. structural errors</p>
+					</section>
+
+					<section>
+						<img src="assets/images/relaxng.png"/>
+					</section>
+
+					<section>
+						<img src="assets/images/note.png"/>
+					</section>
+
+					<section>
+						<h2>Schematron</h2>
+						<p>Validation of business rules</p>
+					</section>
+
+					<section>
+						<h2>Validation report in Excel</h2>
+						<p>What do we want to fix next</p>
+					</section>
+
+					<section>
+						<h2>XSpec</h2>
+						<p>Unit testing framework for XSLT</p>
+					</section>
+
+					<section>
+						<h2>Technical stuff</h2>
+						<ul>
+							<li>PR build and test in Azure Devops pipeline</li>
+							<li>Docker container web service</li>
+							<li>Auto deploy to Portainer</li>
+							<li>Test files and validation reports are also under version control - Nice!</li>
+						</ul>
+					</section>
+					
+					<section>
+						<h1>DEMO</h1>
+					</section>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/externalcode/externalcode.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealExternalCode, RevealHighlight]
+			});
+
+		</script>
+
+	</body>
+</html>
