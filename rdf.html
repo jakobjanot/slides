@@ -28,170 +28,180 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h2>RDF</h2>
-					<p>Resource Description Framework</p>
-				</section>
+					<section>
+						<h2>RDF</h2>
+						<p>Resource Description Framework</p>
+					</section>
 
-				<section>
-					<h3>Hvad er RDF?</h3>
-					<p>En W3 standard til at beskrive <em>beskrive</em> og linke <em>ressourcer</em>.</p>
-				</section>
+					<section>
+						<h3>Hvad er RDF?</h3>
+						<p>En W3 standard til at beskrive <em>beskrive</em> og linke <em>ressourcer</em>.</p>
+					</section>
 
+					<section>
+						<h3>RDF statements</h3>
+						<p>Ressourcer beskrives i form af <br><em>subject</em>-<br><em>predicate</em>-<br><em>object</em><br> statements</p>
+						
+						<p>... også kaldet triples.<br>
+						<p>... i logiske programmeringssprog vil man nok også kalde det et fact.</p>
+					</section>
 
-				<section>
-					<h3>RDF statements</h3>
-					<p>Ressourcer beskrives i form af <br><em>subject</em>-<br><em>predicate</em>-<br><em>object</em><br> statements</p>
-					
-					<p>... også kaldet triples.<br>
-					<p>... i logiske programmeringssprog vil man nok også kalde det et fact.</p>
-				</section>
-
-				<section>
-					<p>Eksempel: "Jakob arbejder som softwareudvikler".
-					<ul>
-						<li>"Jakob" er subject,</li>
-						<li> "arbejder som" predicate og</li>
-						<li> "softwareudvikler" object.</li>
-					</ul>
-					<br><br>eller i RDF&nbsp;&nbsp;
-					<code class="hljs turtle" data-trim>
-						&lt;jakob&gt; :jobTitle "Softwareudvikler" .
-					</code>
-					</p>
-				</section>
-
-				<section>
-					<p>Subjects er en <em>resource</em>.</p>
-					<p>Predicates er en <em>resource</em>.</p>
-					<p>Objects kan være en resource <em>eller</em> en literal.</p>
-				</section>
-
-				<section>
-					<h2>Literals</h2>
-					<p>En literal i RDF er en værdi, fx en tekststreng, et tal eller en dato.</p>
-				</section>
-
-				<section>
-					<p>Literaler kan have en datatype, fx <code>xs:integer</code> og <code>xs:date</code>.</p>
-					
-					<p>Eksempel: <code class="hljs turtle" data-trim>
-						&lt;jakob&gt; :birthDate "1980-12-08"^^xs:date .
+					<section>
+						<p>Eksempel: "Jakob arbejder som softwareudvikler".
+						<ul>
+							<li>"Jakob" er subject,</li>
+							<li> "arbejder som" predicate og</li>
+							<li> "softwareudvikler" object.</li>
+						</ul>
+						<br><br>eller i RDF&nbsp;&nbsp;
+						<code class="hljs turtle" data-trim>
+							&lt;jakob&gt; :jobTitle "Softwareudvikler" .
 						</code>
-					</p>
-					<p><code>^^xs:date</code> betyder altså, at vi definerer <code>:birthDate</code> til at have XML Schema datatypen <code>xs:date</code> </a>.</p>
-				</section>
+						</p>
+					</section>
 
-				<section>
-					<p>Literaler kan endda have et sprogtag, fx <code>@en</code> eller <code>@da</code>. Eksempel:</p>
-					<pre><code class="hljs turtle" data-trim>
-						&lt;jakob&gt; :jobTitle "Softwareudvikler"@da ;
-							:jobTitle "Software developer"@en .
+					<section>
+						<p>Subjects er en <em>resource</em>.</p>
+						<p>Predicates er en <em>resource</em>.</p>
+						<p>Objects kan være en resource <em>eller</em> en literal.</p>
+					</section>
+
+					<section>
+						<h2>Literals</h2>
+						<p>En literal i RDF er en værdi, fx en tekststreng, et tal eller en dato.</p>
+					</section>
+
+					<section>
+						<p>Literaler kan have en datatype, fx <code>xs:integer</code> og <code>xs:date</code>.</p>
+						
+						<p>Eksempel: <code class="hljs turtle" data-trim>
+							&lt;jakob&gt; :birthDate "1980-12-08"^^xs:date .
+							</code>
+						</p>
+						<p><code>^^xs:date</code> betyder altså, at vi definerer <code>:birthDate</code> til at have XML Schema datatypen <code>xs:date</code> </a>.</p>
+					</section>
+
+					<section>
+						<p>Literaler kan endda have et sprogtag, fx <code>@en</code> eller <code>@da</code>. Eksempel:</p>
+						<pre><code class="hljs turtle" data-trim>
+							&lt;jakob&gt; :jobTitle "Softwareudvikler"@da ;
+								:jobTitle "Software developer"@en .
+							</code></pre>
+					</section>
+
+					<section>
+						<h2>Resources</h2>
+						<p>En resource er en entitet, fx en person, en organisation eller et dokument.</p>
+						<p>En URI er en <em>U</em>niq <em>R</em>essource <em>I</em>dentifier <br>
+							og kan være en <em>L</em>ocation på nettet, altså en URL, fx <a>https://www.dr.dk/tv/bluey</a>, <br>
+							men kan også blot være et <em>N</em>avn, dvs. <em>URN</em>, fx <code>urn:isbn:0451450523</code>.</p>
+					</section>
+
+					<section>
+						<h3>Namespaces</h3>
+						<p>I bemærkede måske <code>:</code> i <code>:jobTitle</code>?</p>
+						<p>Det er en <em>prefix</em> til det namespace hvori <code>jobTitle</code> er defineret.</p>
+						<p>I eksemplet stammer <code>jobTitle</code> fra <a href="https://schema.org/jobTitle">https://schema.org/jobTitle</a>.</p>
+						<p>Således er <code >:jobTitle</code> er det samme som <code>&lt;http://schema.org/jobTitle&gt;</code>.</p>
+					</section>
+
+					<section>
+						<p>Prefixes defineres i toppen af dokumentet.</p>
+						<pre><code class="hljs turtle" data-trim>
+							@base &lt;http://example.org/&gt; .
+							@prefix : &lt;http://schema.org/&gt; .
+							&lt;jakob&gt; :jobTitle "Softwareudvikler" .
 						</code></pre>
+						<p>Bemærk hvorledes <code>@base</code> definerer default namespace.</p>
+					</section>
+
+					<section>
+						<p>Der er en række "default" namespaces, fx
+						<ul>
+							<li><code>xs: &lt;http://www.w3.org/2001/XMLSchema&gt;</code></li>
+							<li><code>rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</code></li>
+							<li><code>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</code></li>
+							<li><code>owl: &lt;http://www.w3.org/2002/07/owl#&gt;</code></li>
+						</ul><br><br>som man ikke behøver at definere. Her anvender man blot default prefixes.</p>
+					</section>
+
+					<section>
+						<p>Som I kan se, kan jeg tilføje flere statements med subject <code>&lt;jakob&gt;</code></p>
+						<p><code>schema.org</code> definerer fx også <code>name</code> og <code>worksFor</code>.</p>
+						<pre><code class="hljs turtle" data-trim>
+							@base &lt;http://example.org/&gt; .
+							@prefix : &lt;http://schema.org/&gt; .
+							&lt;jakob&gt; :name "Jakob Kofoed Janot" ;
+								:jobTitle "Softwareudvikler"@da ;
+								:jobTitle "Software developer"@en ;
+								:birthDate "1980-12-08"^^xs:date ;
+								:worksFor "Schultz" .
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Men vi kunne også definere "Schultz" som en resource af typen <a href="http://schema.org/Corporation">http://schema.org/Corporation</a></p>
+						<pre><code class="hljs turtle" data-trim>
+							@base &lt;http://example.org/&gt; .
+							@prefix : &lt;http://schema.org/&gt; .
+
+							&lt;jakob&gt; a :Person ;
+								:name "Jakob Kofoed Janot" ;
+								:jobTitle "Softwareudvikler"@da ;
+								:jobTitle "Software developer"@en ;
+								:birthDate "1980-12-08"^^xs:date ;
+								:worksFor &lt;schultz&gt; .
+
+							&lt;schultz&gt; a :Corporation ;
+								:name "J.H. Schultz Information A/S";
+						</code></pre>
+						<p>Ækvivalent hertil er <code>&lt;jakob&gt;</code> af typen <a href="http://schema.org/Person">http://schema.org/Person</a>.</p>
+					</section>
 				</section>
 
 				<section>
-					<h2>Resources</h2>
-					<p>En resource er en entitet, fx en person, en organisation eller et dokument.</p>
-					<p>En URI er en <em>U</em>niq <em>R</em>essource <em>I</em>dentifier <br>
-						og kan være en <em>L</em>ocation på nettet, altså en URL, fx <a>https://www.dr.dk/tv/bluey</a>, <br>
-						men kan også blot være et <em>N</em>avn, dvs. <em>URN</em>, fx <code>urn:isbn:0451450523</code>.</p>
-				</section>
-
-				<section>
-					<h3>Namespaces</h3>
-					<p>I bemærkede måske <code>:</code> i <code>:jobTitle</code>?</p>
-					<p>Det er en <em>prefix</em> til det namespace hvori <code>jobTitle</code> er defineret.</p>
-					<p>I eksemplet stammer <code>jobTitle</code> fra <a href="https://schema.org/jobTitle">https://schema.org/jobTitle</a>.</p>
-					<p>Således er <code >:jobTitle</code> er det samme som <code>&lt;http://schema.org/jobTitle&gt;</code>.</p>
-				</section>
-
-				<section>
-					<p>Prefixes defineres i toppen af dokumentet.</p>
-					<pre><code class="hljs turtle" data-trim>
-						@base &lt;http://example.org/&gt; .
-						@prefix : &lt;http://schema.org/&gt; .
-						&lt;jakob&gt; :jobTitle "Softwareudvikler" .
-					</code></pre>
-					<p>Bemærk hvorledes <code>@base</code> definerer default namespace.</p>
-				</section>
-
-				<section>
-					<p>Der er en række "default" namespaces, fx
-					<ul>
-						<li><code>xs: &lt;http://www.w3.org/2001/XMLSchema&gt;</code></li>
-						<li><code>rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</code></li>
-						<li><code>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</code></li>
-						<li><code>owl: &lt;http://www.w3.org/2002/07/owl#&gt;</code></li>
-					</ul><br><br>som man ikke behøver at definere. Her anvender man blot default prefixes.</p>
-				</section>
-
-				<section>
-					<p>Som I kan se, kan jeg tilføje flere statements med subject <code>&lt;jakob&gt;</code></p>
-					<p><code>schema.org</code> definerer fx også <code>name</code> og <code>worksFor</code>.</p>
-					<pre><code class="hljs turtle" data-trim>
-						@base &lt;http://example.org/&gt; .
-						@prefix : &lt;http://schema.org/&gt; .
-						&lt;jakob&gt; :name "Jakob Kofoed Janot" ;
-							:jobTitle "Softwareudvikler"@da ;
-							:jobTitle "Software developer"@en ;
-							:birthDate "1980-12-08"^^xs:date ;
-							:address "Sønderlundsvej 31, 4000 Roskilde" ;
-							:worksFor "Schultz" .
-					</code></pre>
-				</section>
-
-				<section>
-					<p>Men vi kunne også definere "Schultz" som en resource af typen <a href="http://schema.org/Corporation">http://schema.org/Corporation</a></p>
-					<pre><code class="hljs turtle" data-trim>
-						@base &lt;http://example.org/&gt; .
-						@prefix : &lt;http://schema.org/&gt; .
-						&lt;jakob&gt; :name "Jakob Kofoed Janot" ;
-							:jobTitle "Softwareudvikler"@da ;
-							:jobTitle "Software developer"@en ;
-							:birthDate "1980-12-08"^^xs:date ;
-							:worksFor &lt;schultz&gt; .
-
-						&lt;schultz&gt; a :Corporation ;
-							:name "J.H. Schultz Information A/S";
-					</code></pre>
-					<p>Ækvivalent hertil er <code>&lt;jakob&gt;</code> af typen <a href="http://schema.org/Person">http://schema.org/Person</a>.</p>
-				</section>
-
-				<section>
-					<h2>Typer</h2>
-					<p>Vi kan definere en resources type, fx. <code>&lt;schultz&gt; a :Corporation</code>, <br>hvor
-					<code>a</code> er et shortcut for <code>rdf:type</code>.</p>
-				</section>
-
-				<section>
-					<h2>Nedarv</h2>
-					<p>En type kan nedarve fra anden type, fx <code>:Corporation rdfs:subclassOf :Organization</code>.</p>
-					<p>Bemærk her, at <code>rdf:type</code> og <code>rdfs:subclassOf</code> "blot" er prædikater på <code>:Organization</code>.</p>
-				</section>
-
-				<section>
-					<p><code>:Organization</code> og <code>:Person</code> nedstammer begge fra <code>:Thing</code>.</p>
-					<p><code>:Thing</code> er den ultimative superklasse ligesom fx <code>Object</code> i Java.</p>
-				</section>
-
-				<section>
-					<p>Kigger vi på type definition <a href="http://schema.org/Person">:Person</a> finder vi at den tillader en <a href="http://schema.org/address">:address</a>.</p>
-					<p>Og kigger vi så på videre på <a href="https://schema.org/address">:address</a> ser vi, <br>at det samme gælder for <a href="http://schema.org/Organization">:Organization</a> <br>og således også for <a href="http://schema.org/Corporation">:Corporation</a></p>
-					<pre><code class="hljs turtle" data-trim>
-						@base &lt;http://example.org/&gt; .
-						@prefix : &lt;http://schema.org/&gt; .
-						&lt;jakob&gt; :name "Jakob Kofoed Janot" ;
-							:jobTitle "Softwareudvikler"@da ;
-							:jobTitle "Software developer"@en ;
-							:birthDate "1980-12-08"^^xs:date ;
-							:address "Sønderlundsvej 31, 4000 Roskilde" ;
-							:worksFor &lt;schultz&gt; .
-
-						&lt;schultz&gt; a :Corporation ;
-							:name "J.H. Schultz Information A/S";
-							:address "Annexstræde 5, 2500 København".
-					</code></pre>
+					<section>
+						<h1>RDFS</h1>
+					</section>
 					
+					<section>
+						<h2>Typer</h2>
+						<p>Vi kan definere en resources type, fx. <code>&lt;schultz&gt; a :Corporation</code>, <br>hvor
+						<code>a</code> er et shortcut for <code>rdf:type</code>.</p>
+					</section>
+
+					<section>
+						<h2>Nedarv</h2>
+						<p>En type kan nedarve fra anden type, fx <code>:Corporation rdfs:subclassOf :Organization</code>.</p>
+						<p>Bemærk her, at <code>rdf:type</code> og <code>rdfs:subclassOf</code> "blot" er prædikater på <code>:Organization</code>.</p>
+					</section>
+
+					<section>
+						<h2>Superklassen <code>:Thing</code></h2>
+						<p><code>:Organization</code> og <code>:Person</code> nedstammer begge fra <code>:Thing</code>.</p>
+						<p><code>:Thing</code> er den ultimative superklasse ligesom fx <code>Object</code> i Java.</p>
+					</section>
+
+					<section>
+						<p>Kigger vi på type definition <a href="http://schema.org/Person">:Person</a> finder vi at den tillader en <a href="http://schema.org/address">:address</a>.</p>
+						<p>Og kigger vi så på videre på <a href="https://schema.org/address">:address</a> ser vi, <br>at det samme gælder for <a href="http://schema.org/Organization">:Organization</a> <br>og således også for <a href="http://schema.org/Corporation">:Corporation</a></p>
+						<pre><code class="hljs turtle" data-trim>
+							@base &lt;http://example.org/&gt; .
+							@prefix : &lt;http://schema.org/&gt; .
+							&lt;jakob&gt; a :Person ;
+								:name "Jakob Kofoed Janot" ;
+								:jobTitle "Softwareudvikler"@da ;
+								:jobTitle "Software developer"@en ;
+								:birthDate "1980-12-08"^^xs:date ;
+								:address "Sønderlundsvej 31, 4000 Roskilde" ;
+								:worksFor &lt;schultz&gt; .
+
+							&lt;schultz&gt; a :Corporation ;
+								:name "J.H. Schultz Information A/S";
+								:address "Annexstræde 5, 2500 København".
+						</code></pre>
+						
+					</section>
 				</section>
 
 				<section>

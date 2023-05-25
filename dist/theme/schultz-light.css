@@ -14,7 +14,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
 :root {
   --r-background-color: #f1ebe4;
   --r-main-font: Soho Gothic Pro, Tahoma, sans-serif;
-  --r-main-font-size: 20px;
+  --r-main-font-size: 28px;
   --r-main-color: #222;
   --r-block-margin: 20px;
   --r-heading-margin: 0 0 20px 0;
@@ -209,7 +209,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   width: 90%;
   margin: var(--r-block-margin) auto;
   text-align: left;
-  font-size: 0.55em;
+  font-size: 1rem;
   font-family: var(--r-code-font);
   line-height: 1.2em;
   word-wrap: break-word;
@@ -337,6 +337,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  *********************************************/
 .reveal .controls {
   color: var(--r-link-color);
+  font-size: 0.15em;
 }
 
 /*********************************************
@@ -356,8 +357,8 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
   }
 }
 body:after {
-  content: url(./assets/schultz-s.png);
+  content: url(./assets/schultz-s-halfsized.png);
   position: fixed;
-  bottom: 3.5em;
-  left: 3.5em;
+  bottom: 1em;
+  left: 1em;
 }
