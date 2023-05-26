@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="da">
+	<head>
+		<meta charset="utf-8">
+
+		<title>XPath tutorial</title>
+
+		<meta name="description" content="En præsentation om hvordan XML værktøjer kan bruges til at håndtere dokumenter">
+		<meta name="author" content="Jakob Kofoed Janot">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/schultz-light.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/atom-one-dark.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>XPath</h2>
+					<p><small>- på opdagelse i CIA's World Factbook</small></p>
+				</section>
+
+				<section>
+					<h2>Hvad er XPath?</h2>
+					<p>- Standard måde at søge struktureret i XML</p>
+					<p>- Et query sprog til XML - "SQL for XML"</p>
+					<p>- Tilgængelig i bl.a. C#, Javascript, XSLT etc.</p>
+				</section>
+
+				<section>
+					<h4>På opdagelse i et stort XML datasæt</h2>
+					<img src="assets/images/factbook.png" width="80%">
+				</section>
+
+				<section>
+					<h4>Download BaseX til Windows fra <a href="https://basex.org/download/">https://basex.org/download/</a></h4>
+					<img src="assets/images/basex-download.png" width="80%">
+				</section>
+
+				<section>
+					<h4>Download Java fra <a href="https://adoptium.net/">https://adoptium.net/</a></h4>
+					<img src="assets/images/java-download.png" width="80%">
+				</section>
+
+				<section>
+					<h4>Opret en database</h2>
+					<img src="assets/images/basex-create.png" width="80%">
+				</section>
+				
+				<section>
+					<img src="assets/images/basex-create2.png" width="80%">
+				</section>
+
+				<section>
+					<h4>Strip namespaces</h2>
+					<img src="assets/images/basex-create3.png" width="80%">
+				</section>
+
+				<section>
+					<h4>Index <i>all the things!</i></h2>
+					<img src="assets/images/basex-create4.png" width="80%">
+				</section>
+
+				<section>
+					<h4>Done</i></h2>
+					<img src="assets/images/basex-create5.png" width="80%">
+				</section>
+
+				<section>
+					<img src="assets/images/factbook-example.png" width="30%">
+				</section>
+
+				<section>
+					<h2>Path expressions</h2>
+					<p>Udvælgelse af noder på baggrund af deres position i træet</h2>
+				</section>
+
+				<section>
+					<h4>Eksempel: Alle lande</h4>
+					<pre><code class="hljs" data-trim>/mondial/country/name/text()</code></pre>
+					<p><code>/</code> er roden af dokumentet</p>
+					<p><code>mondial</code> er elementet der sidder i roden</p>
+					<p><code>mondial</code> har (bl.a.) mange <code>country</code> elementer,</p>
+					<p>hver <code>country</code> har et <code>name</code> element</p>
+					<p><code>text()</code> er tekst-noden i <code>name</code></p>
+				</section>
+
+				<section>
+					<h4>Eksempel: Alle lande</h4>
+					<p>Vi behøver ikke den fulde path</p>
+					<pre><code class="hljs" data-trim>//country/name</code></pre>
+					<pre><code class="hljs" data-trim>
+						<name>Albania</name>
+						<name>Andorra</name>
+						<name>Austria</name>
+						<name>Belarus</name>
+						<name>Belgium</name>
+						...
+					</code></pre>
+				</section>
+
+				<section>
+					<p>Det første land i listen</p>
+					<pre><code class="hljs" data-trim>//country[1]/name</code></pre>
+					<pre><code class="hljs" data-trim>
+						<name>Albania</name>
+					</code></pre>
+				</section>
+
+				<section>
+					<p>Bil landekoder (en attribut <code>@car_code</code>)</p>
+					<pre><code class="hljs" data-trim>//country/@car_code</code></pre>
+					<pre><code class="hljs" data-trim>
+						car_code="AL"
+						car_code="AND"
+						car_code="A"
+						car_code="BY"
+						car_code="B"
+						...
+					</code></pre>
+				</section>
+
+				<section>
+					<p>Attributter på et <code>country</code> (Belgien)</p>
+					<pre><code class="hljs" data-trim>//country[5]/@*</code></pre>
+					<pre><code class="hljs" data-trim>
+						id="f0_162"
+						name="Belgium"
+						capital="f0_1477"
+						population="10170241"
+						datacode="BE"
+						total_area="30510"
+						population_growth="0.33"
+						infant_mortality="6.4"
+						gdp_agri="2"
+						gdp_total="197000"
+						inflation="1.6"
+						indep_date="04 10 1830"
+						government="constitutional monarchy"
+						gdp_ind="28"
+						gdp_serv="70"
+						car_code="B"
+					</code></pre>
+				</section>
+
+				<section>
+					<h4>Path expressions - Opsummering</h4>
+					<p><code>//name</code> - <code>name</code> elementer</p>
+					<p><code>//*</code> - alle elementer</p>
+					<p><code>//@id</code> - <code>id</code> attributer</p>
+					<p><code>//@*</code> - alle attributter</p>
+					<p><code>//text()</code> - tekst-noder</p>
+					<p><code>//node()</code> - noder <code>(text() | *)</code></p>
+				</section>
+
+				<section>
+					<h2>Predikater</h2>
+					<p>Det der står mellem []</p>
+					<p>Filtrering af noder</p>
+				</section>
+
+				<section>
+					<p>Lande der har tyrkere som etnisk gruppe</p>
+					<pre><code class="hljs" data-trim>//country[ethnicgroups = 'Turkish']/name</code></pre>
+					<pre><code class="hljs" data-trim>
+						<name>Germany</name>
+						<name>Macedonia</name>
+						<name>Turkey</name>
+					</code></pre>
+				</section>
+
+				<section>
+					<p>Lande <i>udenfor Tyrkiet</i> der har tyrkere som etnisk gruppe</p>
+					<pre><code class="hljs" data-trim>//country[ethnicgroups = 'Turkish' and name != 'Turkey']/name</code></pre>
+					<pre><code class="hljs" data-trim>
+						<name>Germany</name>
+						<name>Macedonia</name>
+					</code></pre>
+				</section>
+
+				<section>
+					<p>Lande, hvis navn ender på 'Island'</p>
+					<pre><code class="hljs" data-trim>//country/name[ends-with(., 'Island')]</code></pre>
+					<pre><code class="hljs" data-trim>
+						<name>Christmas Island</name>
+						<name>Norfolk Island</name>
+					</code></pre>
+				</section>
+
+				<section>
+					<p>Lande i Europa (@continent = 'f0_119')</p>
+					<pre><code class="hljs" data-trim>//country[encompassed/@continent = 'f0_119']/name</code></pre>
+					<pre><code class="hljs" data-trim>
+						<name>Albania</name>
+						<name>Andorra</name>
+						<name>Austria</name>
+						...
+						<name>Turkey</name>
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Så er det din tur!</h2>
+				</section>
+
+				<section>
+					<p>Lande, hvis navn starter med 'Western'?</p>
+				</section>
+
+				<section>
+					<pre><code class="hljs" data-trim>//country/name[starts-with(., 'Western')]</code></pre>
+				</section>
+
+				<section>
+					<p>Hvilket land har bil landekoden (<code>@car_code</code>) 'MA'?</p>
+				</section>
+				
+				<section>
+					<pre><code class="hljs" data-trim>//country[@car_code = 'MA']/name</code></pre>
+				</section>
+
+				<section>
+					<p>Hvor mange bor der i Gibraltar? (<code>country/@population</code>)</p>
+				</section>
+
+				<section>
+					<pre><code class="hljs" data-trim>//country[name = 'Gibraltar']/@population</code></pre>
+				</section>
+
+				<section>
+					<p>Er der lande med en population under 500?</p>
+				</section>
+
+				<section>
+					<pre><code class="hljs" data-trim>//country[@population lt 500]/name</code></pre>
+				</section>
+
+				<section>
+					<p>Hvilke lande i Europra (<code>encompassed/@continent = 'f0_119'</code>) har et jødisk mindretal ('Jewish')?</p>
+				</section>
+
+				<section>
+					<pre><code class="hljs" data-trim>//country[encompassed/@continent = 'f0_119' and ethnicgroups = 'Jewish']/name</code></pre>
+				</section>
+
+				<section>
+					<p>Hvilket id har Danmark?</p>
+				</section>
+
+				<section>
+					<p>Hvor refereres det (med attributter)?</p>
+				</section>
+
+				<section>
+					<pre><code class="hljs" data-trim>//*[@*='f0_193']</code></pre>
+				</section>
+
+				<section>
+					<p>Hvor mange lande er medlem af <code>organization</code>'en <br/>'North Atlantic Treaty Organization', dvs. NATO</p>
+				</section>
+
+				<section>
+					<pre><code class="hljs" data-trim>count(//organization[@name = 'North Atlantic Treaty Organization']/members)</code></pre>
+				</section>
+
+				<section>
+					<p>Er Danmark i blandt landene i NATO?</p>
+				</section>
+
+				<section>
+					<pre><code class="hljs" data-trim>//organization[@name = 'North Atlantic Treaty Organization']/members[@country = 'f0_193']</code></pre>
+				</section>
+
+				<section>
+					<p>Expert-level: I hvilke lande har man mere end 1&nbsp;km<sup>2</sup> areal (country/@total_area) per indbygger (country/@population)</p>
+				</section>
+
+				<section>
+					<pre><code class="hljs" data-trim>//country[(@total_area div @population) gt 1]/name</code></pre>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight]
+			});
+
+		</script>
+
+	</body>
+</html>

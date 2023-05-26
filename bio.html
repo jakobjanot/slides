@@ -123,25 +123,25 @@
 						<h3>A named entitity recognizer problem</h3>
 						<p>There were two types of references, we could implement as</p>
 						<ul>
-							<li>Simple rules, e.g.<ul>
-								<li>"TSS-cirkulære 2000-9"</li>
-								<li>"Ankestyrelsens principafgørelse 10-19"</li>
-								<li>"U 2004.2756/3H"</li>
-								<li>"lovforslag nr. 203 af 26. marts 2021"</li>
-							</ul>
+							<li>Simple rules, e.g.
+								<ul>
+									<li>"TSS-cirkulære 2000-9"</li>
+									<li>"Ankestyrelsens principafgørelse 10-19"</li>
+									<li>"U 2004.2756/3H"</li>
+									<li>"lovforslag nr. 203 af 26. marts 2021"</li>
+								</ul>
 							</li>
-							<li>Advanced rules, e.g. "Retsplejelovens §§ 33-38, 120 og 128-130"
-							</li>
+							<li>Advanced rules, e.g. "Retsplejelovens §§ 33-38, 120 og 128-130"</li>
 						</ul>
 					</section>
 					<section>
 						<h3>Matching 'TSS-cirkulære 2000-9'</h3>
 						<pre><code class="hljs ruby" data-trim>
-							class TSCirc < Rule
+							class TSCirc &lt; Rule
 								PATTERN = /
 									TSS-cirk(?:\.|ulære)?
 									\s*
-									(&lt;year&gt;\d{4})
+									(?&lt;year&gt;\d{4})
 									\-
 									(?&lt;serial&gt;\d+)
 								/x
@@ -384,13 +384,13 @@
 					</section>
 
 					<section>
-						<img src="assets/images/lfo-crap.png"  />
+						<img src="assets/images/lfo-crap.png"/>
 					</section>
 					<section>
-						<img src="assets/images/lfo-crap2.png"  />
+						<img src="assets/images/lfo-crap2.png"/>
 					</section>
 					<section>
-						<img src="assets/images/lfo-crap3.png"  />
+						<img src="assets/images/lfo-crap3.png"/>
 					</section>
 
 					<section>
@@ -398,7 +398,7 @@
 					</section>
 
 					<section>
-						<img src="assets/images/lfo-good.png"  />
+						<img src="assets/images/lfo-good.png"/>
 					</section>
 
 					<section>
@@ -420,7 +420,7 @@
 					</section>
 
 					<section>
-						<ol>
+						<ul>
 							<li>Cleanup/standardize steps</li>
 							<li>Detect structure in text (§ 3, Kapitel 3, Til nr. 31 og 32)</li>
 							<li>Wrap in structure</li>
