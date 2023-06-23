@@ -1,0 +1,4 @@
+start = element paragraf {
+    attribute id { xsd:ID }, 
+    element stk { text }+
+}
