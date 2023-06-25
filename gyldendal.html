@@ -28,13 +28,521 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Tips and tricks</h1>
-					<p>Schultz</p>
+					<h1>👋</h1>
+					<p>Hi, I'm Jakob</p>
+					<h2>Who are you?</h2>
 				</section>
 
-				<!-- Harvesting -->
+				<!-- Case: Norwegian Law on Fundament -->
+				<section>
+					<section>
+						<h3>Case: Norwegian Law on Fundament</h3>
+					</section>
 
+					<section>
+						<h2>What I did?</h2>
+					</section>
 
+					<section>
+						<p>Harvested
+							<ul>
+								<li>the <em>lov</em> from <em>lovdata.no</em></li>
+								<li>the <em>proposisjon</em> from <em>regjeringen.no</em></li>
+								<li>the <em>innstilling</em> and <em>vedtak</em> from <em>stortinget.no</em></li>
+							</ul>
+						</p>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/lovdata.png"/>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/regjergingen-1.png"/>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/regjergingen-2.png"/>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/stortinget-1.png"/>
+					</section>
+
+					<section>
+						<p>Each chapter downloaded and merged into a single XHTML document</p>
+					</section>
+
+					<section>
+						<p>Next the document was transformed into Rhinestone XML, and uploaded</p>
+					</section>
+
+					<section>
+						<p>Thankfully, norwegian legislation is very similar to danish.</p>
+					</section>
+
+					<section>
+						<p>Proposisjon<br>=<br>Lovforslag som fremsat</p>
+					</section>
+
+					<section>
+						<p>At the end of the proposisjon</p>
+						<img src="assets/gyldendal/images/lovforslag-no.png"/>
+					</section>
+
+					<section>
+						<p>Lovforslag</p>
+						<img src="assets/gyldendal/images/lovforslag.png"/>
+					</section>
+
+					<section>
+						<p>Bakgrunnen for lovforslaget, etc.<br>=<br>Almindelige bemærkninger</p>
+					</section>
+
+					<section>
+						<p>Bakgrunnen for lovforslaget, etc.</p>
+						<img src="assets/gyldendal/images/alm-bem-no.png"/>
+					</section>
+
+					<section>
+						<p>Almindelige bemærkninger</p>
+						<img src="assets/gyldendal/images/alm-bem-dk.png"/>
+					</section>
+
+					<section>
+						<p>Merknader til de enkelte bestemmelser<br>=<br>Bemærkninger til de enkelte bestemmelser</p>
+					</section>
+
+					<section>
+						<p>Merknader til de enkelte bestemmelser</p>
+						<img src="assets/gyldendal/images/spec-bem-no.png"/>
+					</section>
+
+					<section>
+						<p>Bemærkninger til de enkelte bestemmelser</p>
+						<img src="assets/gyldendal/images/spec-bem-dk.png"/>
+					</section>
+
+					<section>
+						<p>So we ended up with a document structure like this</p>
+						<pre><code data-trim class="hljs language-xml">
+							...
+							<section class="spec-bem" id="kap20">
+								<h1>20 Merknader til de enkelte bestemmelsene</h1>
+								<section class="spec-bem-paragraf" id="bem-p1" data-remarks-on="p1">
+								   <h1>Til § 1</h1>
+								   <p>Forslaget er nærmere omtalt i kapittel 7.</p>
+								   <p>Paragrafen gir uttrykk for formålet med loven, ...</p>
+								</section>
+								...
+							</section>
+							...
+						</code>
+						
+					</section>
+
+					<section>
+						<p>Lastly, relations between the documents was added</p>
+					</section>
+				</section>
+				
+
+				<!-- Schemas -->
+				<section>
+					<section>
+						<h2>On Schematron</h2>
+					</section>
+
+					<section>
+						<p>XML is not <em>just</em> a data format</p>
+					</section>
+
+					<section>
+						<p>it's a <em>M</em>arkup <em>L</em>anguage<br/></p>
+					</section>
+
+					<section>
+						<p><em>Marking up </em>content - analouge</p>
+						<img src="assets/gyldendal/images/markup.png">
+					</section>
+	
+					<section>
+						<p>and digitally</p>
+						<pre><code class="hljs language-xml" data-trim>
+							<script type="text/template">
+								<p>
+									... Kennedsy aktioner omkring Cubakrisen ses.
+								</p>
+								<p>
+									Da Cuba ved Castros overtagelse af magten blev 
+									et socialistisk land, manglede det kapitaler til 
+									gennemfør<del>sel</del><ins>else</ins> af sit 
+									nye reformprogram. De amerikanske kapitalister
+									nægtede forståeligt nok at udlåne penge, da de
+									...
+								</p>
+							</script>
+						</code></pre>
+					</section>
+	
+					<section>
+						<p>XML is e<em>X</em>tensible</p>
+						<p>We can define tree-like data structures, <strong>schemas</strong></p>
+					</section>
+
+					<section>
+						<p>Schemas are strict, just like a table schema in SQL</p>
+						<p>but they still allow <em>flexibility</em> we need to express natural language, e.g.</p>
+						<pre><code class="hljs language-xml" data-trim>
+							<h1>CO<sub>2</sub> <em>er</em> en drivhusgas</h1>
+						</code></pre>
+						<small>i.e. a heading element with two elements + three text nodes</small>
+					</section>
+
+					<section>
+						<p>Schemas are declarative</p>
+						<p>We (only) need to specify how a document must be structured.</p>
+					</section>
+
+					<section>
+						<p>Example: A <em>paragraf</em> have one or more <em>stykker</em></p>
+						<img src="assets/gyldendal/images/paragraf-valid.png"/>
+					</section>
+
+					<section>
+						<p>Hence, the structure</p>
+						<pre><code class="hljs relaxng" data-trim>
+							start = element paragraf {
+								attribute id { xsd:ID }, 
+								element stk { text }+
+							}
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Consequently, the following is invalid</p>
+						<img src="assets/gyldendal/images/paragraf-not-valid.png"/>
+					</section>
+
+					<section>
+						<h3>Schemas are not just for validation</h3>
+					</section>
+
+					<section>
+						<p>XML editors understand schemas</p>
+						<p>and can help you write valid documents</p>
+						<p>Hence strict schemas are a valuable tool for editors</p>
+					</section>
+
+					<section>
+						<p>Also, it's easier to avoid introducing errors, than to find and correct them later on</p>
+					</section>
+
+					<section>
+						<p>Valid strictly structured documents means: <ul>
+							<li>We can trust the data</li>
+							<li>We know what to expect</li>
+							<li>We can build appplication code based on those expectations</li>
+							<li>We need less application code</li>
+							<li>It's easier to build applications</li>
+						</ul></p>
+					</section>
+
+					<section>
+						<p>But schemas cannot express all kind of constraints</p>
+						<p>Example: § 4 should follow § 3</p>
+					</section>
+
+					<section>
+						<h2>Schematron</h2>
+					</section>
+					
+					<section>
+						<p>Schematron is a rule-based language</p>
+						<p>based on XPath</p>
+					</section>
+
+					<section>
+						<p>Every rule has a context</p>
+						<pre><code class="hljs language-xml" data-trim>
+							<sch:rule context="paragraf">
+								...
+							</sch:rule>
+						</code></pre>
+					</section>
+
+					<section>
+						<p>and an assertion</p>
+						<pre><code class="hljs language-xml" data-trim>
+							<sch:rule context="paragraf">
+								<sch:assert test="count(stk) gt 0">
+									A paragraf must have at least one stk
+								</sch:assert>
+							</sch:rule>
+						</code></pre>
+					</section>
+
+					<section>
+						<p>We can also define variables</p>
+						<pre><code class="hljs language-xml" data-trim>
+							<script type="text/template">
+								<sch:rule context="paragraf">
+									<sch:let name="paragraf-number" value="number(substring-after(@id, 'p'))"/>
+									<sch:assert test="$paragraf-number gt 0">
+										The paragraf number must be greater than 0
+									</sch:assert>
+								</sch:rule>
+							</script>
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Back to the example:</p><p></p> § 4 should follow § 3</p>
+					</section>
+
+					<section>
+						<p>§ 4 should follow § 3</p>
+						<pre><code class="hljs language-xml" data-trim >
+							<script type="text/template">
+								<sch:rule context="paragraf[preceding::paragraf]">
+
+									<sch:let name="paragraf-number" 
+											    value="number(substring-after(@id, 'p'))"/>
+
+									<sch:let name="preceding-paragraf-id" 
+											    value="preceding::paragraf[1]/@id"/>
+
+									<sch:let name="preceding-paragraf-number"
+											    value="number(substring-after($preceding-paragraf-id, 'p'))"/>
+									
+									<sch:assert test="$paragraf-number gt $preceding-paragraf-number ">
+										The paragraf id (<sch:value-of select="@id"/>) should be larger than the id 
+										of the preceding paragraf (<sch:value-of select="$preceding-paragraf-id"/>)  
+									</sch:assert>
+
+								</sch:rule>
+							</script>
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>But wait, there's more</h3>
+						<p></p>
+					</section>
+
+					<section>
+						<p>Example</p>
+						<p>Replacing <code>ae</code> with <code>æ</code> in id's</p>
+					</section>
+
+					<section>
+						<p>It's not an error, so we just report it</p>
+						<pre><code class="hljs language-xml" data-trim >
+							<script type="text/template">
+								<sch:rule context="paragraf/@id">
+									<sch:report test="ends-with(., 'ae')" sqf:fix="replace-ae">
+										id should not contain 'ae'
+									</sch:report>
+								</sch:rule>
+							</script>
+						</code></pre>
+					</section>
+
+					<section>
+						<p>But we can also suggest a fix for it</p>
+						<pre><code class="hljs language-xml" data-trim >
+							<script type="text/template">
+								<sqf:fix id="replace-ae">
+									<sqf:description>
+										<sqf:title>Replace 'ae' with 'æ'</sqf:title>
+									</sqf:description>
+									<sqf:replace node-type="keep" target="id" select="replace(., 'ae', 'æ')"/>
+								</sqf:fix>
+							</script>
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Schematron quick fixes</p>
+						<pre><code class="hljs language-xml" data-trim >
+							<script type="text/template">
+								<sch:rule context="paragraf/@id">
+									<sch:report test="ends-with(., 'ae')" sqf:fix="replace-ae">
+										id should not contain 'ae'
+									</sch:report>
+								</sch:rule>
+
+								<sqf:fix id="replace-ae">
+									<sqf:description>
+										<sqf:title>Replace 'ae' with 'æ'</sqf:title>
+									</sqf:description>
+									<sqf:replace node-type="keep" target="id" select="replace(., 'ae', 'æ')"/>
+								</sqf:fix>
+							</script>
+						</code></pre>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/sqf-1.png"/>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/sqf-2.png"/>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/sqf-3.png"/>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/imagination-spongebob-squarepants.gif"/>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<h2>Rhinestone XML</h2>
+						<p>the XML format of Fundament</p>
+					</section>
+
+					<section>
+						<h3>Rhinestone XML is essentially XHTML</h3>
+						<ul>
+							<li>with <code>section</code> backported from HTML5</li>
+							<li>no <code>script</code></li>
+							<li>no <code>iframe</code></li>
+							<li>no <code>form</code>s</li>
+							<li>javascript events, e.g. <code>onclick=</code></li>
+						</ul>
+					</section>
+
+					<section>
+						<h4>A word about <code>section</code>s</h4>
+						<p>It defines sections of the document<br>and we use it to generate the table of contents</p>
+					</section>
+
+					<section>
+						<p>If the <code>section</code> can be referred to, i.e. has an <code>id</code><br> it <em>should</em> have a title, i.e. <code>h1</code></p>
+						<pre><code class="hljs language-xml" data-trim>							
+							<section id="p1" class="paragraf">
+								<h1>§ 1</h1>
+								
+								<section class="stk">
+									<p>For det første ...</p>
+								</section>
+								
+								<section class="stk">
+									<h1>Stk. 2</h1>
+									<p>For det andet ...</p>
+								</section>
+								
+								<section class="stk">
+									<h1>Stk. 3</h1>
+									<p>For det tredje ...</p>
+								</section>
+							</section>
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>Limitations of Rhinestone XML</h4>
+						<p>It is essentially just XHTML</p>
+					</section>
+
+					<section>
+						<p>Therefore it limits the expressiveness of the XML</p>
+					</section>
+
+					<section>
+						<p>Compare</p>
+						<pre><code class="hljs language-xml" data-trim>
+							<section id="p1" class="paragraf">
+								<h1>§ 1</h1>
+								
+								<section class="stk">
+									<p>For det første ...</p>
+								</section>
+								
+								<section class="stk">
+									<h1>Stk. 2</h1>
+									<p>For det andet ...</p>
+								</section>
+								
+								<section class="stk">
+									<h1>Stk. 3</h1>
+									<p>For det tredje ...</p>
+								</section>
+							</section>
+						</code></pre>
+					</section>
+
+					<section>
+						<p>... to</p>
+						<pre><code class="hljs language-xml" data-trim>
+							<paragraf num="1">
+								<stk>For det første ...</stk>
+								
+								<stk>For det andet ...</stk>
+								
+								<stk>For det tredje ...</stk>
+							</paragraf>
+						</code></pre>
+					</section>
+
+					<section>
+						<p>The latter example is data <em>without</em> presentation</p>
+						<pre><code class="hljs language-xml" data-trim>							
+							...
+								<section class="stk">
+									<p>For det første ...</p>
+								</section>
+								
+								<section class="stk">
+									<h1>Stk. 2</h1>
+									<p>For det andet ...</p>
+								</section>
+							...
+						</code></pre>
+						<p>... and <em>Stk. 2</em> should be added on rendering</p>
+					</section>
+
+					<section>
+						<p>And it is not possible to express constraints on <code>section/@class</code></p>
+						<pre><code class="hljs relaxng" data-trim>
+							start = element paragraf {
+								attribute id { xsd:ID }, 
+								element stk { text }+
+							}
+						</code></pre>
+
+						<p> ... remember?</p>
+					</section>
+
+					<section>
+						<p>But we can express constraints on <code>section/@class</code> in Schematron</p>
+						<pre><code class="hljs language-xml" data-trim>
+							<sch:rule context="section[@class='stk']">
+								<sch:assert test="parent::section[@class='paragraf']">
+									Section with class 'stk' must be a child of a section with class 'paragraf'
+								</sch:assert>
+							</sch:rule>
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>Pragmatism</h4>
+						<p>Our history is that, we had many different formats for the same type of content, e.g. <em>forslag</em></p>
+						<p>Large variations in semantics and strictness</p>
+						<p>Rhinestone XML was considered a common ground</p>
+					</section>
+
+					<section>
+						<h4>Moving ahead</h4>
+						<p>Rhinestone XML is a great publication format</p>
+						<p>But we have initiatives towards support for other content models in the management part of Fundament</p>
+					</section>
+				</section>
+				
 				<!-- Uptransforming to better semantics -->
 				<section>
 					<section>
@@ -47,6 +555,7 @@
 						<h2>Why?</h2>
 						<p>Better semantics enables new possibilities.</p>
 						<p>E.g. Schultz §-zoom is all about better semantics</p>
+						<p>Align documents in various content models (i.e. schemas)</p>
 					</section>
 					
 					<section>
@@ -63,7 +572,7 @@
 							<li>Transform using XSLT</li>
 							<li>Validate input (know what to expect in XSLT)</li>
 							<li>Validate output</li>
-							<li>Validate content (i.e. text) differences - did we shuffle or loose?</li>
+							<li>Validate text-differences - did we shuffle or loose something?</li>
 							<li>Use XSpec for unit testing</li>
 							<li>Large input/output verification test set</li>
 						</ul>
@@ -117,7 +626,7 @@
 					<section>
 						<h4>Example</h4>
 						<p>id-references inside the document should have a target id</p>
-						<p>i.e. <code>ref="#p3"</code> should have a <code>id="p3"</code></p>
+						<p>i.e. <code>href="#p3"</code> should have a <code>id="p3"</code></p>
 					</section>
 
 					<section>
@@ -157,6 +666,10 @@
 					</section>
 
 					<section>
+						<p>Example ...</p>
+					</section>
+
+					<section>
 						<h3>XSLT pipelines</h3>
 						<p>Output of one step, is input of the next, ...</p>
 						<p>Why?</p>
@@ -187,34 +700,43 @@
 					</section>
 
 					<section>
-						<p>Mark up</p>
-						<pre><code class="hljs xml" data-trim>
+						<p>Mark up <em>paragraf</em>-references</p>
+						<pre><code class="hljs language-xml" data-trim data-line-numbers="2">
 							&lt;section&gt;
 								&lt;h1&gt;Til § 4-9 og 12&lt;/h1&gt;
 							&lt;/section&gt;
 						</code></pre>
-						<p>... as ...</p>
-						<pre><code class="hljs xml" data-trim>
+						<p>... as</p>
+						<pre><code class="hljs language-xml" data-trim data-line-numbers="2">
 							&lt;section&gt;
-								&lt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
+								&lt;h1&gt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
 							&lt;/section&gt;
 						</code></pre>
 					</section>
 
 					<section>
-						<p>Collect into <code>data-remarks</code></p>
-						<pre><code class="hljs xml" data-trim>
+						<p>Collect</p>
+						<pre><code class="hljs language-xml" data-trim data-line-numbers="1">
 							&lt;section data-remarks="#p4-#p9 #p12"&gt;
-								&lt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
+								&lt;h1&gt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
 							&lt;/section&gt;
 						</code></pre>
 					</section>
 
 					<section>
-						<p>Expand <code>data-remarks</code></p>
-						<pre><code class="hljs xml" data-trim>
+						<p>Expand ranges</p>
+						<pre><code class="hljs language-xml" data-trim data-line-numbers="1">
 							&lt;section data-remarks="#p4 #p5 #p6 #p7 #p8 #p9 #p12"&gt;
-								&lt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
+								&lt;h1&gt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
+							&lt;/section&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Cleanup</p>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;section data-remarks="#p4 #p5 #p6 #p7 #p8 #p9 #p12"&gt;
+								&lt;h1&gt;Til § 4-9 og 12&lt;/h1&gt;
 							&lt;/section&gt;
 						</code></pre>
 					</section>
@@ -225,610 +747,314 @@
 							<li>Strip insignificant newlines and whitespace</li>
 							<li>Detect words that marks the beginning of sections, <br>
 								e.g. <em>Kapitel 3</em>, <em>Til § 5</em>, «..., </li>
-							<li>Add wrappers - outside-in</li>
-							<li>Generate logical id's</li>
-							<li>Remove empty elements</li>
-							<li>Remove redundant elements</li>
+							<li>Add wrappers i.e. sections - outside-in</li>
+							<li>Generate logical id's for those sections</li>
+							<li>Generate id-references</li>
+							<li>Remove empty or redundant elements</li>
 						</ul>
+					</section>
+
+					<section>
+						<h2>So, we had ...</h2>
+					</section>
+
+					<section>
+						<img src="assets/images/lfo-crap.png"/>
+					</section>
+					<section>
+						<img src="assets/images/lfo-crap2.png"/>
+					</section>
+					<section>
+						<img src="assets/images/lfo-crap3.png"/>
+					</section>
+
+					<section>
+						<h2>... and we got</h2>
+					</section>
+
+					<section>
+						<img src="assets/images/lfo-good.png"/>
+					</section>
+
+					<section>
+						<p>... and happy customers 😄</p>
 					</section>
 				</section>
 
+				<!-- XSLT -->
 				<section>
 					<section>
 						<h2>On XSLT</h2>
 					</section>
 
 					<section>
-						<h4>Broadly there's two kind of use-cases, hence stylesheets</h4>
+						<p>First of all...</p>
+						<img src="assets/gyldendal/images/regex-for-xml.png"/>
 					</section>
 
 					<section>
-						<h4>Convert from one format to another</h4>
+						<h3>Why is XSLT the right tool?</h3>	
+					</section>
+
+					<section>
+						<h4>It's declarative!</h4>
+						<p>We only write what we want, not how to get it.</p>
+						<p>i.e. in this context return this.</p>
+						<p>The XSLT processor takes care of the rest.</p>
+					</section>
+
+					<section>
+						<h4>It's functional!</h4>
+						<p>No side-effects, i.e. no state</p>
+					</section>
+
+					<section>
+						<h4>It's agnostic</h4>
+						<p>Processors are available for most languages</p>
+						<p>... even browsers</p>
+					</section>
+
+					<section>
+						<h4>It's a domain specific language</h4>
+						<p>It's made exactly for the purpose, transforming XML to XML,<br> ... or HTML5, or JSON, or plain text, ...</p>
+					</section>
+
+					<section>
+						<h4>It's a W3 standard</h4>
+						<p>XSLT and XPath are W3 standards</p>
+						<p>and industry standards</p>
+						<p>- you will be standing on the shoulders of experts</p>
+					</section>
+
+					<section>
+						<h3>XSLT tips and tricks</h3>
+					</section>
+
+					<section>
+						<h3>Use XSLT 2.0 or later</h3>
+						<p>You like to be able to use regular expressions, don't you?</p>
+					</section>
+
+					<section>
+						<h4>Use a good editor</h4>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/xslt-editor.png"/>
+					</section>
+
+					<section>
+						<h4>On XSLT coding style</h4>
+					</section>
+
+					<section>
+						<h5>Given an ordered list</h5>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;Index&gt;
+								&lt;Indentatio&gt;First&lt;/Indentatio&gt;
+								&lt;Indentatio&gt;Next&lt;/Indentatio&gt;
+								&lt;Indentatio&gt;Third&lt;/Indentatio&gt;
+							&lt;/Index&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<h5>Don't do this ...</h5>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;xsl:template match="Index"&gt;
+								&lt;ol&gt;
+									&lt;xsl:for-each select="Indentatio"&gt;
+										&lt;li&gt;
+											&lt;xsl:value-of select="."/&gt;
+										&lt;/li&gt;
+									&lt;/xsl:for-each&gt;
+								&lt;/ol&gt;
+							&lt;/xsl:template&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<h5>Do this instead ...</h5>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;xsl:template match="Index"&gt;
+								&lt;ol&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/ol&gt;
+							&lt;/xsl:template&gt;
+
+							&lt;xsl:template match="Indentatio"&gt;
+								&lt;li&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/li&gt;
+							&lt;/xsl:template&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>The processor priorities the best matching template</h4>
+					</section>
+
+					<section>
+						<h5>So, given a unordered list</h5>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;Index&gt;
+								&lt;Indentatio&gt;- This&lt;/Indentatio&gt;
+								&lt;Indentatio&gt;- And that&lt;/Indentatio&gt;
+							&lt;/Index&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Thus, among ...</p>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;xsl:template match="Index"&gt;
+								&lt;ol&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/ol&gt;
+							&lt;/xsl:template&gt;
+
+							&lt;xsl:template match="Index[starts-with(Indentatio, '-')]"&gt;
+								&lt;ul&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/ul&gt;
+							&lt;/xsl:template&gt;
+						</code></pre>
+						<p>The processor will pick the <em>latter</em> template</p>
+					</section>
+
+					<section>
+						<h4>Use XSpec</h4>
+						<p>Unit testing for XSLT</p>
+					</section>
+
+					<section>
+						<p>Lets build a test for <code>deduplicate-ids.xslt</code><br> and name it <code>deduplicate-ids.xspec</code></p>
+					</section>
+
+					<section>
+						<pre><code class="hljs language-xml" data-trim>
+							<script type="text/template">
+								<x:description xmlns:x="http://www.jenitennison.com/xslt/xspec"
+									stylesheet="../xslt/deduplicate-ids.xslt" run-as="external">
+
+									<x:scenario label="Duplicate ids">
+										<x:context>
+											<section id="id1">
+												<section id="id3"/>
+												<section id="id3"/>
+												<section id="id1"/>
+												<section id="id3"/>
+												<section id="id2"/>
+											</section>
+										</x:context>
+										
+										<x:expect>
+											<section id="id1">
+												<section id="id3"/>
+												<section id="id3-duplicate1"/>
+												<section id="id1-duplicate1"/>
+												<section id="id3"/>
+												<section id="id2"/>
+											</section>
+										</x:expect>
+									</x:scenario>
+								</x:description>
+							</script>
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Running it</p>
+						<pre><code data-trim class="hljs language-bash">
+							Duplicate ids
+
+								FAILED
+
+							Formatting Report...
+							passed: 0 / pending: 0 / failed: 1 / total: 1
+							Report available at xspec/xspec/deduplicate-ids-result.html
+							Done.
+						</code></pre>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/xspec.png"/>
+					</section>
+
+					<section>
+						<h3>Broadly there's two kind of use-cases</h3>
+						<p>i.e. types of stylesheets you can write</p>
+					</section>
+
+					<section>
+						<h4>Use-case 1: Convert from one format to another</h4>
 						<p>Example: <em>HTML</em>-rendering of <em>LexDania</em></p>
-						<pre><code class="hljs xml" data-trim>
+						<pre><code class="hljs language-xml" data-trim>
 							&lt;xsl:template match="Rubrica"&gt;
 								&lt;h1&gt;
 									&lt;xsl:apply-templates/&gt;
 								&lt;/h1&gt;
 							&lt;/xsl:template&gt;
+
+							&lt;xsl:template match="Linea"&gt;
+								&lt;p&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/p&gt;
+							&lt;/xsl:template&gt;
+
+							&lt;xsl:template match="*"&gt;
+								&lt;UNKNOWN&gt;
+									&lt;xsl:attribute name="name" select="name()"/&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/UNKNOWN&gt;
+							&lt;/xsl:template&gt;
 						</code></pre>
+						<small>Note: LexDania is the danish legislation schema</small>
 					</section>
 					
 					<section>
-						<h4>Trick: Mark elements that aren't matched</h4>
-						<xsl:template match="*">
-							<UNKNOWN>
-								<xsl:attribute name="name" select="name()"/>
-								<xsl:apply-templates/>
-							</UNKNOWN>
-						</xsl:template>
-					</section>
-				</section>
-
-				<!-- Schemas -->
-				<section>
-					<section>
-						<img src="assets/images/sch/logo.png"/>
-						<h2>Schemas</h2>
-						<p>Why do we use schemas?</p>
-					</section>
-
-					<section>
-						<p>Schemas are declarative</p>
-						<p>We (only) need to specify how a document must be structured.</p>
-					</section>
-
-					<section>
-						<p>Example: A <em>paragraf</em> have one or more <em>stykker</em></p>
-						<img src="assets/gyldendal/images/paragraf-valid.png"/>
-					</section>
-
-					<section>
-						<p>Hence, the structure</p>
-						<pre><code class="hljs relaxng" data-trim>
-							start = element paragraf {
-								attribute id { xsd:ID }, 
-								element stk { text }+
-							}
+						<h5>Trick: Mark elements that aren't matched</h5>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;xsl:template match="*"&gt;
+								&lt;UNKNOWN&gt;
+									&lt;xsl:attribute name="name" select="name()"/&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/UNKNOWN&gt;
+							&lt;/xsl:template&gt;
 						</code></pre>
 					</section>
 
 					<section>
-						<p>Consequently, the following is invalid</p>
-						<img src="assets/gyldendal/images/paragraf-not-valid.png"/>
-					</section>
+						<h4>Use-case 2: Change a single thing (almost a copy)</h4>
+						<p>Example: Uptransform documents</p>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;xsl:template match="span[@class = 'bold']"&gt;
+								&lt;b&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/b&gt;
+							&lt;/xsl:template&gt;
 
-					<section>
-						<p>Literaler kan have en datatype, fx <code>xs:integer</code> og <code>xs:date</code>.</p>
-						
-						<p>Eksempel: <code class="hljs turtle" data-trim>
-							&lt;jakob&gt; :birthDate "1980-12-08"^^xs:date .
-							</code>
-						</p>
-						<p><code>^^xs:date</code> betyder altså, at vi definerer <code>:birthDate</code> til at have XML Schema datatypen <code>xs:date</code> </a>.</p>
-					</section>
-
-					<section>
-						<p>Literaler kan endda have et sprogtag, fx <code>@en</code> eller <code>@da</code>. Eksempel:</p>
-						<pre><code class="hljs turtle" data-trim>
-							&lt;jakob&gt; :jobTitle "Softwareudvikler"@da ;
-								:jobTitle "Software developer"@en .
-							</code></pre>
-					</section>
-
-					<section>
-						<h2>Resources</h2>
-						<p>En resource er en entitet, fx en person, en organisation eller et dokument.</p>
-						<p>En URI er en <em>U</em>niq <em>R</em>essource <em>I</em>dentifier <br>
-							og kan være en <em>L</em>ocation på nettet, altså en URL, fx <a>https://www.dr.dk/tv/bluey</a>, <br>
-							men kan også blot være et <em>N</em>avn, dvs. <em>URN</em>, fx <code>urn:isbn:0451450523</code>.</p>
-					</section>
-
-					<section>
-						<h3>Namespaces</h3>
-						<p>I bemærkede måske <code>:</code> i <code>:jobTitle</code>?</p>
-						<p>Det er en <em>prefix</em> til det namespace hvori <code>jobTitle</code> er defineret.</p>
-						<p>I eksemplet stammer <code>jobTitle</code> fra <a href="https://schema.org/jobTitle">https://schema.org/jobTitle</a>.</p>
-						<p>Således er <code >:jobTitle</code> er det samme som <code>&lt;http://schema.org/jobTitle&gt;</code>.</p>
-					</section>
-
-					<section>
-						<p>Prefixes defineres i toppen af dokumentet.</p>
-						<pre><code class="hljs turtle" data-trim>
-							@base &lt;http://example.org/&gt; .
-							@prefix : &lt;http://schema.org/&gt; .
-							&lt;jakob&gt; :jobTitle "Softwareudvikler" .
+							&lt;xsl:template match="node()"&gt;
+								&lt;xsl:copy&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/xsl:copy&gt;
+							&lt;/xsl:template&gt;
 						</code></pre>
-						<p>Bemærk hvorledes <code>@base</code> definerer default namespace.</p>
-					</section>
-
-					<section>
-						<p>Der er en række "default" namespaces, fx
-						<ul>
-							<li><code>xs: &lt;http://www.w3.org/2001/XMLSchema&gt;</code></li>
-							<li><code>rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;</code></li>
-							<li><code>rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;</code></li>
-							<li><code>owl: &lt;http://www.w3.org/2002/07/owl#&gt;</code></li>
-						</ul><br><br>som man ikke behøver at definere. Her anvender man blot default prefixes.</p>
-					</section>
-
-					<section>
-						<p>Som I kan se, kan jeg tilføje flere statements med subject <code>&lt;jakob&gt;</code></p>
-						<p><code>schema.org</code> definerer fx også <code>name</code> og <code>worksFor</code>.</p>
-						<pre><code class="hljs turtle" data-trim>
-							@base &lt;http://example.org/&gt; .
-							@prefix : &lt;http://schema.org/&gt; .
-							&lt;jakob&gt; :name "Jakob Kofoed Janot" ;
-								:jobTitle "Softwareudvikler"@da ;
-								:jobTitle "Software developer"@en ;
-								:birthDate "1980-12-08"^^xs:date ;
-								:worksFor "Schultz" .
-						</code></pre>
-					</section>
-
-					<section>
-						<p>Men vi kunne også definere "Schultz" som en resource af typen <a href="http://schema.org/Corporation">http://schema.org/Corporation</a></p>
-						<pre><code class="hljs turtle" data-trim>
-							@base &lt;http://example.org/&gt; .
-							@prefix : &lt;http://schema.org/&gt; .
-
-							&lt;jakob&gt; a :Person ;
-								:name "Jakob Kofoed Janot" ;
-								:jobTitle "Softwareudvikler"@da ;
-								:jobTitle "Software developer"@en ;
-								:birthDate "1980-12-08"^^xs:date ;
-								:worksFor &lt;schultz&gt; .
-
-							&lt;schultz&gt; a :Corporation ;
-								:name "J.H. Schultz Information A/S";
-						</code></pre>
-						<p>Ækvivalent hertil er <code>&lt;jakob&gt;</code> af typen <a href="http://schema.org/Person">http://schema.org/Person</a>.</p>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<h1>RDFS</h1>
-						<p>RDFS definerer hvordan RDF metadata </p>
+						<small>Note: LexDania is the danish legislation schema</small>
 					</section>
 					
 					<section>
-						<h2>Typer</h2>
-						<p>Vi kan definere en resources type, fx. <code>&lt;schultz&gt; a :Corporation</code>, <br>hvor
-						<code>a</code> er et shortcut for <code>rdf:type</code>.</p>
-					</section>
-
-					<section>
-						<h2>Nedarv</h2>
-						<p>En type kan nedarve fra anden type, fx <code>:Corporation rdfs:subclassOf :Organization</code>.</p>
-						<p>Bemærk her, at <code>rdf:type</code> og <code>rdfs:subclassOf</code> "blot" er prædikater på <code>:Organization</code>.</p>
-					</section>
-
-					<section>
-						<h2>Superklassen <code>:Thing</code></h2>
-						<p><code>:Organization</code> og <code>:Person</code> nedstammer begge fra <code>:Thing</code>.</p>
-						<p><code>:Thing</code> er den ultimative superklasse ligesom fx <code>Object</code> i Java.</p>
-					</section>
-
-					<section>
-						<p>Kigger vi på type definition <a href="http://schema.org/Person">:Person</a> finder vi at den tillader en <a href="http://schema.org/address">:address</a>.</p>
-						<p>Og kigger vi så på videre på <a href="https://schema.org/address">:address</a> ser vi, <br>at det samme gælder for <a href="http://schema.org/Organization">:Organization</a> <br>og således også for <a href="http://schema.org/Corporation">:Corporation</a></p>
-						<pre><code class="hljs turtle" data-trim>
-							@base &lt;http://example.org/&gt; .
-							@prefix : &lt;http://schema.org/&gt; .
-							&lt;jakob&gt; a :Person ;
-								:name "Jakob Kofoed Janot" ;
-								:jobTitle "Softwareudvikler"@da ;
-								:jobTitle "Software developer"@en ;
-								:birthDate "1980-12-08"^^xs:date ;
-								:address "Sønderlundsvej 31, 4000 Roskilde" ;
-								:worksFor &lt;schultz&gt; .
-
-							&lt;schultz&gt; a :Corporation ;
-								:name "J.H. Schultz Information A/S";
-								:address "Annexstræde 5, 2500 København".
+						<h5>Trick: The identity transform</h5>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;xsl:template match="node()"&gt;
+								&lt;xsl:copy&gt;
+									&lt;xsl:apply-templates/&gt;
+								&lt;/xsl:copy&gt;
+							&lt;/xsl:template&gt;
 						</code></pre>
-						
 					</section>
 				</section>
-
-				<section>
-					<h2>RDF serialiseringsformater</h2>
-					<p>En af grundstenene i RDF er, at det skal være brugbart på alverdens softwaresystemer og frameworks.<br>
-						Derfor er RDF en abstract model med mange forskellige serialiseringsformater, herunder:</p>
-					<ul>
-						<li><a href="https://www.w3.org/TR/turtle/">Turtle</a></li>
-						<li><a href="https://www.w3.org/TR/n-triples/">N-Triples</a></li>
-						<li><a href="https://www.w3.org/TR/rdf-json/">RDF/JSON</a></li>
-						<li><a href="https://www.w3.org/TR/rdf-syntax-grammar/">RDF/XML</a></li>
-						<li><a href="https://www.w3.org/TR/rdf11-concepts/">RDFa</a></li>
-						<li><a href="https://www.w3.org/TR/json-ld/">JSON-LD</a></li>
-					</ul>
-				</section>
 				
-				<section>
-					<h3>Turtle</h3>
-					<pre><code class="hljs turtle" data-trim>
-						@base &lt;http://example.org/&gt; .
-						@prefix : &lt;http://schema.org/&gt; .
-						&lt;jakob&gt; :name "Jakob Kofoed Janot" ;
-							:jobTitle "Softwareudvikler"@da ;
-							:jobTitle "Software developer"@en ;
-							:birthDate "1980-12-08"^^xs:date ;
-							:address "Sønderlundsvej 31, 4000 Roskilde" ;
-							:worksFor &lt;schultz&gt; .
-
-						&lt;schultz&gt; a :Corporation ;
-							:name "J.H. Schultz Information A/S";
-							:address "Annexstræde 5, 2500 København".
-					</code></pre>
-				</section>
-
-				<section>
-					<h3>RDF/XML</h3>
-					<pre><code class="hljs xml" data-trim>
-						<?xml version="1.0" encoding="utf-8" ?>
-						<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-								xmlns:schema="http://schema.org/">
-
-							<rdf:Description rdf:about="http://example.org/jakob">
-								<schema:name>Jakob Kofoed Janot</schema:name>
-								<schema:jobTitle xml:lang="da">Softwareudvikler</schema:jobTitle>
-								<schema:jobTitle xml:lang="en">Software developer</schema:jobTitle>
-								<schema:birthDate rdf:datatype="http://www.w3.org/2001/XMLSchema#date">1980-12-08</schema:birthDate>
-								<schema:address>Sønderlundsvej 31, 4000 Roskilde</schema:address>
-								<schema:worksFor>
-								<schema:Corporation rdf:about="http://example.org/schultz">
-									<schema:name>J.H. Schultz Information A/S</schema:name>
-									<schema:address>Annexstræde 5, 2500 København</schema:address>
-								</schema:Corporation>
-								</schema:worksFor>
-							</rdf:Description>
-						</rdf:RDF>
-					</code></pre>
-				</section>
-
-				<section>
-					<h3>JSON-LD</h3>
-					<pre><code class="hljs json" data-trim>
-						[
-							{
-								"@id":"http://example.org/jakob",
-								"http://schema.org/name":[
-									{
-										"@value":"Jakob Kofoed Janot"
-									}
-								],
-								"http://schema.org/jobTitle":[
-									{
-										"@value":"Softwareudvikler",
-										"@language":"da"
-									},
-									{
-										"@value":"Software developer",
-										"@language":"en"
-									}
-								],
-								... // resten af data
-								],
-								"http://schema.org/worksFor":[
-									{
-										"@id":"http://example.org/schultz"
-									}
-								]
-							},
-							{
-								"@id":"http://example.org/schultz",
-								"@type":[
-									"http://schema.org/Corporation"
-								],
-								"http://schema.org/name":[
-									{
-										"@value":"J.H. Schultz Information A/S"
-									}
-								],
-								"http://schema.org/address":[
-									{
-										"@value":"Annexstræde 5, 2500 København"
-									}
-								]
-							},
-							{
-								"@id":"http://schema.org/Corporation"
-							}
-						]
-					</code></pre>
-				</section>
-
-				<section>
-					<p>Hvorfor nu RDF, når jeg nu har JSON?</p>
-				</section>
-
-				<section>
-					<p>Svaret er: <strong>Tooling</strong></p>
-				</section>
-
-				<section>
-					<h3>Triple-stores</h3>
-					<p>Triple-stores er graf-databaser, der er optimeret til at gemme og søge i RDF-data.</p>
-				</section>
-
-				<section>
-					<h1>DEMO</h1>
-				</section>
-				
-				<section>
-					<p><em>"Graf-databaser ...</em> kan man så ikke bare bruge sådan een?"</p>
-				</section>
-
-				<section>
-					<h3>Triple-stores har nogle killer  features:</h3>
-					<p><strong>SPARQL</strong> - søgning i RDF grafdata</p>
-					<p><strong>Reasoning</strong> - definer nye facts ud fra eksisterende</p>
-				</section>
-
-				<section>
-					<h3>SELECT * IN SPARQL</h3>
-					<pre><code class="hljs sparql" data-trim>
-						BASE &lt;http://www.example.org/&gt;
-						PREFIX schema: &lt;http://schema.org/&gt;
-						SELECT ?S ?P ?O
-						WHERE {
-							?S ?P ?O
-						}
-					</code></pre>
-				</section>
-
-				<section>
-					<h3>SPARQL</h3>
-					<pre><code class="hljs sparql" data-trim>
-						BASE &lt;http://www.example.org/&gt;
-						PREFIX schema: &lt;http://schema.org/&gt;
-						SELECT ?name ?jobTitle
-						WHERE {
-							?person schema:name ?name ;
-								schema:jobTitle ?jobTitle .
-						}
-					</code></pre>
-				</section>
-
-				<section>
-					<p>... og nu bliver det smart</p>
-				</section>
-
-				<section>
-					<p>Mange triple-stores har en indbygget reasoner.</p>
-				</section>
-
-				<section>
-					<p>Reasoning, giver os mulighed for at begrænse "input" data til de essentielle facts</p>
-				</section>
-
-				<section>
-					<p>Reasoners der kan evaluere regler<br> (herunder: OWL axioms) og dermed udlede nye facts.</p>
-				</section>
-
-				<section>
-					<h2>Reasoning - med OWL axioms</h2>
-				</section>
-
-				<section>
-					<p>Med OWL kan vi definere nye klasser og properties ud fra eksisterende</p>
-					<pre><code class="hljs turtle" data-trim>
-						:Organization a owl:Class .
-						:Organization rdfs:subClassOf :Thing .
-						
-						:Company rdfs:subClassOf :Organization .
-
-						:Person a owl:Class .
-						:Person rdfs:subClassOf :Thing .
-
-						:worksFor a owl:ObjectProperty .
-					</code></pre>
-				</section>
-
-				<section>
-					<p>Vi kan definere OWL ObjectProperties, fx begrænse <code>:worksFor</code> til<br> at have <code>:Organization</code> som subject og <code>:Person</code> som object</p>
-					<pre><code class="hljs turtle" data-trim>
-						:worksFor a owl:ObjectProperty ;
-							rdfs:domain :Person ;
-							rdfs:range :Organization .
-					</code></pre>
-					<p>- altså fra en resource til en anden resource</p>
-				</section>
-
-				<section>
-					<p>Vi kan definere OWL DataProperties, fx startdato for ansættelsesforholdet</p>
-					<pre><code class="hljs turtle" data-trim>
-						:startDate a owl:DatatypeProperty ;
-							rdfs:domain :worksFor ;
-							rdfs:range xsd:date .
-					</code></pre>
-					<p>- altså fra en resource til en literal</p>
-				</section>
-
-				<section>
-					<p>OWL kan også relatere properties, fx definere <code>:hasWorker</code> som den omvendte af <code>:worksFor</code></p>
-					<pre><code class="hljs turtle" data-trim>
-						:hasWorker owl:inverseOf :worksFor .
-					</code></pre>
-				</section>
-
-				<section>
-					<p>Man kan endda definere properties som nedarver fra andre properties</p>
-					<pre><code class="hljs turtle" data-trim>
-						:slavesFor a owl:ObjectProperty .
-						:slavesFor rdfs:subPropertyOf :worksFor .
-					</code></pre>
-					<p>E.g. <code>:slavesFor</code> has no <code>:endDate</code></p>
-				</section>
-
-				<section>
-					<p>Redefiner :worksFor så den har en property :startDate</p>
-					<pre><code class="hljs turtle" data-trim>
-						:worksFor owl:propertyChainAxiom (:hasWorker :startDate) .
-					</code></pre>
-				</section>
-
-				<!-- Slide der demonstrerer startDate, bruges til at beregne om man har 5, 10, 15, 20, 25, ... års jubilæum -->
-				
-				<section>
-					<h3>Reasoning - med Datalog regler</h3>
-				</section>
-
-				<section>
-					<p>Datalog er et deklarativt programmeringssprog, der kan bruges til at definere regler.</p>
-				</section>
-
-				<section>
-					<p>Reglerne kan bruges til at udlede nye facts, ligesom vi kan i OWL.</p>
-				</section>
-
-				<section>
-					<pre><code class="hljs datalog" data-trim>
-						worksFor(?person, ?company) :- 
-							hasWorker(?company, ?person).
-					</code></pre>
-				</section>
-
-				<section>
-					<!-- in datalog define freeGlasses if birthDate more than 50 years ago -->
-					<pre><code class="hljs datalog" data-trim>
-						freeGlasses(?person) :- 
-							birthDate(?person, ?date), 
-							?date &lt; "1965-01-01"^^xsd:date. 
-					</code></pre>
-				</section>
-
-				<section>
-					<!-- in datalog define a collegue relationship if person1 worksFor a Company that hasWorker person2 -->
-					<pre><code class="hljs datalog" data-trim>
-						collegue(?person1, ?person2) :- 
-							worksFor(?person1, ?company), 
-							hasWorker(?company, ?person2), 
-							?person1 != ?person2.
-					</code></pre>
-				</section>
-
-				<section>
-					<p>SPARQL - hvor mange ansatte er der i Schultz?</p>
-					<pre><code class="hljs sparql" data-trim>
-						BASE &lt;http://www.example.org/&gt;
-						PREFIX schema: &lt;http://schema.org/&gt;
-						SELECT (COUNT(?person) AS ?count)
-						WHERE {
-							?company schema:name "J.H. Schultz Information A/S" ;
-								:hasWorker ?person .
-						}
-					</code></pre>
-				</section>
-
-				<section>
-					<p>Hvor mange er født efter 1980?</p>
-					<pre><code class="hljs sparql" data-trim>
-						BASE &lt;http://www.example.org/&gt;
-						PREFIX schema: &lt;http://schema.org/&gt;
-						SELECT (COUNT(?person) AS ?count)
-						WHERE {
-							?company schema:name "J.H. Schultz Information A/S" ;
-								:hasWorker ?person .
-							?person schema:birthDate ?birthDate .
-							FILTER (?birthDate > "1980-01-01"^^xsd:date)
-						}
-					</code></pre>
-				</section>
-
-				<section>
-					<p>Brug den beregnede :hasAnniversary i en SPARQL søgning </p>
-					<pre><code class="hljs sparql" data-trim>
-						BASE &lt;http://www.example.org/&gt;
-						PREFIX schema: &lt;http://schema.org/&gt;
-						SELECT ?name ?jobTitle
-						WHERE {
-							?company schema:name "J.H. Schultz Information A/S" ;
-								:hasWorker ?person .
-							?person schema:name ?name ;
-								:hasAnniversary "true"^^xsd:boolean .
-						}
-					</code></pre>
-				</section>
-
-				<section>
-					<p>Jakob's kollegaer</p>
-					<pre><code class="hljs sparql" data-trim>
-						BASE &lt;http://www.example.org/&gt;
-						PREFIX schema: &lt;http://schema.org/&gt;
-						SELECT ?colleague
-						WHERE {
-							&lt;jakob&gt; :worksFor/:hasWorker ?colleague
-							FILTER (?colleague != &lt;jakob&gt;)
-						}
-					</code></pre>
-				</section>
-
-				<section>
-					<h3>Jeg kunne istedet have defineret <code>:hasCollegue</code></h3>
-					<pre><code class="hljs datalog" data-trim>
-						hasCollegue(?person1, ?person2) :- worksFor(?person1, ?company), hasWorker(?company, ?person2).
-					</code></pre>
-					<p>... altså en regel på en regel. Smart!</p>
-				</section>
-
-				<section>
-					<p>Jakob's kollegaer (ved brug af :hasCollegue)</p>
-					<pre><code class="hljs sparql" data-trim>
-						BASE &lt;http://www.example.org/&gt;
-						PREFIX schema: &lt;http://schema.org/&gt;
-						SELECT ?colleague
-						WHERE {
-							&lt;jakob&gt; :hasCollegue ?colleague
-							FILTER (?colleague != &lt;jakob&gt;)
-						}
-					</code></pre>
-				</section>
-
-				<section>
-					<p>Reasoning works for classes too</p>
-				</section>
-
-				<section>
-					<p>Define a <code>:SchultzEmployee</code> as a subclass of <code>:Person</code></p>
-					<pre><code class="hljs turtle" data-trim>
-						:SchultzEmployee a rdfs:Class ;
-							rdfs:subClassOf :Person .
-					</code></pre>
-				</section>
-
-				<section>
-					<pre><code class="hljs datalog" data-trim>
-						SchultzEmployee(?person) :- 
-							worksFor(?person, ?company), 
-							?company = &lt;schultz&gt;.
-					</code></pre>
-				</section>
-
-
-				<section>
-					<h2>Definer en <code>:harJubilæum</code> property hvis en <code>:SchultzEmployee</code> har <code>startDate</code> for 25 år siden</h2>
-					<pre><code class="hljs datalog" data-trim>
-						harJubilaeum(?person) :- 
-							startDate(?person, ?date), 
-							?date &lt; "1990-01-01"^^xsd:date.
-					</code></pre>
-				</section>
-				
-				<section>
-					<p>Igen, hvor mange ansatte er der i Schultz?</p>
-					<pre><code class="hljs sparql" data-trim>
-						BASE &lt;http://www.example.org/&gt;
-						PREFIX schema: &lt;http://schema.org/&gt;
-						SELECT (COUNT(?person) AS ?count)
-						WHERE {
-							?person a :SchultzEmployee .
-						}
-					</code></pre>
-				</section>
-
 			</div>
 		</div>
 

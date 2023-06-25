@@ -5,6 +5,7 @@
     queryBinding="xslt2">
     
     <sch:pattern>
+        <!--
         <sch:rule context="paragraf[preceding::paragraf]">
             <sch:let name="paragraf-number" value="number(substring-after(@id, 'p'))"/>
             <sch:let name="preceding-paragraf-id" value="preceding::paragraf[1]/@id"/>
@@ -15,6 +16,7 @@
                 of the preceding paragraf (<sch:value-of select="$preceding-paragraf-id"/>)  
             </sch:assert>
         </sch:rule>
+        -->
         
         <sch:rule context="paragraf/@id">
             <sch:assert test="matches(., '^p[1-9][0-9]*([a-zæøå][aoe]?)?$')">
@@ -34,6 +36,7 @@
             </sqf:fix>
         </sch:rule>
         
+        <!--
         <sch:rule context="paragraf">
             <sch:assert test="starts-with(descendant::text()[1], '§')" sqf:fix="remove-pgf-start">
                 Paragraf is not supposed to start with a '§'
@@ -45,5 +48,6 @@
                 <sqf:stringReplace regex="^§\s*[1-9][0-9]*\s*[A-ZÆØÅa-zæøå]?\.?\s+" select="''"/>
             </sqf:fix>
         </sch:rule>
+        -->
     </sch:pattern>
 </sch:schema>
