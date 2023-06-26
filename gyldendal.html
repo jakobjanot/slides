@@ -146,264 +146,10 @@
 					</section>
 				</section>
 				
-
-				<!-- Schemas -->
-				<section>
-					<section>
-						<h2>On Schematron</h2>
-					</section>
-
-					<section>
-						<p>XML is not <em>just</em> a data format</p>
-					</section>
-
-					<section>
-						<p>it's a <em>M</em>arkup <em>L</em>anguage<br/></p>
-					</section>
-
-					<section>
-						<p><em>Marking up </em>content - analouge</p>
-						<img src="assets/gyldendal/images/markup.png">
-					</section>
-	
-					<section>
-						<p>and digitally</p>
-						<pre><code class="hljs language-xml" data-trim>
-							<script type="text/template">
-								<p>
-									... Kennedsy aktioner omkring Cubakrisen ses.
-								</p>
-								<p>
-									Da Cuba ved Castros overtagelse af magten blev 
-									et socialistisk land, manglede det kapitaler til 
-									gennemfør<del>sel</del><ins>else</ins> af sit 
-									nye reformprogram. De amerikanske kapitalister
-									nægtede forståeligt nok at udlåne penge, da de
-									...
-								</p>
-							</script>
-						</code></pre>
-					</section>
-	
-					<section>
-						<p>XML is e<em>X</em>tensible</p>
-						<p>We can define tree-like data structures, <strong>schemas</strong></p>
-					</section>
-
-					<section>
-						<p>Schemas are strict, just like a table schema in SQL</p>
-						<p>but they still allow <em>flexibility</em> we need to express natural language, e.g.</p>
-						<pre><code class="hljs language-xml" data-trim>
-							<h1>CO<sub>2</sub> <em>er</em> en drivhusgas</h1>
-						</code></pre>
-						<small>i.e. a heading element with two elements + three text nodes</small>
-					</section>
-
-					<section>
-						<p>Schemas are declarative</p>
-						<p>We (only) need to specify how a document must be structured.</p>
-					</section>
-
-					<section>
-						<p>Example: A <em>paragraf</em> have one or more <em>stykker</em></p>
-						<img src="assets/gyldendal/images/paragraf-valid.png"/>
-					</section>
-
-					<section>
-						<p>Hence, the structure</p>
-						<pre><code class="hljs relaxng" data-trim>
-							start = element paragraf {
-								attribute id { xsd:ID }, 
-								element stk { text }+
-							}
-						</code></pre>
-					</section>
-
-					<section>
-						<p>Consequently, the following is invalid</p>
-						<img src="assets/gyldendal/images/paragraf-not-valid.png"/>
-					</section>
-
-					<section>
-						<h3>Schemas are not just for validation</h3>
-					</section>
-
-					<section>
-						<p>XML editors understand schemas</p>
-						<p>and can help you write valid documents</p>
-						<p>Hence strict schemas are a valuable tool for editors</p>
-					</section>
-
-					<section>
-						<p>Also, it's easier to avoid introducing errors, than to find and correct them later on</p>
-					</section>
-
-					<section>
-						<p>Valid strictly structured documents means: <ul>
-							<li>We can trust the data</li>
-							<li>We know what to expect</li>
-							<li>We can build appplication code based on those expectations</li>
-							<li>We need less application code</li>
-							<li>It's easier to build applications</li>
-						</ul></p>
-					</section>
-
-					<section>
-						<p>But schemas cannot express all kind of constraints</p>
-						<p>Example: § 4 should follow § 3</p>
-					</section>
-
-					<section>
-						<h2>Schematron</h2>
-					</section>
-					
-					<section>
-						<p>Schematron is a rule-based language</p>
-						<p>based on XPath</p>
-					</section>
-
-					<section>
-						<p>Every rule has a context</p>
-						<pre><code class="hljs language-xml" data-trim>
-							<sch:rule context="paragraf">
-								...
-							</sch:rule>
-						</code></pre>
-					</section>
-
-					<section>
-						<p>and an assertion</p>
-						<pre><code class="hljs language-xml" data-trim>
-							<sch:rule context="paragraf">
-								<sch:assert test="count(stk) gt 0">
-									A paragraf must have at least one stk
-								</sch:assert>
-							</sch:rule>
-						</code></pre>
-					</section>
-
-					<section>
-						<p>We can also define variables</p>
-						<pre><code class="hljs language-xml" data-trim>
-							<script type="text/template">
-								<sch:rule context="paragraf">
-									<sch:let name="paragraf-number" value="number(substring-after(@id, 'p'))"/>
-									<sch:assert test="$paragraf-number gt 0">
-										The paragraf number must be greater than 0
-									</sch:assert>
-								</sch:rule>
-							</script>
-						</code></pre>
-					</section>
-
-					<section>
-						<p>Back to the example:</p><p></p> § 4 should follow § 3</p>
-					</section>
-
-					<section>
-						<p>§ 4 should follow § 3</p>
-						<pre><code class="hljs language-xml" data-trim >
-							<script type="text/template">
-								<sch:rule context="paragraf[preceding::paragraf]">
-
-									<sch:let name="paragraf-number" 
-											    value="number(substring-after(@id, 'p'))"/>
-
-									<sch:let name="preceding-paragraf-id" 
-											    value="preceding::paragraf[1]/@id"/>
-
-									<sch:let name="preceding-paragraf-number"
-											    value="number(substring-after($preceding-paragraf-id, 'p'))"/>
-									
-									<sch:assert test="$paragraf-number gt $preceding-paragraf-number ">
-										The paragraf id (<sch:value-of select="@id"/>) should be larger than the id 
-										of the preceding paragraf (<sch:value-of select="$preceding-paragraf-id"/>)  
-									</sch:assert>
-
-								</sch:rule>
-							</script>
-						</code></pre>
-					</section>
-
-					<section>
-						<h3>But wait, there's more</h3>
-						<p></p>
-					</section>
-
-					<section>
-						<p>Example</p>
-						<p>Replacing <code>ae</code> with <code>æ</code> in id's</p>
-					</section>
-
-					<section>
-						<p>It's not an error, so we just report it</p>
-						<pre><code class="hljs language-xml" data-trim >
-							<script type="text/template">
-								<sch:rule context="paragraf/@id">
-									<sch:report test="ends-with(., 'ae')" sqf:fix="replace-ae">
-										id should not contain 'ae'
-									</sch:report>
-								</sch:rule>
-							</script>
-						</code></pre>
-					</section>
-
-					<section>
-						<p>But we can also suggest a fix for it</p>
-						<pre><code class="hljs language-xml" data-trim >
-							<script type="text/template">
-								<sqf:fix id="replace-ae">
-									<sqf:description>
-										<sqf:title>Replace 'ae' with 'æ'</sqf:title>
-									</sqf:description>
-									<sqf:replace node-type="keep" target="id" select="replace(., 'ae', 'æ')"/>
-								</sqf:fix>
-							</script>
-						</code></pre>
-					</section>
-
-					<section>
-						<p>Schematron quick fixes</p>
-						<pre><code class="hljs language-xml" data-trim >
-							<script type="text/template">
-								<sch:rule context="paragraf/@id">
-									<sch:report test="ends-with(., 'ae')" sqf:fix="replace-ae">
-										id should not contain 'ae'
-									</sch:report>
-								</sch:rule>
-
-								<sqf:fix id="replace-ae">
-									<sqf:description>
-										<sqf:title>Replace 'ae' with 'æ'</sqf:title>
-									</sqf:description>
-									<sqf:replace node-type="keep" target="id" select="replace(., 'ae', 'æ')"/>
-								</sqf:fix>
-							</script>
-						</code></pre>
-					</section>
-
-					<section>
-						<img src="assets/gyldendal/images/sqf-1.png"/>
-					</section>
-
-					<section>
-						<img src="assets/gyldendal/images/sqf-2.png"/>
-					</section>
-
-					<section>
-						<img src="assets/gyldendal/images/sqf-3.png"/>
-					</section>
-
-					<section>
-						<img src="assets/gyldendal/images/imagination-spongebob-squarepants.gif"/>
-					</section>
-				</section>
-
 				<!-- Uptransforming to better semantics -->
 				<section>
 					<section>
 						<h2>Uptransforming documents</h1>
-						<br/>
 						<p>Case: Enabling <em>§-zoom</em> in Schultz Legal Research</p>
 					</section>
 					
@@ -432,6 +178,16 @@
 							<li>Use XSpec for unit testing</li>
 							<li>Large input/output verification test set</li>
 						</ul>
+					</section>
+
+					<section>
+						<h3>Verfication test set</h3>
+						<img src="assets/gyldendal/images/test-folder.png"/>
+					</section>
+
+					<section>
+						<p>Why?</p>
+						<p>We want to progress iteratively<br> by safely enhancing structure <br>and eliminating known errors, <br>without introducing new errors.</p>
 					</section>
 
 					<section>
@@ -857,11 +613,263 @@
 					</section>
 				</section>
 				
-				
+					<!-- Schemas -->
+					<section>
+						<section>
+							<h2>Schematron and friends</h2>
+						</section>
+	
+						<section>
+							<p>XML is not <em>just</em> a data format</p>
+						</section>
+	
+						<section>
+							<p>it's a <em>M</em>arkup <em>L</em>anguage<br/></p>
+						</section>
+	
+						<section>
+							<p><em>Marking up </em>content - analouge</p>
+							<img src="assets/gyldendal/images/markup.png">
+						</section>
+		
+						<section>
+							<p>and digitally</p>
+							<pre><code class="hljs language-xml" data-trim>
+								<script type="text/template">
+									<p>
+										... Kennedsy aktioner omkring Cubakrisen ses.
+									</p>
+									<p>
+										Da Cuba ved Castros overtagelse af magten blev 
+										et socialistisk land, manglede det kapitaler til 
+										gennemfør<del>sel</del><ins>else</ins> af sit 
+										nye reformprogram. De amerikanske kapitalister
+										nægtede forståeligt nok at udlåne penge, da de
+										...
+									</p>
+								</script>
+							</code></pre>
+						</section>
+		
+						<section>
+							<p>XML is e<em>X</em>tensible</p>
+							<p>We can define tree-like data structures, <strong>schemas</strong></p>
+						</section>
+	
+						<section>
+							<p>Schemas are strict, just like a table schema in SQL</p>
+							<p>but they still allow <em>flexibility</em> we need to express natural language, e.g.</p>
+							<pre><code class="hljs language-xml" data-trim>
+								<h1>CO<sub>2</sub> <em>er</em> en drivhusgas</h1>
+							</code></pre>
+							<small>i.e. a heading element with two elements + three text nodes</small>
+						</section>
+	
+						<section>
+							<p>Schemas are declarative</p>
+							<p>We (only) need to specify how a document must be structured.</p>
+						</section>
+	
+						<section>
+							<p>Example: A <em>paragraf</em> have one or more <em>stykker</em></p>
+							<img src="assets/gyldendal/images/paragraf-valid.png"/>
+						</section>
+	
+						<section>
+							<p>Hence, the structure</p>
+							<pre><code class="hljs relaxng" data-trim>
+								start = element paragraf {
+									attribute id { xsd:ID }, 
+									element stk { text }+
+								}
+							</code></pre>
+						</section>
+	
+						<section>
+							<p>Consequently, the following is invalid</p>
+							<img src="assets/gyldendal/images/paragraf-not-valid.png"/>
+						</section>
+	
+						<section>
+							<h3>Schemas are not just for validation</h3>
+						</section>
+	
+						<section>
+							<p>XML editors understand schemas</p>
+							<p>and can help you write valid documents</p>
+							<p>Hence strict schemas are a valuable tool for editors</p>
+						</section>
+	
+						<section>
+							<p>Also, it's easier to avoid introducing errors, than to find and correct them later on</p>
+						</section>
+	
+						<section>
+							<p>Valid strictly structured documents means: <ul>
+								<li>We can trust the data</li>
+								<li>We know what to expect</li>
+								<li>We can build appplication code based on those expectations</li>
+								<li>We need less application code</li>
+								<li>It's easier to build applications</li>
+							</ul></p>
+						</section>
+	
+						<section>
+							<p>But schemas cannot express all kind of constraints</p>
+							<p>Example: § 4 should follow § 3</p>
+						</section>
+	
+						<section>
+							<h2>Schematron</h2>
+						</section>
+						
+						<section>
+							<p>Schematron is a rule-based language</p>
+							<p>based on XPath</p>
+						</section>
+	
+						<section>
+							<p>Every rule has a context</p>
+							<pre><code class="hljs language-xml" data-trim>
+								<sch:rule context="paragraf">
+									...
+								</sch:rule>
+							</code></pre>
+						</section>
+	
+						<section>
+							<p>and an assertion</p>
+							<pre><code class="hljs language-xml" data-trim>
+								<sch:rule context="paragraf">
+									<sch:assert test="count(stk) gt 0">
+										A paragraf must have at least one stk
+									</sch:assert>
+								</sch:rule>
+							</code></pre>
+						</section>
+	
+						<section>
+							<p>We can also define variables</p>
+							<pre><code class="hljs language-xml" data-trim>
+								<script type="text/template">
+									<sch:rule context="paragraf">
+										<sch:let name="paragraf-number" value="number(substring-after(@id, 'p'))"/>
+										<sch:assert test="$paragraf-number gt 0">
+											The paragraf number must be greater than 0
+										</sch:assert>
+									</sch:rule>
+								</script>
+							</code></pre>
+						</section>
+	
+						<section>
+							<p>Back to the example:</p><p></p> § 4 should follow § 3</p>
+						</section>
+	
+						<section>
+							<p>§ 4 should follow § 3</p>
+							<pre><code class="hljs language-xml" data-trim >
+								<script type="text/template">
+									<sch:rule context="paragraf[preceding::paragraf]">
+	
+										<sch:let name="paragraf-number" 
+													value="number(substring-after(@id, 'p'))"/>
+	
+										<sch:let name="preceding-paragraf-id" 
+													value="preceding::paragraf[1]/@id"/>
+	
+										<sch:let name="preceding-paragraf-number"
+													value="number(substring-after($preceding-paragraf-id, 'p'))"/>
+										
+										<sch:assert test="$paragraf-number gt $preceding-paragraf-number ">
+											The paragraf id (<sch:value-of select="@id"/>) should be larger than the id 
+											of the preceding paragraf (<sch:value-of select="$preceding-paragraf-id"/>)  
+										</sch:assert>
+	
+									</sch:rule>
+								</script>
+							</code></pre>
+						</section>
+	
+						<section>
+							<h3>But wait, there's more</h3>
+							<p></p>
+						</section>
+	
+						<section>
+							<p>Example</p>
+							<p>Replacing <code>ae</code> with <code>æ</code> in id's</p>
+						</section>
+	
+						<section>
+							<p>It's not an error, so we just report it</p>
+							<pre><code class="hljs language-xml" data-trim >
+								<script type="text/template">
+									<sch:rule context="paragraf/@id">
+										<sch:report test="ends-with(., 'ae')" sqf:fix="replace-ae">
+											id should not contain 'ae'
+										</sch:report>
+									</sch:rule>
+								</script>
+							</code></pre>
+						</section>
+	
+						<section>
+							<p>But we can also suggest a fix for it</p>
+							<pre><code class="hljs language-xml" data-trim >
+								<script type="text/template">
+									<sqf:fix id="replace-ae">
+										<sqf:description>
+											<sqf:title>Replace 'ae' with 'æ'</sqf:title>
+										</sqf:description>
+										<sqf:replace node-type="keep" target="id" select="replace(., 'ae', 'æ')"/>
+									</sqf:fix>
+								</script>
+							</code></pre>
+						</section>
+	
+						<section>
+							<p>Schematron quick fixes</p>
+							<pre><code class="hljs language-xml" data-trim >
+								<script type="text/template">
+									<sch:rule context="paragraf/@id">
+										<sch:report test="ends-with(., 'ae')" sqf:fix="replace-ae">
+											id should not contain 'ae'
+										</sch:report>
+									</sch:rule>
+	
+									<sqf:fix id="replace-ae">
+										<sqf:description>
+											<sqf:title>Replace 'ae' with 'æ'</sqf:title>
+										</sqf:description>
+										<sqf:replace node-type="keep" target="id" select="replace(., 'ae', 'æ')"/>
+									</sqf:fix>
+								</script>
+							</code></pre>
+						</section>
+	
+						<section>
+							<img src="assets/gyldendal/images/sqf-1.png"/>
+						</section>
+	
+						<section>
+							<img src="assets/gyldendal/images/sqf-2.png"/>
+						</section>
+	
+						<section>
+							<img src="assets/gyldendal/images/sqf-3.png"/>
+						</section>
+	
+						<section>
+							<img src="assets/gyldendal/images/imagination-spongebob-squarepants.gif"/>
+						</section>
+					</section>
+
+					
 				<!-- XSLT -->
 				<section>
 					<section>
-						<h2>On XSLT</h2>
+						<h2>XSLT</h2>
 					</section>
 
 					<section>
