@@ -398,7 +398,277 @@
 						<img src="assets/gyldendal/images/imagination-spongebob-squarepants.gif"/>
 					</section>
 				</section>
+
+				<!-- Uptransforming to better semantics -->
+				<section>
+					<section>
+						<h2>Uptransforming documents</h1>
+						<br/>
+						<p>Case: Enabling <em>§-zoom</em> in Schultz Legal Research</p>
+					</section>
+					
+					<section>
+						<h2>Why?</h2>
+						<p>Better semantics enables new possibilities.</p>
+						<p>E.g. Schultz §-zoom is all about better semantics</p>
+						<p>Align documents in various content models (i.e. schemas)</p>
+					</section>
+					
+					<section>
+						<img src="assets/gyldendal/images/pgf-zoom-hegnsloven-icon.png"/>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/pgf-zoom-hegnsloven.png"/>
+					</section>
+					
+					<section>
+						<h2>How?</h2>
+						<ul>
+							<li>Transform using XSLT</li>
+							<li>Validate input (know what to expect in XSLT)</li>
+							<li>Validate output</li>
+							<li>Validate text-differences - did we shuffle or loose something?</li>
+							<li>Use XSpec for unit testing</li>
+							<li>Large input/output verification test set</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Validation of grammatics</h3>
+					</section>
+
+					<section>
+						<h4>Example</h4>
+						<p>a <em>paragraf</em> must contain one or more <em>ledd</em></p>
+					</section>
+
+					<section>
+						<h4>Example</h4>
+						<p>a <em>proposisjon</em> must have the following <em>kapitler</em>
+							<ul> 
+								<li>...</li>
+								<li><em>Merknader til de enkelte bestemmelsene</em></li>
+								<li><em>Tilrådning</em></li>
+								<li><em>Forslag til lov om ...</em></li>
+							</ul>
+						</p>
+					</section>
+
+					<section>
+						<h3>(Business) rule validation</h3>
+					</section>
+
+					<section>
+						<h4>Example</h4>
+						<p>§ 4 follows § 3</p>
+					</section>
+					
+					<section>
+						<h4>Example</h4>
+						<p>Logical ids for a <em>paragraf</em> in a <em>lov</em> is composed of</p>
+						<ul>
+							<li>"L"</li>
+							<li>"8-digit <em>kunngjort</em> date"</li>
+							<li>"2-digit serial number"</li>
+							<li>" . "</li>
+							<li>"§"</li>
+							<li>"paragraf number"</li>
+						</ul>
+						<br/>
+						<p>E.g. <em>tvisteloven § 18-3</em>, kunngjort 17/6 2005<br> will become <em>L2005061790.§18-3</em></p>
+					</section>
+
+					<section>
+						<h4>Example</h4>
+						<p>id-references inside the document should have a target id</p>
+						<p>i.e. <code>href="#p3"</code> should have a <code>id="p3"</code></p>
+					</section>
+
+					<section>
+						<h3>The uptransformation flow</h3>
+						<ul>
+							<li>Validate input document</li>
+							<li>Transform document step by step using a XSLT pipeline</li>
+							<li>Validate output document</li>
+							<li>Report validation errors</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Work iteratively using git</h3>
+						<p>The pull-request contains
+							<ul>
+								<li>changes to the transformation code, i.e. XSLT</li>
+								<li>changes in output documents, showing the improvement</li>
+								<li>changes to validation reports, fewer errors (hopefully)</li>
+							</ul>
+						</p>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/pull-request.png"/>
+					</section>
+
+					<section>
+						<h4>Aggregation of error types is useful</h4>
+						<p>All errors were given types, so we could aggregate errors by type</p>
+						<p>... and focus our efforts on error types</p>
+					</section>
+
+					<section>
+						<p>Trying to solve all problems in a single document<br> is not that productive</p>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/agg-errors.png"/>
+					</section>
+
+					<section>
+						<img src="assets/gyldendal/images/agg-errors-2.png"/>
+					</section>
+
+					<section>
+						<h3>Ensure no content is shuffled or lost unexpectedly</h3>
+						<p>i.e. for input and output document</p>
+						<ul>
+							<li>Strip all xml</li>
+							<li>Tokenize</li>
+							<li>Compare the list of words</li>
+						</ul>
+						<p>... and save as part of pull-request</p>
+					</section>
+
+					<section>
+						<p>Example ...</p>
+					</section>
+
+					<section>
+						<h3>XSLT pipelines</h3>
+						<p>Output of one step, is input of the next, ...</p>
+						<p>Why?</p>
+					</section>
+
+					<section>
+						<h4>Problem</h4>
+						<p>It's hard to solve <em>complex</em> tasks</p>
+					</section>
+
+					<section>
+						<h4>Solution</h4>
+						<p>Instead, solve <em>simple</em> tasks, <br>task by task, <br>making it increasingly easier <br>to solve the complex task</p>
+					</section>
+
+					<section>
+						<p>.. thus, each step is a XSLT transform, that
+							<ul>
+								<li>Outputs a document that is <em>almost</em><br> identical to the input document</li>
+								<li>Changes will be made, if the right context is present</li>
+							</ul>
+						</p>
+					</section>
+
+					<section>
+						<h4>Example</h4>
+						<p>Generate links from a <em>Merknader</em> section to <em>paragraf</em> sections</p>
+					</section>
+
+					<section>
+						<p>Mark up <em>paragraf</em>-references</p>
+						<pre><code class="hljs language-xml" data-trim data-line-numbers="2">
+							&lt;section&gt;
+								&lt;h1&gt;Til § 4-9 og 12&lt;/h1&gt;
+							&lt;/section&gt;
+						</code></pre>
+						<p>... as</p>
+						<pre><code class="hljs language-xml" data-trim data-line-numbers="2">
+							&lt;section&gt;
+								&lt;h1&gt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
+							&lt;/section&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Collect</p>
+						<pre><code class="hljs language-xml" data-trim data-line-numbers="1">
+							&lt;section data-remarks="#p4-#p9 #p12"&gt;
+								&lt;h1&gt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
+							&lt;/section&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Expand ranges</p>
+						<pre><code class="hljs language-xml" data-trim data-line-numbers="1">
+							&lt;section data-remarks="#p4 #p5 #p6 #p7 #p8 #p9 #p12"&gt;
+								&lt;h1&gt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
+							&lt;/section&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Cleanup</p>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;section data-remarks="#p4 #p5 #p6 #p7 #p8 #p9 #p12"&gt;
+								&lt;h1&gt;Til § 4-9 og 12&lt;/h1&gt;
+							&lt;/section&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>Our ~100 step pipeline, can be generalized as</h4>
+						<ul>
+							<li>Strip insignificant newlines and whitespace</li>
+							<li>Detect words that marks the beginning of sections, <br>
+								e.g. <em>Kapitel 3</em>, <em>Til § 5</em>, «..., </li>
+							<li>Add wrappers i.e. sections - outside-in</li>
+							<li>Generate logical id's for those sections</li>
+							<li>Generate id-references</li>
+							<li>Remove empty or redundant elements</li>
+						</ul>
+					</section>
+
+					<section>
+						<h4>XML databases</h4>
+						<p>are quite useful for explorative analysis.</p>
+						<p>They let you search across all your documents</p>
+						<p>using XPath</p>
+					</section>
+
+					<section>
+						<h4>Example: BaseX</h4>
+						<p>Indexing documents is easy</p>
+						<img src="assets/gyldendal/images/basex-create2.png"/>
+					</section>
+
+					<section>
+						<h2>Summing up, we had ...</h2>
+					</section>
+
+					<section>
+						<img src="assets/images/lfo-crap.png"/>
+					</section>
+					<section>
+						<img src="assets/images/lfo-crap2.png"/>
+					</section>
+					<section>
+						<img src="assets/images/lfo-crap3.png"/>
+					</section>
+
+					<section>
+						<h2>... and we got</h2>
+					</section>
+
+					<section>
+						<img src="assets/images/lfo-good.png"/>
+					</section>
+
+					<section>
+						<p>... and happy customers 😄</p>
+					</section>
+				</section>
 				
+				<!-- Rhinestone XML -->
 				<section>
 					<section>
 						<h2>Rhinestone XML</h2>
@@ -414,6 +684,50 @@
 							<li>no <code>form</code>s</li>
 							<li>javascript events, e.g. <code>onclick=</code></li>
 						</ul>
+					</section>
+
+					<section>
+						<p>In fact we defined it as a subset of XHTML (HTML4) using RelaxNG</p>
+					</section>
+
+					<section>
+						<pre><code class="hljs relaxng" data-trim>
+							default namespace = "http://www.w3.org/1999/xhtml"
+							include "../www.w3.org/xhtml11/rnc/modules/datatypes.rnc"
+							include "../www.w3.org/xhtml11/rnc/modules/attribs.rnc"
+							include "modules/html5backports.rnc"
+							include "../www.w3.org/xhtml11/rnc/modules/struct.rnc" {
+								html = element html { html.attlist, article }
+							}
+							include "../www.w3.org/xhtml11/rnc/modules/text.rnc" {
+								blockquote.attlist &= attribute data-ends-with { text }?
+							}
+							include "../www.w3.org/xhtml11/rnc/modules/hypertext.rnc"
+							include "modules/hypertext.rnc"
+							include "../www.w3.org/xhtml11/rnc/modules/list.rnc"
+							include "../www.w3.org/xhtml11/rnc/modules/image.rnc"
+							include "../www.w3.org/xhtml11/rnc/modules/pres.rnc"
+							include "../www.w3.org/xhtml11/rnc/modules/edit.rnc"
+							include "../www.w3.org/xhtml11/rnc/modules/table.rnc"
+							include "../www.w3.org/xhtml11/rnc/modules/inlstyle.rnc"
+							include "../www.w3.org/xhtml11/rnc/modules/legacy.rnc"
+							include "modules/note.rnc"
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Here's the parts we had to add ourselves (inspired by HTML5)</p>
+						<pre><code class="hljs relaxng" data-trim>
+							section = element section { section.attlist, Flow.model }
+							section.attlist = CommonIdRequired.attrib
+							Block.class |= section
+							
+							article = element article { article.attlist, header, Flow.model }
+							article.attlist = Common.attrib
+							
+							header = element header { header.attlist, Flow.model }
+							header.attlist = Common.attrib
+						</code></pre>
 					</section>
 
 					<section>
@@ -543,244 +857,7 @@
 					</section>
 				</section>
 				
-				<!-- Uptransforming to better semantics -->
-				<section>
-					<section>
-						<h2>Uptransforming documents</h1>
-						<br/>
-						<p>Case: Enabling <em>§-zoom</em> in Schultz Legal Research</p>
-					</section>
-					
-					<section>
-						<h2>Why?</h2>
-						<p>Better semantics enables new possibilities.</p>
-						<p>E.g. Schultz §-zoom is all about better semantics</p>
-						<p>Align documents in various content models (i.e. schemas)</p>
-					</section>
-					
-					<section>
-						<img src="assets/gyldendal/images/pgf-zoom-hegnsloven-icon.png"/>
-					</section>
-
-					<section>
-						<img src="assets/gyldendal/images/pgf-zoom-hegnsloven.png"/>
-					</section>
-					
-					<section>
-						<h2>How?</h2>
-						<ul>
-							<li>Transform using XSLT</li>
-							<li>Validate input (know what to expect in XSLT)</li>
-							<li>Validate output</li>
-							<li>Validate text-differences - did we shuffle or loose something?</li>
-							<li>Use XSpec for unit testing</li>
-							<li>Large input/output verification test set</li>
-						</ul>
-					</section>
-
-					<section>
-						<h3>Validation of grammatics</h3>
-					</section>
-
-					<section>
-						<h4>Example</h4>
-						<p>a <em>paragraf</em> must contain one or more <em>ledd</em></p>
-					</section>
-
-					<section>
-						<h4>Example</h4>
-						<p>a <em>proposisjon</em> must have the following <em>kapitler</em>
-							<ul> 
-								<li>...</li>
-								<li><em>Merknader til de enkelte bestemmelsene</em></li>
-								<li><em>Tilrådning</em></li>
-								<li><em>Forslag til lov om ...</em></li>
-							</ul>
-						</p>
-					</section>
-
-					<section>
-						<h3>(Business) rule validation</h3>
-					</section>
-
-					<section>
-						<h4>Example</h4>
-						<p>§ 4 follows § 3</p>
-					</section>
-					
-					<section>
-						<h4>Example</h4>
-						<p>Logical ids for a <em>paragraf</em> in a <em>lov</em> is composed of</p>
-						<ul>
-							<li>"L"</li>
-							<li>"8-digit <em>kunngjort</em> date"</li>
-							<li>"2-digit serial number"</li>
-							<li>" . "</li>
-							<li>"§"</li>
-							<li>"paragraf number"</li>
-						</ul>
-						<br/>
-						<p>E.g. <em>tvisteloven § 18-3</em>, kunngjort 17/6 2005<br> will become <em>L2005061790.§18-3</em></p>
-					</section>
-
-					<section>
-						<h4>Example</h4>
-						<p>id-references inside the document should have a target id</p>
-						<p>i.e. <code>href="#p3"</code> should have a <code>id="p3"</code></p>
-					</section>
-
-					<section>
-						<h3>The uptransformation flow</h3>
-						<ul>
-							<li>Validate input document</li>
-							<li>Transform document step by step using a XSLT pipeline</li>
-							<li>Validate output document</li>
-							<li>Report validation errors</li>
-						</ul>
-					</section>
-
-					<section>
-						<h3>Work iteratively using git</h3>
-						<p>The pull-request contains
-							<ul>
-								<li>changes to the transformation code, i.e. XSLT</li>
-								<li>changes in output documents, showing the improvement</li>
-								<li>changes to validation reports, fewer errors (hopefully)</li>
-							</ul>
-						</p>
-					</section>
-
-					<section>
-						<img src="assets/gyldendal/images/pull-request.png"/>
-					</section>
-
-					<section>
-						<h3>Ensure no content is shuffled or lost unexpectedly</h3>
-						<p>i.e. for input and output document</p>
-						<ul>
-							<li>Strip all xml</li>
-							<li>Tokenize</li>
-							<li>Compare the list of words</li>
-						</ul>
-						<p>... and save as part of pull-request</p>
-					</section>
-
-					<section>
-						<p>Example ...</p>
-					</section>
-
-					<section>
-						<h3>XSLT pipelines</h3>
-						<p>Output of one step, is input of the next, ...</p>
-						<p>Why?</p>
-					</section>
-
-					<section>
-						<h4>Problem</h4>
-						<p>It's hard to solve <em>complex</em> tasks</p>
-					</section>
-
-					<section>
-						<h4>Solution</h4>
-						<p>Instead, solve <em>simple</em> tasks, <br>task by task, <br>making it increasingly easier <br>to solve the complex task</p>
-					</section>
-
-					<section>
-						<p>.. thus, each step is a XSLT transform, that
-							<ul>
-								<li>Outputs a document that is <em>almost</em><br> identical to the input document</li>
-								<li>Changes will be made, if the right context is present</li>
-							</ul>
-						</p>
-					</section>
-
-					<section>
-						<h4>Example</h4>
-						<p>Generate links from a <em>Merknader</em> section to <em>paragraf</em> sections</p>
-					</section>
-
-					<section>
-						<p>Mark up <em>paragraf</em>-references</p>
-						<pre><code class="hljs language-xml" data-trim data-line-numbers="2">
-							&lt;section&gt;
-								&lt;h1&gt;Til § 4-9 og 12&lt;/h1&gt;
-							&lt;/section&gt;
-						</code></pre>
-						<p>... as</p>
-						<pre><code class="hljs language-xml" data-trim data-line-numbers="2">
-							&lt;section&gt;
-								&lt;h1&gt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
-							&lt;/section&gt;
-						</code></pre>
-					</section>
-
-					<section>
-						<p>Collect</p>
-						<pre><code class="hljs language-xml" data-trim data-line-numbers="1">
-							&lt;section data-remarks="#p4-#p9 #p12"&gt;
-								&lt;h1&gt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
-							&lt;/section&gt;
-						</code></pre>
-					</section>
-
-					<section>
-						<p>Expand ranges</p>
-						<pre><code class="hljs language-xml" data-trim data-line-numbers="1">
-							&lt;section data-remarks="#p4 #p5 #p6 #p7 #p8 #p9 #p12"&gt;
-								&lt;h1&gt;Til § &lt;a href="#p4"&gt;4&lt;/a&gt;-&lt;a href="#p9"&gt;9&lt;/a&gt; og &lt;a href="#p12"&gt;12&lt;/a&gt;&lt;/h1&gt;
-							&lt;/section&gt;
-						</code></pre>
-					</section>
-
-					<section>
-						<p>Cleanup</p>
-						<pre><code class="hljs language-xml" data-trim>
-							&lt;section data-remarks="#p4 #p5 #p6 #p7 #p8 #p9 #p12"&gt;
-								&lt;h1&gt;Til § 4-9 og 12&lt;/h1&gt;
-							&lt;/section&gt;
-						</code></pre>
-					</section>
-
-					<section>
-						<h4>Our ~100 step pipeline, can be generalized as</h4>
-						<ul>
-							<li>Strip insignificant newlines and whitespace</li>
-							<li>Detect words that marks the beginning of sections, <br>
-								e.g. <em>Kapitel 3</em>, <em>Til § 5</em>, «..., </li>
-							<li>Add wrappers i.e. sections - outside-in</li>
-							<li>Generate logical id's for those sections</li>
-							<li>Generate id-references</li>
-							<li>Remove empty or redundant elements</li>
-						</ul>
-					</section>
-
-					<section>
-						<h2>So, we had ...</h2>
-					</section>
-
-					<section>
-						<img src="assets/images/lfo-crap.png"/>
-					</section>
-					<section>
-						<img src="assets/images/lfo-crap2.png"/>
-					</section>
-					<section>
-						<img src="assets/images/lfo-crap3.png"/>
-					</section>
-
-					<section>
-						<h2>... and we got</h2>
-					</section>
-
-					<section>
-						<img src="assets/images/lfo-good.png"/>
-					</section>
-
-					<section>
-						<p>... and happy customers 😄</p>
-					</section>
-				</section>
-
+				
 				<!-- XSLT -->
 				<section>
 					<section>
