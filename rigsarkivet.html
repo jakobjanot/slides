@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="da">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Case</title>
+
+		<meta name="description" content="Jobinterview">
+		<meta name="author" content="Jakob Kofoed Janot">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/rigsarkivet.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/atom-one-dark.css">
+		<style>
+
+			@font-face {
+				font-family: "Ra-Gorm-Semibold";
+				src: url("https://www.rigsarkivet.dk/wp-content/themes/rigsarkivet/assets/fonts/RAGorm-SemiBold.woff2") format("woff2"),
+						url("https://www.rigsarkivet.dk/wp-content/themes/rigsarkivet/assets/fonts/RAGorm-SemiBold.woff") format("woff");
+				font-weight: 600;
+				font-style: normal;
+				font-display: swap;
+			}
+  
+			@font-face {
+				font-family: "Ra-Harald";
+				src: url("https://www.rigsarkivet.dk/wp-content/themes/rigsarkivet/assets/fonts/RAHarald-Medium.woff2") format("woff2"),
+						url("https://www.rigsarkivet.dk/wp-content/themes/rigsarkivet/assets/fonts/RAHarald-Medium.woff") format("woff");
+				font-weight: normal;
+				font-style: normal;
+				font-display: swap;
+			}
+  
+			@font-face {
+				font-family: "Ra-Harald-Semibold";
+				src: url("https://www.rigsarkivet.dk/wp-content/themes/rigsarkivet/assets/fonts/RAHarald-SemiBold.woff2") format("woff2"),
+						url("https://www.rigsarkivet.dk/wp-content/themes/rigsarkivet/assets/fonts/RAHarald-SemiBold.woff") format("woff");
+				font-weight: 600;
+				font-style: normal;
+				font-display: swap;
+			}
+	  
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Rigsarkivet</h1>
+					<p>Jobinterview</p>
+				</section>
+
+				<section>
+					<h1>Nyt bevaringsformat til regneark</h2>
+				</section>
+
+				<!-- Baggrund -->
+				<section>
+					<section>
+						<h1>Baggrund</h1>
+					</section>
+
+					<section>
+						<h2>Regneark</h3>
+					</section>
+
+					<section>
+						<p>Program hvormed man kan lave beregninger og opstille data i tabelform.</p>
+					</section>
+
+					<section>
+						<p>En af de mest udbredte måder at gemme data på.</p>
+					</section>
+
+					<section>
+						<p>Historisk set:</p>
+						<ul>
+							<li>Lotus 1-2-3</li>
+							<li>Excel</li>
+							<li>Numbers</li>
+							<li>OpenOffice Calc</li>
+							<li>Google Sheets</li>
+						</ul>
+					</section>
+
+					<section>
+						<ul>
+							<li>Nemt at bruge</li>
+							<li>Nemt at dele data med andre.</li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>Struktur?</h3>
+					</section>
+
+					<section>
+						<p style="font-size: 80px">😬</p>
+					</section>
+
+					<section>
+						<p>Modsat databaser - ingen krav til skema-definition</p>
+					</section>
+
+					<section>
+						<p>Alligevel er der struktur</p>
+					</section>
+
+					<section>
+						<p>Fx navngivne worksheets, der består af rækker og kolonner.</p>
+					</section>
+
+					<section>
+						<p>Men ofte meget renderingsorienteret, vha. positionering af tal og tekst.</p>
+					</section>
+
+					<section>
+						<h3>En titel</h3>
+						<p>tekst i en celle, der er centreret og skrevet med fed skrift.</p>
+					</section>
+										
+					<section>
+						<p>Brugerdefinerede formler refererer til celler ved deres position, fx <code>=B1+B2</code></p>
+						<p>Hvad er <code>B1</code> og <code>B2</code>?</p>
+					</section>
+
+					<section>
+						<img src="assets/rigsarkivet/images/b1-b2.png" style="width: 50%;"/>
+					</section>
+					
+					<section>
+						<p>Du kan også referere til celler i navngivet form, fx <code>=Areal*Pris</code></p>
+						<p>Men det er der jo ingen der gør</p>
+					</section>
+
+					<section>
+						<p>Altså, ingen semantik i data eller formler</p>
+					</section>
+					
+					<section>
+						<p>Regneark er ikke data-only</p>
+					</section>
+
+					<section>
+						<p>Regneark er data og formatering/rendering</p>
+					</section>
+
+					<section>
+						<p>WYSIWYG</p>
+						<p>Vi er nødt til at anvende Excel for at forstå data</p>
+					</section>
+
+					<section>
+						<p>Er TIFF det bedste format til at gemme regneark?</p>
+					</section>
+
+					<section>
+						<p>Fordele:</p>
+						<ul>
+							<li>Excel (eller andet program) er ikke nødvendigt</li>
+							<li>Visuel information bevares</li>
+							<li>Diagrammer og grafer bevares</li>
+						</ul>
+					</section>
+
+					<section>
+						<p>Ulemper:</p>
+						<ul>
+							<li>Svært at genskabe data</li>
+							<li>Formler er ikke tilgængelige</li>
+						</ul>
+					</section>
+					
+					<section>
+						<p>Men kan vi undvære "beregningerne"?</p>
+					</section>
+
+					<section>
+						<p>Hvordan kom vi frem til det automatisk beregnede tal, der står i cellen?</p>
+					</section>
+
+					<section>
+						<p>Var tallet væsentlig for en historisk beslutning?</p>
+					</section>
+
+					<section>
+						<p>En regnefejl?</p>
+					</section>
+
+					<section>
+						<p>Hvorfor overveje et nyt format?</p>
+					</section>
+					
+					<section>
+						<p>Noget information går tabt</p>
+					</section>
+
+					<section>
+						<p>Vi begrænser anvendelsen af data og formler</p>
+					</section>
+				</section>
+
+				<!-- XML som bevaringsformat -->
+				<section>
+					<section>
+						<h1>XML som bevaringsformat</h1>
+					</section>
+
+					<section>
+						<p>Vi bør overveje et struktureret format i tillæg til TIFF</p>
+					</section>
+
+					<section>
+						<p>XML er et struktureret format</p>
+					</section>
+
+					<section>
+						<p>En .xlsx-fil er en zip-fil med XML-filer i OpenXML formatet</p>
+					</section>
+
+					<section>
+						<img src="assets/rigsarkivet/images/xlsx.gif" style="width: 50%;"/>
+					</section>
+
+					<section>
+						<pre><code data-trim class="hljs language-xml">
+							&lt;worksheet ...&gt;
+								...
+								&lt;cols&gt;
+									&lt;col min="1" max="1" width="26.2" customWidth="1"/&gt;
+									...
+								&lt;/cols&gt;
+								&lt;sheetData&gt;
+									&lt;row r="1"&gt;
+										&lt;c r="A1" s="1" t="s"&gt;
+											&lt;v&gt;0&lt;/v&gt;
+											...
+										&lt;/c&gt;
+									&lt;/row&gt;
+									...
+								&lt;/sheetData&gt;
+								...
+							&lt;/worksheet&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<p>XML er et eXtensible</p>
+					</section>
+
+					<section>
+						<p>Kan du leve med at anvende '<' og '>'?</p>
+					</section>
+
+					<section>
+						<p>Kan du definere din struktur i et skema?</p>
+					</section>
+
+					<section>
+						<p>... så har du et nyt fil-format</p>
+					</section>
+
+					<section>
+						<p>XML er <i>kun</i> data</p>
+					</section>
+
+					<section>
+						<p>XML giver mulighed for at definere semantik</p>
+					</section>
+
+					<section>
+						<p>XML dør ikke i morgen</p>
+					</section>
+
+					<section>
+						<p>Alverdens filformater baserer sig på XML</p>
+					</section>
+
+					<section>
+						<p>Eksempler: SVG, MathML, XHTML, ODF, OOXML, GML, EPUB, RSS, MusicXML, XBRL, etc.</p>
+					</section>
+
+					<section>
+						<p>Er det XML - er der en palette af værktøjer</p>
+					</section>
+
+					<section>
+						<p>Validér med skemaer</p>
+					</section>
+
+					<section>
+						<p>Søg med XPath</p>
+					</section>
+
+					<section>
+						<p>Transformér med XSLT</p>
+					</section>
+
+					<section>
+						<p>Supporteret i alle programmeringssprog, databaser osv.</p>
+					</section>
+
+					<section>
+						<p>XML-teknologier er internationale standarder og specifikationer er åbne</p>
+					</section>
+
+					<section>
+						<p>Så, XML forsvinder ikke i morgen, XML ændres ikke i morgen</p>
+					</section>
+
+					<section>
+						<p>Hvorfor ikke bruge OpenXML?</p>
+					</section>
+
+					<section>
+						<p>OpenXML er en ECMA standard</p>
+					</section>
+
+					<section>
+						<p>Download RelaxNG-skemaet for OpenXML fra:</p>
+						<p>https://ecma-international.org/publications-and-standards/standards/ecma-376/</p>
+					</section>
+
+					<section>
+						<p>Ulempe ved OpenXML er at det er en meget kompleks standard</p>
+					</section>
+
+					<section>
+						<p>OpenDocument Format (ODF) er en ISO standard</p>
+						<p>https://github.com/oasis-tcs/odf-tc/blob/master/src/main/resources/odf1.4/OpenDocument-v1.4-schema.rng</p>
+					</section>
+
+					<section>
+						<p>ODF er et "bedre" OpenXML</p>
+					</section>
+
+					<section>
+						<p>ODF er født med "RDFa" - Resource Description Framework in Attributes</p>
+					</section>
+
+					<section>
+						<p>RDF er en anden W3C standard, for metadata</p>
+					</section>
+
+					<section>
+						<h2>Forslag</h2>
+					</section>
+
+					<section>
+						<p>Vi bør overveje at gemme regneark i XML-format i tillæg til TIFF</p>
+					</section>
+
+					<section>
+						<p>OOXML eller ODF?</p>
+					</section>
+
+					<section>
+						<p>¯\_(ツ)_/¯</p>
+					</section>
+
+					<section>
+						<p>Begge formater er veldefinerede</p>
+					</section>
+
+					<section>
+						<p>Væsentligt: Arkiver skemaerne m.v. fra ECMA/ISO</p>
+					</section>
+				</section>
+
+				<!-- Overgangen til det nye format -->
+				<section>
+					<section>
+						<h1>Overgangen til det nye format</h1>
+					</section>
+
+					<section>
+						<p>Tabsfri konvertering .xls (binært) til .xlsx (XML)?</p>
+					</section>
+
+					<section>
+						<p>Lotus Notes?</p>
+					</section>
+
+					<section>
+						<p>Acceptance test af konvertering på virkelige regneark</p>
+					</section>
+					
+					<section>
+						<p>Beskrive krav til XML bevaringsformater, bl.a. ved henvisning 
+							til konkrete skema-versioner</p>
+					</section>
+
+					<section>
+						<p>Udvikle værktøjer til validering af regnark i XML-format</p>
+					</section>
+
+					<section>
+						<p>Testkørsel af validering på stort datamateriale, tilfældigt udvalgt</p>
+					</section>
+
+					<section>
+						<p>Jeg forestiller mig at stille skema'er, eksempel-filer, dokumentation og kildekode 
+							til rådighed via git repository</p>
+					</section>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/externalcode/externalcode.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealExternalCode, RevealHighlight]
+			});
+
+		</script>
+
+	</body>
+</html>

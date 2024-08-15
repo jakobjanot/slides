@@ -1,0 +1,26 @@
+@font-face {
+    font-family: "Ra Gorm Semibold";
+    src: url("./RAGorm-SemiBold.woff2") format("woff2"),
+        url("./RAGorm-SemiBold.woff") format("woff");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "Ra Harald";
+    src: url("./RAHarald-Medium.woff2") format("woff2"),
+        url("./RAHarald-Medium.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "Ra Harald Semibold";
+    src: url("./RAHarald-SemiBold.woff2") format("woff2"),
+        url("./RAHarald-SemiBold.woff") format("woff");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
