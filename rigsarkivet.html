@@ -66,6 +66,16 @@
 					<h1>Nyt bevaringsformat til regneark</h2>
 				</section>
 
+				<section>
+					<h1>Indhold</h1>
+					<ul>
+						<li>Introduktion</li>
+						<li>Baggrund</li>
+						<li>XML som bevaringsformat</li>
+						<li>Overgangen til det nye format</li>
+					</ul>
+				</section>
+
 				<!-- Baggrund -->
 				<section>
 					<section>
@@ -231,32 +241,6 @@
 					</section>
 
 					<section>
-						<img src="assets/rigsarkivet/images/xlsx.gif" style="width: 50%;"/>
-					</section>
-
-					<section>
-						<pre><code data-trim class="hljs language-xml">
-							&lt;worksheet ...&gt;
-								...
-								&lt;cols&gt;
-									&lt;col min="1" max="1" width="26.2" customWidth="1"/&gt;
-									...
-								&lt;/cols&gt;
-								&lt;sheetData&gt;
-									&lt;row r="1"&gt;
-										&lt;c r="A1" s="1" t="s"&gt;
-											&lt;v&gt;0&lt;/v&gt;
-											...
-										&lt;/c&gt;
-									&lt;/row&gt;
-									...
-								&lt;/sheetData&gt;
-								...
-							&lt;/worksheet&gt;
-						</code></pre>
-					</section>
-
-					<section>
 						<p>XML er et eXtensible</p>
 					</section>
 
@@ -271,17 +255,18 @@
 					<section>
 						<p>... så har du et nyt fil-format</p>
 					</section>
-
-					<section>
-						<p>XML er <i>kun</i> data</p>
-					</section>
-
+				
 					<section>
 						<p>XML giver mulighed for at definere semantik</p>
 					</section>
 
 					<section>
 						<p>XML dør ikke i morgen</p>
+					</section>
+
+					<section>
+						<p>Version 1.0 - 26 år siden</p>
+						<p>Version 1.1 - 17 år siden</p>
 					</section>
 
 					<section>
@@ -334,7 +319,30 @@
 					</section>
 
 					<section>
-						<p>Ulempe ved OpenXML er at det er en meget kompleks standard</p>
+						<p>Ulempen ved OpenXML - en meget kompleks standard</p>
+					</section>
+
+					<section>
+						<img src="assets/rigsarkivet/images/xlsx-visning.png" style="width: 50%;"/>
+					</section>
+
+					<section>
+						<img src="assets/rigsarkivet/images/xlsx-unzip.png" style="width: 50%;"/>
+					</section>
+
+					<section>
+						<p>xl/worksheets/sheet1.xml</p>
+						<img src="assets/rigsarkivet/images/xlsx-sheet1-1.png" style="width: 50%;"/>
+					</section>
+
+					<section>
+						<p>xl/worksheets/sheet1.xml</p>
+						<img src="assets/rigsarkivet/images/xlsx-sheet1-2.png" style="width: 50%;"/>
+					</section>
+
+					<section>
+						<p>xl/sharedStrings.xml</p>
+						<img src="assets/rigsarkivet/images/xlsx-sheet1-3.png" style="width: 50%;"/>
 					</section>
 
 					<section>
@@ -367,11 +375,31 @@
 					</section>
 
 					<section>
-						<p>¯\_(ツ)_/¯</p>
+						<p>Begge formater er veldefinerede</p>
 					</section>
 
 					<section>
-						<p>Begge formater er veldefinerede</p>
+						<p>CSV er ikke et godt match, da regneark er mere end en tabel</p>
+					</section>
+
+					<section>
+						<p>OOXML er komplekst, men udbredt</p>
+					</section>
+
+					<section>
+						<p>Use case: Sprogmodeller</p>
+					</section>
+
+					<section>
+						<p>Stort behov for at anvende semantik i dokumenter i forb. med træning af LLM'er</p>
+					</section>
+
+					<section>
+						<p>Høj skalerbarhed = snedige mennesker laver snedige løsninger</p>
+					</section>
+
+					<section>
+						<p>¯\_(ツ)_/¯</p>
 					</section>
 
 					<section>
@@ -394,12 +422,64 @@
 					</section>
 
 					<section>
+						<p>Samarbejde med interne interessenter</p>
+					</section>
+
+					<section>
+						<p>Involvere testere og arkivarer</p>
+					</section>
+				
+					<section>
 						<p>Acceptance test af konvertering på virkelige regneark</p>
+					</section>
+
+					<section>
+						<p>Involvere IT-udviklere</p>
+					</section>
+
+					<section>
+						<p>Hvordan skal en indhentningspipeline fungere?</p>
+					</section>
+
+					<section>
+						<p>Arkiveringsparkke-format - behov for ændringer?</p>
 					</section>
 					
 					<section>
 						<p>Beskrive krav til XML bevaringsformater, bl.a. ved henvisning 
-							til konkrete skema-versioner</p>
+							til de konkrete versioner af struktur skema'erne</p>
+					</section>
+
+					<section>
+						<p>Evt. udvikle schematron schema, hvor struktur skema'erne ikke er tilstrækkelige</p>
+					</section>
+
+					<section>
+						<p>Schematron definerer business-rules (assertions), der ikke kan defineres i skemaer</p>
+					</section>
+
+					<section>
+						<h2>Eksempel på Schematron</h2>
+						<pre><code class="hljs language-xml" data-trim>
+							&lt;schematron xmlns="http://purl.oclc.org/dsdl/schematron"&gt;
+								&lt;ns prefix="x" uri="http://schemas.openxmlformats.org/spreadsheetml/2006/main"/&gt;
+						
+								&lt;pattern id="check-for-missing-worksheets"&gt;
+										&lt;title&gt;Check for missing worksheet files in xl/worksheets directory&lt;/title&gt;
+										
+										&lt;!-- Rule to check that each sheet has a corresponding worksheet file --&gt;
+										&lt;rule context="x:sheets/x:sheet"&gt;
+											&lt;assert test="doc-available(concat('xl/worksheets/sheet', @sheetId, '.xml'))"&gt;
+													Worksheet file 'xl/worksheets/sheet{@sheetId}.xml' is missing.
+											&lt;/assert&gt;
+									&lt;/rule&gt;
+							&lt;/pattern&gt;
+						&lt;/schematron&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Eksempel: Begrænse indholdet, uden at ændre struktur skema'er</p>
 					</section>
 
 					<section>
